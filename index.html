@@ -1,0 +1,2816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta de Clima Laboral 2026 · Subsecretaría de Servicios Públicos · Gobierno de Río Cuarto</title>
+  <meta name="description" content="Encuesta de Clima Laboral 2026 (FO-SGC-05-IDI.11) — Subsecretaría de Servicios Públicos · Dirección General de Estadísticas, Control de Calidad y Procesos — Municipalidad de Río Cuarto.">
+  <meta name="author" content="Dirección General de Estadísticas, Control de Calidad y Procesos — Municipalidad de Río Cuarto">
+
+  <!-- Anti-flicker para el tema claro/oscuro -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('clima_sp_tema');
+        if (t === 'claro' || t === 'oscuro') {
+          document.documentElement.setAttribute('data-tema', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0" rel="stylesheet">
+  <script src="schema.js"></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --bg-alt: #f4f5f7;
+      --bg-soft: #eef2f6;
+      --ink: #14171a;
+      --ink-soft: #525b66;
+      --ink-muted: #76808c;
+      --line: #dde2e8;
+      --brand: #009DE0;
+      --brand-d: #0077ad;
+      --brand-bg: #e0f4fc;
+      --brand-border: rgba(0, 157, 224, 0.35);
+
+      --c-ok: #059669;
+      --c-ok-bg: #d1fae5;
+      --c-warn: #d97706;
+      --c-warn-bg: #fef3c7;
+      --c-alert: #dc2626;
+      --c-alert-bg: #fee2e2;
+      --c-purple: #6d28d9;
+      --c-purple-bg: #ede9fe;
+
+      --radius: 16px;
+      --radius-sm: 11px;
+      --shadow: 0 1px 3px rgba(20, 23, 26, 0.06), 0 4px 14px rgba(20, 23, 26, 0.04);
+      --shadow-lift: 0 10px 28px rgba(20, 23, 26, 0.12), 0 3px 8px rgba(20, 23, 26, 0.06);
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-tema="claro"]) {
+        color-scheme: dark;
+        --bg: #15191f;
+        --bg-alt: #0d1014;
+        --bg-soft: #1e242d;
+        --ink: #f1f5f9;
+        --ink-soft: #a8b3c2;
+        --ink-muted: #788496;
+        --line: #28303d;
+        --brand: #1cb0f0;
+        --brand-d: #58c7f7;
+        --brand-bg: #0f2c3d;
+        --brand-border: rgba(28, 176, 240, 0.4);
+        --c-ok-bg: #083828;
+        --c-warn-bg: #3b2809;
+        --c-alert-bg: #3d1414;
+        --c-purple-bg: #2a1854;
+      }
+    }
+
+    :root[data-tema="oscuro"] {
+      color-scheme: dark;
+      --bg: #15191f;
+      --bg-alt: #0d1014;
+      --bg-soft: #1e242d;
+      --ink: #f1f5f9;
+      --ink-soft: #a8b3c2;
+      --ink-muted: #788496;
+      --line: #28303d;
+      --brand: #1cb0f0;
+      --brand-d: #58c7f7;
+      --brand-bg: #0f2c3d;
+      --brand-border: rgba(28, 176, 240, 0.4);
+      --c-ok-bg: #083828;
+      --c-warn-bg: #3b2809;
+      --c-alert-bg: #3d1414;
+      --c-purple-bg: #2a1854;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-alt);
+      color: var(--ink);
+      font-family: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.48;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      user-select: none;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ================= HEADER INSTITUCIONAL ================= */
+    .topbar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-muni {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 30px;
+      background: var(--line);
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-titles .org-top {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--brand-d);
+    }
+
+    .brand-titles .org-sub {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-pill {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      border: 1px solid var(--brand-border);
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .icon-btn {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+    }
+
+    .icon-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+    }
+
+    /* ================= BARRA DE PROGRESO STICKY ================= */
+    .progress-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 10px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .progress-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+      flex-wrap: wrap;
+    }
+
+    .progress-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .progress-pct-badge {
+      background: var(--brand);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .autosave-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: var(--bg-soft);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--brand) 0%, #00c96b 100%);
+      border-radius: 999px;
+      transition: width 0.3s var(--ease);
+    }
+
+    .block-nav-pills {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .block-nav-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .block-pill {
+      flex: 1;
+      min-width: 92px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.15s var(--ease);
+      font-family: inherit;
+    }
+
+    .block-pill.current {
+      border-color: var(--brand);
+      background: var(--brand-bg);
+      color: var(--brand-d);
+    }
+
+    .block-pill.completed {
+      border-color: rgba(5, 150, 105, 0.4);
+      background: var(--c-ok-bg);
+      color: var(--c-ok);
+    }
+
+    /* ================= TARJETA DE PROPÓSITO E INTRO ================= */
+    .hero-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--brand);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin: 20px 0 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .hero-tag {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--brand-d);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mode-switch-btn {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: inherit;
+    }
+
+    .mode-switch-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+    }
+
+    .hero-card h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px;
+      color: var(--ink);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+    }
+
+    .purpose-box {
+      background: var(--brand-bg);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-sm);
+      padding: 15px 18px;
+    }
+
+    .purpose-box h2 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--brand-d);
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .purpose-box p {
+      font-size: 13.5px;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+
+    .purpose-list {
+      margin: 0 0 10px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .purpose-list li {
+      margin-bottom: 4px;
+    }
+
+    .purpose-thanks {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--brand-d);
+      margin: 0;
+    }
+
+    .anon-guarantee-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .anon-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .anon-Chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-soft);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--brand-d);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      font-family: inherit;
+    }
+
+    /* ================= SECCIONES / BLOQUES DEL FORMULARIO ================= */
+    .form-section {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      transition: all 0.2s var(--ease);
+    }
+
+    .sec-header {
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .sec-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .sec-kicker {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .sec-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin: 4px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+    }
+
+    .scale-legend {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--brand);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    .scale-legend strong {
+      color: var(--ink);
+    }
+
+    /* ================= PREGUNTAS Y CONTROLES ================= */
+    .q-card {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .q-card:first-of-type {
+      padding-top: 4px;
+    }
+
+    .q-card:last-of-type {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+
+    .q-card.conditional-card {
+      background: color-mix(in srgb, var(--brand-bg) 42%, var(--bg));
+      border: 1.5px solid var(--brand-border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .q-card.has-error {
+      background: color-mix(in srgb, var(--c-alert-bg) 35%, var(--bg));
+      border: 1.5px solid var(--c-alert);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .q-num {
+      background: var(--brand);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      min-width: 28px;
+      height: 26px;
+      padding: 0 7px;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .q-num.cond {
+      background: var(--c-warn);
+    }
+
+    .q-label-wrap {
+      flex: 1;
+    }
+
+    .q-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 3px;
+      line-height: 1.38;
+    }
+
+    .q-meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .counter-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+    }
+
+    .counter-pill.limit-reached {
+      background: var(--c-warn-bg);
+      color: var(--c-warn);
+      border-color: rgba(217, 119, 6, 0.4);
+    }
+
+    /* OPCIONES DE SELECCIÓN ÚNICA Y MÚLTIPLE (TARJETAS TÁCTILES) */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 8px;
+    }
+
+    .options-grid.cols-1 {
+      grid-template-columns: 1fr;
+    }
+
+    .opt-btn {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 11px 13px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.16s var(--ease);
+      font-family: inherit;
+      line-height: 1.3;
+    }
+
+    .opt-btn:hover {
+      border-color: var(--brand);
+      background: color-mix(in srgb, var(--brand-bg) 35%, var(--bg));
+    }
+
+    .opt-btn .opt-indicator {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s var(--ease);
+    }
+
+    .opt-btn.multi .opt-indicator {
+      border-radius: 6px;
+    }
+
+    .opt-btn.active {
+      background: var(--brand-bg);
+      border-color: var(--brand);
+      color: var(--ink);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 157, 224, 0.16);
+    }
+
+    .opt-btn.active .opt-indicator {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .opt-btn.disabled-max:not(.active) {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
+
+    .otro-input-wrap {
+      margin-top: 10px;
+      padding: 12px;
+      background: var(--bg);
+      border: 1.5px solid var(--brand);
+      border-radius: var(--radius-sm);
+    }
+
+    .otro-input-wrap label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--brand-d);
+      margin-bottom: 6px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--brand);
+      background: var(--bg);
+      box-shadow: 0 0 0 3px var(--brand-bg);
+    }
+
+    /* ================= ESCALAS LIKERT 1 A 5 TÁCTILES ================= */
+    .likert-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .likert-row.with-na {
+      grid-template-columns: repeat(5, 1fr) 115px;
+    }
+
+    @media (max-width: 640px) {
+      .likert-row {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+      }
+      .likert-row.with-na {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .likert-row.with-na .likert-btn.na-btn {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        padding: 8px 12px;
+        gap: 8px;
+      }
+    }
+
+    .likert-btn {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 4px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+      transition: all 0.16s var(--ease);
+      font-family: inherit;
+      color: var(--ink);
+    }
+
+    .likert-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .likert-top {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .likert-num {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .likert-icon {
+      font-size: 22px;
+      font-variation-settings: 'FILL' 0, 'wght' 500;
+    }
+
+    .likert-text {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    /* Colores semafóricos por valor (1 a 5) */
+    .likert-btn[data-val="5"] .likert-icon,
+    .likert-btn[data-val="5"] .likert-num { color: #059669; }
+    .likert-btn[data-val="4"] .likert-icon,
+    .likert-btn[data-val="4"] .likert-num { color: #65a30d; }
+    .likert-btn[data-val="3"] .likert-icon,
+    .likert-btn[data-val="3"] .likert-num { color: #d97706; }
+    .likert-btn[data-val="2"] .likert-icon,
+    .likert-btn[data-val="2"] .likert-num { color: #ea580c; }
+    .likert-btn[data-val="1"] .likert-icon,
+    .likert-btn[data-val="1"] .likert-num { color: #dc2626; }
+
+    .likert-btn.active {
+      transform: translateY(-1px);
+    }
+    .likert-btn.active .likert-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 600;
+      transform: scale(1.1);
+    }
+    .likert-btn.active .likert-text {
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .likert-btn[data-val="5"].active {
+      background: var(--c-ok-bg);
+      border-color: #059669;
+      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.22);
+    }
+    .likert-btn[data-val="4"].active {
+      background: color-mix(in srgb, #65a30d 18%, var(--bg));
+      border-color: #65a30d;
+      box-shadow: 0 3px 10px rgba(101, 163, 13, 0.2);
+    }
+    .likert-btn[data-val="3"].active {
+      background: var(--c-warn-bg);
+      border-color: #d97706;
+      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.2);
+    }
+    .likert-btn[data-val="2"].active {
+      background: color-mix(in srgb, #ea580c 18%, var(--bg));
+      border-color: #ea580c;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.2);
+    }
+    .likert-btn[data-val="1"].active {
+      background: var(--c-alert-bg);
+      border-color: #dc2626;
+      box-shadow: 0 3px 10px rgba(220, 38, 38, 0.22);
+    }
+
+    .likert-btn.na-btn {
+      border-style: dashed;
+    }
+    .likert-btn.na-btn.active {
+      background: var(--bg-soft);
+      border-style: solid;
+      border-color: var(--ink-soft);
+    }
+
+    /* ================= SUBFILAS MATRIZ (P23 y P24) ================= */
+    .matrix-subrow {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .matrix-subrow:last-child {
+      margin-bottom: 0;
+    }
+
+    .matrix-subrow-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      margin: 0 0 10px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ================= ESCALA eNPS 1 A 10 (P27) ================= */
+    .enps-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+    }
+
+    @media (max-width: 520px) {
+      .enps-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .enps-btn {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 4px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      font-family: inherit;
+    }
+
+    .enps-btn:hover {
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+
+    .enps-btn.detractor.active {
+      background: #dc2626;
+      border-color: #dc2626;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .enps-btn.pasivo.active {
+      background: #d97706;
+      border-color: #d97706;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.3);
+    }
+
+    .enps-btn.promotor.active {
+      background: #059669;
+      border-color: #059669;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
+    }
+
+    .enps-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    /* ================= NAVEGACIÓN POR BLOQUES Y ENVÍO ================= */
+    .wizard-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 20px 0 32px;
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.15s var(--ease);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      border: none;
+      color: #fff;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0, 157, 224, 0.32);
+      transition: all 0.18s var(--ease);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-d);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit-full {
+      width: 100%;
+      background: linear-gradient(135deg, #009DE0 0%, #059669 100%);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 28px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      box-shadow: 0 6px 18px rgba(0, 157, 224, 0.35);
+      margin: 18px 0 36px;
+    }
+
+    /* ================= ALERTAS Y MODALES ================= */
+    .toast-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #14171a;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 90;
+      box-shadow: var(--shadow-lift);
+      max-width: 92vw;
+    }
+
+    .toast-banner.show {
+      display: inline-flex;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 18, 0.68);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: var(--shadow-lift);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .receipt-box {
+      background: var(--bg-soft);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 12px;
+      margin: 14px 0 18px;
+      color: var(--ink-soft);
+    }
+
+    /* ================= FOOTER ================= */
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+      padding: 24px 0 36px;
+      margin-top: 30px;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER INSTITUCIONAL ================= -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand-group">
+        <img class="logo-muni" src="assets/logo.png" alt="Gobierno de Río Cuarto">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-titles">
+          <span class="org-top">Secretaría de Gestión y Participación Ciudadana</span>
+          <span class="org-sub">Dirección General de Estadísticas, Control de Calidad y Procesos</span>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <span class="code-pill" title="Código oficial del Sistema de Gestión de Calidad y Procesos">FO-SGC-05-IDI.11</span>
+        <button type="button" class="icon-btn" id="btn-theme" title="Cambiar entre modo claro y oscuro" aria-label="Cambiar entre modo claro y oscuro">
+          <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= BARRA DE PROGRESO Y AUTOGUARDADO ================= -->
+  <div class="progress-sticky" role="region" aria-label="Progreso de la encuesta">
+    <div class="wrap">
+      <div class="progress-top-row">
+        <div class="progress-status">
+          <span class="progress-pct-badge" id="progress-pct">0%</span>
+          <span id="progress-label">Bloque 1 de 7 · Datos generales</span>
+        </div>
+        <div class="autosave-indicator" id="autosave-status">
+          <span class="material-symbols-outlined" style="font-size:15px; color:var(--c-ok);">cloud_done</span>
+          <span>Guardado local automático activo</span>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="block-nav-pills" id="block-pills-nav" role="tablist" aria-label="Navegación por bloques">
+        <button type="button" class="block-pill current" data-step="1">1. Datos</button>
+        <button type="button" class="block-pill" data-step="2">2. Ambiente</button>
+        <button type="button" class="block-pill" data-step="3">3. Motivación</button>
+        <button type="button" class="block-pill" data-step="4">4. Capacitación</button>
+        <button type="button" class="block-pill" data-step="5">5. Recursos</button>
+        <button type="button" class="block-pill" data-step="6">6. Valoración</button>
+        <button type="button" class="block-pill" data-step="7">7. Comentario</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONTENIDO PRINCIPAL ================= -->
+  <main class="wrap">
+
+    <!-- TARJETA INSTITUCIONAL DE BIENVENIDA Y PROPÓSITO -->
+    <section class="hero-card" aria-labelledby="survey-main-title">
+      <div class="hero-eyebrow">
+        <span class="hero-tag">
+          <span class="material-symbols-outlined" style="font-size:16px;">verified_user</span>
+          Relevamiento Institucional Anónimo 2026
+        </span>
+        <button type="button" class="mode-switch-btn" id="btn-toggle-view-mode">
+          <span class="material-symbols-outlined" style="font-size:16px;" id="view-mode-icon">view_agenda</span>
+          <span id="view-mode-text">Ver formulario completo</span>
+        </button>
+      </div>
+
+      <h1 id="survey-main-title">Encuesta de Clima Laboral 2026</h1>
+      <p class="hero-subtitle">Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto</p>
+
+      <div class="purpose-box">
+        <h2>
+          <span class="material-symbols-outlined" style="font-size:18px;">info</span>
+          Propósito
+        </h2>
+        <p>
+          Esta encuesta forma parte del Sistema de Gestión de Calidad y Procesos. Su objetivo es conocer cómo percibís tu lugar de trabajo, para identificar fortalezas y oportunidades de mejora.
+        </p>
+        <ul class="purpose-list">
+          <li><strong>Es anónima y confidencial.</strong></li>
+          <li><strong>Tu participación es voluntaria</strong>, pero muy importante para que los resultados reflejen la realidad del área.</li>
+          <li><strong>La información será usada solo con fines de diagnóstico y mejora.</strong></li>
+        </ul>
+        <p class="purpose-thanks">Tu aporte es muy valioso. ¡Gracias por participar!</p>
+      </div>
+
+      <div class="anon-guarantee-bar">
+        <div class="anon-badges">
+          <span class="anon-Chip">
+            <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-ok);">lock</span>
+            Sin DNI, Nombre ni IP
+          </span>
+          <span class="anon-Chip">
+            <span class="material-symbols-outlined" style="font-size:14px; color:var(--brand);">groups</span>
+            Secreto estadístico (k-anonimato n ≥ 5)
+          </span>
+          <span class="anon-Chip">
+            <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-warn);">schedule</span>
+            Sello horario redondeado
+          </span>
+        </div>
+        <button type="button" class="link-btn" onclick="abrirModalAnonimato()">
+          Ver protocolo técnico de anonimato
+        </button>
+      </div>
+    </section>
+
+    <!-- FORMULARIO PRINCIPAL -->
+    <form id="clima-survey-form" novalidate>
+
+      <!-- =================================================================
+           BLOQUE 1 · DATOS GENERALES
+           ================================================================= -->
+      <section class="form-section" data-block="1" id="section-block-1">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 1 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Respuestas cerradas y sin identificación personal</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">badge</span>
+            Bloque 1 · Datos generales
+          </h2>
+        </div>
+
+        <!-- P1 -->
+        <div class="q-card" id="qcard-p1">
+          <div class="q-header">
+            <span class="q-num">1</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Área en la que trabaja *</h3>
+              <p class="q-meta">Selección única · obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p1" id="group-p1"></div>
+          <input type="hidden" name="p1" id="input-p1" required>
+        </div>
+
+        <!-- P2 -->
+        <div class="q-card" id="qcard-p2">
+          <div class="q-header">
+            <span class="q-num">2</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Modalidad de contratación *</h3>
+              <p class="q-meta">Selección única · obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p2" id="group-p2"></div>
+          <input type="hidden" name="p2" id="input-p2" required>
+        </div>
+
+        <!-- P3 -->
+        <div class="q-card" id="qcard-p3">
+          <div class="q-header">
+            <span class="q-num">3</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Antigüedad laboral *</h3>
+              <p class="q-meta">Selección única · obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p3" id="group-p3"></div>
+          <input type="hidden" name="p3" id="input-p3" required>
+        </div>
+
+        <!-- P4 -->
+        <div class="q-card" id="qcard-p4">
+          <div class="q-header">
+            <span class="q-num">4</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Tarea que desempeña *</h3>
+              <p class="q-meta">Selección única · obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p4" id="group-p4"></div>
+          <input type="hidden" name="p4" id="input-p4" required>
+        </div>
+
+        <!-- P5 -->
+        <div class="q-card" id="qcard-p5">
+          <div class="q-header">
+            <span class="q-num">5</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Está conforme con el área donde trabaja y con las tareas que realiza actualmente? *</h3>
+              <p class="q-meta">Selección única · obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p5" id="group-p5"></div>
+          <input type="hidden" name="p5" id="input-p5" required>
+        </div>
+
+        <!-- P6 (Condicional: aparece si P5 != "Sí, conforme con ambas") -->
+        <div class="q-card conditional-card hidden" id="qcard-p6">
+          <div class="q-header">
+            <span class="q-num cond">6</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Qué es lo que más pesa en su disconformidad? *</h3>
+              <p class="q-meta">
+                <span>Selección múltiple, máximo 3 · obligatoria</span>
+                <span class="counter-pill" id="counter-p6">0 / 3 seleccionadas</span>
+              </p>
+            </div>
+          </div>
+          <div class="options-grid" data-multi-group="p6" data-max="3" id="group-p6"></div>
+          <input type="hidden" name="p6" id="input-p6">
+          <div class="otro-input-wrap hidden" id="otro-wrap-p6">
+            <label for="input-p6-otro">Indique qué motiva su disconformidad (obligatorio): *</label>
+            <input type="text" class="form-input" id="input-p6-otro" name="p6_otro" maxlength="200" placeholder="Describa brevemente el motivo de su disconformidad...">
+          </div>
+        </div>
+
+        <!-- P7 (Condicional: aparece si P5 == "No con el área" o "No con ninguna de las dos") -->
+        <div class="q-card conditional-card hidden" id="qcard-p7">
+          <div class="q-header">
+            <span class="q-num cond">7</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿En qué área preferiría trabajar? *</h3>
+              <p class="q-meta">Selección única · condicional obligatoria</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p7" id="group-p7"></div>
+          <input type="hidden" name="p7" id="input-p7">
+
+          <div class="otro-input-wrap hidden" id="otro-wrap-p7">
+            <label for="input-p7-otro">Indique en qué otra área prefiere trabajar (obligatorio): *</label>
+            <input type="text" class="form-input" id="input-p7-otro" name="p7_otro" maxlength="160" placeholder="Escriba el área en la que preferiría trabajar...">
+          </div>
+
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--brand-border);">
+            <label for="input-p7-porque" style="display:block; font-size:13.5px; font-weight:700; color:var(--ink); margin-bottom:6px;">
+              ¿Por qué prefiere dicha área? * <span style="font-weight:500; font-size:12px; color:var(--ink-soft);">(obligatorio · máx. 250 caracteres)</span>
+            </label>
+            <textarea class="form-textarea" id="input-p7-porque" name="p7_porque" rows="2" maxlength="250" placeholder="Explique brevemente por qué prefiere trabajar en esa área..."></textarea>
+            <div style="text-align:right; font-size:11px; color:var(--ink-soft); margin-top:4px;" id="char-count-p7">0 / 250 caracteres</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 2 · AMBIENTE LABORAL
+           ================================================================= -->
+      <section class="form-section hidden" data-block="2" id="section-block-2">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 2 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Una respuesta por fila · obligatoria</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">groups</span>
+            Bloque 2 · Ambiente laboral
+          </h2>
+        </div>
+
+        <div class="scale-legend">
+          <strong>Escala de conformidad (1 a 5):</strong>
+          5 Muy conforme · 4 Conforme · 3 Ni conforme ni disconforme · 2 Poco conforme · 1 Nada conforme.
+        </div>
+
+        <div id="container-bloque-2"></div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 3 · MOTIVACIÓN Y COMPROMISO
+           ================================================================= -->
+      <section class="form-section hidden" data-block="3" id="section-block-3">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 3 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Una respuesta por fila · obligatoria</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">bolt</span>
+            Bloque 3 · Motivación y compromiso
+          </h2>
+        </div>
+
+        <div class="scale-legend">
+          <strong>Escala de acuerdo (1 a 5):</strong>
+          5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo.
+        </div>
+
+        <div id="container-bloque-3"></div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 4 · CAPACITACIÓN Y DESARROLLO
+           ================================================================= -->
+      <section class="form-section hidden" data-block="4" id="section-block-4">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 4 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Formación y mejora continua</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">school</span>
+            Bloque 4 · Capacitación y desarrollo
+          </h2>
+        </div>
+
+        <!-- P21 -->
+        <div class="q-card" id="qcard-p21">
+          <div class="q-header">
+            <span class="q-num">21</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Qué tan satisfecho está con las oportunidades de capacitación relacionadas con su tarea? *</h3>
+              <p class="q-meta">Escala de 5 puntos · obligatoria</p>
+            </div>
+          </div>
+          <div class="likert-row" data-likert-group="p21" id="likert-p21"></div>
+          <input type="hidden" name="p21" id="input-p21" required>
+        </div>
+
+        <!-- P22 -->
+        <div class="q-card" id="qcard-p22">
+          <div class="q-header">
+            <span class="q-num">22</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Capacitaciones que considera necesarias para mejorar su tarea diaria *</h3>
+              <p class="q-meta">
+                <span>Selección múltiple · obligatoria (máximo 3)</span>
+                <span class="counter-pill" id="counter-p22">0 / 3 seleccionadas</span>
+              </p>
+            </div>
+          </div>
+          <div class="options-grid" data-multi-group="p22" data-max="3" id="group-p22"></div>
+          <input type="hidden" name="p22" id="input-p22" required>
+          <div class="otro-input-wrap hidden" id="otro-wrap-p22">
+            <label for="input-p22-otro">Indique qué capacitación le gustaría realizar (obligatorio): *</label>
+            <input type="text" class="form-input" id="input-p22-otro" name="p22_otro" maxlength="200" placeholder="Escriba la temática o curso que considera necesario...">
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 5 · PROCESOS, RECURSOS Y HERRAMIENTAS
+           ================================================================= -->
+      <section class="form-section hidden" data-block="5" id="section-block-5">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 5 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Equipamiento, insumos y procedimientos</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">handyman</span>
+            Bloque 5 · Procesos, recursos y herramientas
+          </h2>
+        </div>
+
+        <div class="scale-legend">
+          <strong>Escala de acuerdo (1 a 5):</strong>
+          5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo. Una respuesta por fila · obligatoria.
+        </div>
+
+        <!-- P23 Matriz -->
+        <div class="q-card" id="qcard-p23">
+          <div class="q-header">
+            <span class="q-num">23</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Recibo en tiempo y forma, y en buen estado, lo necesario para mis tareas: *</h3>
+              <p class="q-meta">Escala de acuerdo 1 a 5 · matriz, una respuesta por fila · obligatoria · Cada fila incluye "No me corresponde / no lo uso".</p>
+            </div>
+          </div>
+          <div id="container-p23-rows"></div>
+        </div>
+
+        <!-- P23.1 Condicional por cada fila de P23 con respuesta 1 o 2 -->
+        <div id="container-p23-1-conditionals"></div>
+
+        <!-- P24 Matriz de Proveedor -->
+        <div class="q-card" id="qcard-p24">
+          <div class="q-header">
+            <span class="q-num">24</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Quién le provee habitualmente cada uno de estos elementos? *</h3>
+              <p class="q-meta">Selección única por fila · obligatoria · Filas: las mismas de P23</p>
+            </div>
+          </div>
+          <div id="container-p24-rows"></div>
+        </div>
+
+        <!-- P25 -->
+        <div class="q-card" id="qcard-p25">
+          <div class="q-header">
+            <span class="q-num">25</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Los procedimientos de trabajo de mi sector están claros y se respetan. *</h3>
+              <p class="q-meta">Escala de acuerdo 1 a 5 · obligatoria</p>
+            </div>
+          </div>
+          <div class="likert-row" data-likert-group="p25" id="likert-p25"></div>
+          <input type="hidden" name="p25" id="input-p25" required>
+        </div>
+
+        <!-- P25.1 Condicional si P25 es 1 o 2 -->
+        <div class="q-card conditional-card hidden" id="qcard-p25_1">
+          <div class="q-header">
+            <span class="q-num cond">25.1</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Qué es lo que más pesa en que los procedimientos no estén claros o no se respeten? *</h3>
+              <p class="q-meta">
+                <span>Selección múltiple, máximo 2 · condicional obligatoria</span>
+                <span class="counter-pill" id="counter-p25_1">0 / 2 seleccionadas</span>
+              </p>
+            </div>
+          </div>
+          <div class="options-grid" data-multi-group="p25_1" data-max="2" id="group-p25_1"></div>
+          <input type="hidden" name="p25_1" id="input-p25_1">
+          <div class="otro-input-wrap hidden" id="otro-wrap-p25_1">
+            <label for="input-p25_1-otro">Indique el motivo de desacuerdo (obligatorio): *</label>
+            <input type="text" class="form-input" id="input-p25_1-otro" name="p25_1_otro" maxlength="200" placeholder="Describa el motivo...">
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 6 · VALORACIÓN GLOBAL Y RECOMENDACIÓN (eNPS)
+           ================================================================= -->
+      <section class="form-section hidden" data-block="6" id="section-block-6">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 6 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Satisfacción General y eNPS</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">recommend</span>
+            Bloque 6 · Valoración global y recomendación (eNPS)
+          </h2>
+        </div>
+
+        <!-- P26 -->
+        <div class="q-card" id="qcard-p26">
+          <div class="q-header">
+            <span class="q-num">26</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">En general, ¿qué tan satisfecho/a está con su lugar de trabajo hoy? *</h3>
+              <p class="q-meta">Escala de 5 puntos · obligatoria</p>
+            </div>
+          </div>
+          <div class="likert-row" data-likert-group="p26" id="likert-p26"></div>
+          <input type="hidden" name="p26" id="input-p26" required>
+        </div>
+
+        <!-- P27 -->
+        <div class="q-card" id="qcard-p27">
+          <div class="q-header">
+            <span class="q-num">27</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Recomendaría trabajar en su área a un conocido? *</h3>
+              <p class="q-meta">Escala numérica 1 a 10 · obligatoria</p>
+            </div>
+          </div>
+          <div class="enps-grid" id="enps-group-p27"></div>
+          <div class="enps-labels">
+            <span>1 = Nada probable (Detractor: 1 a 6)</span>
+            <span>Neutro (7 a 8)</span>
+            <span>10 = Totalmente probable (Promotor: 9 a 10)</span>
+          </div>
+          <input type="hidden" name="p27" id="input-p27" required>
+        </div>
+
+        <!-- P27.1 Condicional: si P26 <= 3 o P27 <= 6 -->
+        <div class="q-card conditional-card hidden" id="qcard-p27_1">
+          <div class="q-header">
+            <span class="q-num cond">27.1</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">¿Qué fue lo que más pesó en su valoración? *</h3>
+              <p class="q-meta">Selección única · obligatoria · condicional (si P26 es "Ni satisfecho ni insatisfecho", "Insatisfecho" o "Muy insatisfecho", o si P27 es 6 o menos)</p>
+            </div>
+          </div>
+          <div class="options-grid" data-single-group="p27_1" id="group-p27_1"></div>
+          <input type="hidden" name="p27_1" id="input-p27_1">
+          <div class="otro-input-wrap hidden" id="otro-wrap-p27_1">
+            <label for="input-p27_1-otro">Indique el motivo de su valoración (obligatorio): *</label>
+            <input type="text" class="form-input" id="input-p27_1-otro" name="p27_1_otro" maxlength="200" placeholder="Describa el motivo principal de su valoración...">
+          </div>
+        </div>
+
+        <!-- P28 Condicional en este mismo caso -->
+        <div class="q-card conditional-card hidden" id="qcard-p28">
+          <div class="q-header">
+            <span class="q-num cond">28</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Cuéntenos brevemente qué cambiaría *</h3>
+              <p class="q-meta">Texto libre · obligatorio en este caso</p>
+            </div>
+          </div>
+          <textarea class="form-textarea" id="input-p28" name="p28" rows="3" maxlength="500" placeholder="Escribí tu comentario aquí"></textarea>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           BLOQUE 7 · COMENTARIO FINAL
+           ================================================================= -->
+      <section class="form-section hidden" data-block="7" id="section-block-7">
+        <div class="sec-header">
+          <div class="sec-badge-row">
+            <span class="sec-kicker">Bloque 7 de 7</span>
+            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Espacio abierto opcional</span>
+          </div>
+          <h2 class="sec-title">
+            <span class="material-symbols-outlined" style="color:var(--brand);">rate_review</span>
+            Bloque 7 · Comentario final
+          </h2>
+        </div>
+
+        <!-- P29 -->
+        <div class="q-card" id="qcard-p29">
+          <div class="q-header">
+            <span class="q-num">29</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">Escriba de modo simple sus observaciones o sugerencias para mejorar su lugar de trabajo. Puede incluir lo que funciona bien y debería seguir igual, y lo que cambiaría (por ejemplo: condiciones del lugar, trato entre compañeros, recursos, organización, etc.).</h3>
+              <p class="q-meta">Texto libre · opcional</p>
+            </div>
+          </div>
+          <textarea class="form-textarea" id="input-p29" name="p29" rows="4" maxlength="1000" placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-full" id="btn-submit-final">
+          <span class="material-symbols-outlined">send</span>
+          Enviar Encuesta Anónima
+        </button>
+      </section>
+
+      <!-- CONTROLES DE NAVEGACIÓN PASO A PASO -->
+      <div class="wizard-nav" id="wizard-nav-controls">
+        <button type="button" class="btn-secondary hidden" id="btn-prev-block">
+          <span class="material-symbols-outlined">arrow_back</span>
+          Bloque anterior
+        </button>
+        <div style="flex:1"></div>
+        <button type="button" class="btn-primary" id="btn-next-block">
+          Siguiente bloque
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- ================= MODAL DE CONFIRMACIÓN DE ENVÍO ================= -->
+  <div class="modal-overlay" id="modal-success" role="dialog" aria-modal="true" aria-labelledby="modal-success-title">
+    <div class="modal-box" style="text-align:center;">
+      <div style="width:60px; height:60px; border-radius:50%; background:var(--c-ok-bg); color:var(--c-ok); display:flex; align-items:center; justify-content:center; margin:0 auto 14px;">
+        <span class="material-symbols-outlined" style="font-size:34px;">check_circle</span>
+      </div>
+      <h2 id="modal-success-title" style="font-size:20px; font-weight:900; margin:0 0 8px;">¡Muchas gracias por participar!</h2>
+      <p style="font-size:14px; color:var(--ink-soft); margin:0 0 12px;">
+        Tu respuesta fue registrada de forma <strong>100% anónima y confidencial</strong> dentro del Sistema de Gestión de Calidad y Procesos (FO-SGC-05-IDI.11).
+      </p>
+
+      <div class="receipt-box" id="receipt-details">
+        <div><strong>Comprobante Técnico de Anonimato (UUID):</strong> <span id="rec-uuid">-</span></div>
+        <div><strong>Sello Temporal Redondeado:</strong> <span id="rec-time">-</span></div>
+        <div><strong>Índice de Clima de la Respuesta (IGCL):</strong> <span id="rec-igcl">-</span></div>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button type="button" class="btn-primary" onclick="reiniciarFormulario()">
+          <span class="material-symbols-outlined">restart_alt</span>
+          Nueva respuesta
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL PROTOCOLO DE ANONIMATO ================= -->
+  <div class="modal-overlay" id="modal-anonimato" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <h3 style="margin:0; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined" style="color:var(--brand);">shield_lock</span>
+          Protocolo de Anonimato Técnico y Metodológico
+        </h3>
+        <button type="button" class="icon-btn" onclick="cerrarModalAnonimato()" aria-label="Cerrar">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin-top:0;">
+        En cumplimiento del diseño metodológico de la <strong>Dirección General de Estadísticas, Control de Calidad y Procesos</strong>, este instrumento aplica las siguientes salvaguardas técnicas:
+      </p>
+      <ul style="font-size:13px; color:var(--ink); padding-left:18px; line-height:1.55;">
+        <li><strong>Ausencia total de datos filiatorios:</strong> No se solicita Nombre, DNI, Legajo ni Correo Electrónico.</li>
+        <li><strong>No almacenamiento de IP ni huella de dispositivo:</strong> El servidor descarta cabeceras de red y direcciones IP.</li>
+        <li><strong>Sello temporal redondeado a la hora:</strong> La fecha de envío se trunca a la hora en punto (<code>HH:00:00</code>) para impedir la trazabilidad por minuto exacto de carga.</li>
+        <li><strong>Criterio estadístico de <em>k</em>-anonimato (<em>n</em> ≥ 5):</strong> Ningún filtro o cruce por área, modalidad o antigüedad se muestra en el monitor si cuenta con menos de 5 respuestas.</li>
+        <li><strong>Sanitización automática de texto libre:</strong> Cualquier número de documento o correo ingresado accidentalmente en los comentarios abiertos es enmascarado antes de guardarse.</li>
+      </ul>
+      <div style="text-align:right; margin-top:16px;">
+        <button type="button" class="btn-primary" onclick="cerrarModalAnonimato()">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL LABORATORIO METODOLÓGICO (SGCyP / FASE 6) ================= -->
+  <div class="modal-overlay" id="modal-lab" role="dialog" aria-modal="true">
+    <div class="modal-box" style="max-width:680px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <h3 style="margin:0; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined" style="color:var(--brand);">science</span>
+          Laboratorio Metodológico y Simulación Monte Carlo (SGCyP)
+        </h3>
+        <button type="button" class="icon-btn" onclick="cerrarModalLab()" aria-label="Cerrar">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <p style="font-size:13px; color:var(--ink-soft); margin-top:0;">
+        Herramienta de verificación estadística (Fases 2 y 6 de la Hoja de Ruta) para probar el almacenamiento local, el cálculo de <strong>Alfa de Cronbach (α)</strong>, <strong>IGCL</strong>, <strong>eNPS</strong> y la exportación de datos limpios.
+      </p>
+
+      <div class="receipt-box" id="lab-stats-summary" style="font-size:12.5px; line-height:1.6;">
+        Cargando estadísticas de la base local...
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+        <button type="button" class="btn-primary" style="padding:10px 16px; font-size:13px;" onclick="ejecutarSimulacionMonteCarlo()">
+          <span class="material-symbols-outlined" style="font-size:18px;">auto_graph</span>
+          Inyectar 100 casos Monte Carlo (Fase 6.1)
+        </button>
+        <button type="button" class="btn-secondary" style="padding:10px 16px; font-size:13px;" onclick="exportarBaseCSV()">
+          <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+          Descargar CSV limpio
+        </button>
+        <button type="button" class="btn-secondary" style="padding:10px 16px; font-size:13px; color:var(--c-alert);" onclick="purgarBaseLocal()">
+          <span class="material-symbols-outlined" style="font-size:18px;">delete_sweep</span>
+          Purgar base de prueba (Fase 6.2)
+        </button>
+      </div>
+
+      <div style="text-align:right;">
+        <button type="button" class="btn-secondary" onclick="cerrarModalLab()">Cerrar panel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST DE AVISO -->
+  <div class="toast-banner" id="toast-banner" role="status" aria-live="polite">
+    <span class="material-symbols-outlined" style="color:var(--c-warn);">warning</span>
+    <span id="toast-text">Por favor complete los campos obligatorios.</span>
+  </div>
+
+  <!-- ================= FOOTER INSTITUCIONAL ================= -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <strong>Dirección General de Estadísticas, Control de Calidad y Procesos</strong><br>
+        Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto · FO-SGC-05-IDI.11
+      </div>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <button type="button" class="link-btn" onclick="abrirModalLab()">
+          <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
+          Verificador Metodológico (SGCyP)
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= LÓGICA DE LA APLICACIÓN ================= -->
+  <script>
+    // Endpoint Serverless (Google Apps Script) configurable para Fase 3
+    const SCRIPT_URL = "";
+    const STORAGE_DRAFT_KEY = "borrador_clima_sp_2026_v1";
+    const STORAGE_DB_KEY = "respuestas_clima_sp_2026";
+    const STORAGE_QUEUE_KEY = "cola_envios_clima_sp_2026";
+
+    let currentBlock = 1;
+    let isFullViewMode = false;
+
+    const ESCALAS = {
+      conformidad_1_5: [
+        { val: "5", label: "Muy conforme", icon: "sentiment_very_satisfied" },
+        { val: "4", label: "Conforme", icon: "sentiment_satisfied" },
+        { val: "3", label: "Ni conforme ni disconforme", icon: "sentiment_neutral" },
+        { val: "2", label: "Poco conforme", icon: "sentiment_dissatisfied" },
+        { val: "1", label: "Nada conforme", icon: "sentiment_very_dissatisfied" }
+      ],
+      acuerdo_1_5: [
+        { val: "5", label: "Totalmente de acuerdo", icon: "sentiment_very_satisfied" },
+        { val: "4", label: "De acuerdo", icon: "sentiment_satisfied" },
+        { val: "3", label: "Ni de acuerdo ni en desacuerdo", icon: "sentiment_neutral" },
+        { val: "2", label: "En desacuerdo", icon: "sentiment_dissatisfied" },
+        { val: "1", label: "Totalmente en desacuerdo", icon: "sentiment_very_dissatisfied" }
+      ],
+      satisfaccion_1_5: [
+        { val: "5", label: "Muy satisfecho/a", icon: "sentiment_very_satisfied" },
+        { val: "4", label: "Satisfecho/a", icon: "sentiment_satisfied" },
+        { val: "3", label: "Ni satisfecho/a ni insatisfecho/a", icon: "sentiment_neutral" },
+        { val: "2", label: "Insatisfecho/a", icon: "sentiment_dissatisfied" },
+        { val: "1", label: "Muy insatisfecho/a", icon: "sentiment_very_dissatisfied" }
+      ]
+    };
+
+    const NOMBRES_BLOQUES = {
+      1: "Bloque 1 de 7 · Datos generales",
+      2: "Bloque 2 de 7 · Ambiente laboral",
+      3: "Bloque 3 de 7 · Motivación y compromiso",
+      4: "Bloque 4 de 7 · Capacitación y desarrollo",
+      5: "Bloque 5 de 7 · Procesos, recursos y herramientas",
+      6: "Bloque 6 de 7 · Valoración global y recomendación (eNPS)",
+      7: "Bloque 7 de 7 · Comentario final"
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      renderAllQuestions();
+      bindEvents();
+      restaurarBorradorLocal();
+      aplicarParametrosURL();
+      actualizarCondicionales();
+      actualizarProgresoGlobal();
+    });
+
+    /* ================= TEMA CLARO / OSCURO ================= */
+    function initTheme() {
+      const btn = document.getElementById("btn-theme");
+      const icon = document.getElementById("theme-icon");
+      const updateIcon = () => {
+        const current = document.documentElement.getAttribute("data-tema");
+        const isDark = current === "oscuro" || (!current && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        icon.textContent = isDark ? "light_mode" : "dark_mode";
+      };
+      updateIcon();
+      btn.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-tema");
+        const isDark = current === "oscuro" || (!current && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        const next = isDark ? "claro" : "oscuro";
+        document.documentElement.setAttribute("data-tema", next);
+        try { localStorage.setItem("clima_sp_tema", next); } catch (e) {}
+        updateIcon();
+      });
+    }
+
+    /* ================= RENDERIZADO DINÁMICO DESDE EL SCHEMA ================= */
+    function renderAllQuestions() {
+      const cat = window.CLIMA_SP_SCHEMA.catalogos;
+      const dims = window.CLIMA_SP_SCHEMA.dimensiones;
+
+      // Bloque 1
+      renderSingleChoice("group-p1", "p1", cat.areas);
+      renderSingleChoice("group-p2", "p2", cat.modalidades);
+      renderSingleChoice("group-p3", "p3", cat.antiguedad);
+      renderSingleChoice("group-p4", "p4", cat.tareas);
+      renderSingleChoice("group-p5", "p5", cat.conformidad_p5);
+      renderMultiChoice("group-p6", "p6", cat.motivos_disconformidad, 3);
+      renderSingleChoice("group-p7", "p7", [...cat.areas, "Otro"]);
+
+      // Bloque 2 (P8 a P14)
+      const contB2 = document.getElementById("container-bloque-2");
+      contB2.innerHTML = dims.ambiente_laboral.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "conformidad_1_5", false)).join("");
+
+      // Bloque 3 (P15 a P20)
+      const contB3 = document.getElementById("container-bloque-3");
+      contB3.innerHTML = dims.motivacion_compromiso.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "acuerdo_1_5", false)).join("");
+
+      // Bloque 4 (P21 y P22)
+      document.getElementById("likert-p21").innerHTML = crearBotonesLikertHTML("satisfaccion_1_5", false);
+      renderMultiChoice("group-p22", "p22", cat.capacitaciones_p22, 3);
+
+      // Bloque 5 (P23, P23.1, P24, P25, P25.1)
+      const contP23 = document.getElementById("container-p23-rows");
+      contP23.innerHTML = cat.items_p23_p24.map((item) => `
+        <div class="matrix-subrow" id="qcard-${item.codigo}">
+          <div class="matrix-subrow-title">
+            <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand);">check_box_outline_blank</span>
+            ${item.label} *
+          </div>
+          <div class="likert-row with-na" data-likert-group="${item.codigo}">
+            ${crearBotonesLikertHTML("acuerdo_1_5", true)}
+          </div>
+          <input type="hidden" name="${item.codigo}" id="input-${item.codigo}" required>
+        </div>
+      `).join("");
+
+      const contP23_1 = document.getElementById("container-p23-1-conditionals");
+      contP23_1.innerHTML = cat.items_p23_p24.map((item) => {
+        const subKey = `p23_1${item.id}`;
+        return `
+          <div class="q-card conditional-card hidden" id="qcard-${subKey}">
+            <div class="q-header">
+              <span class="q-num cond">23.1</span>
+              <div class="q-label-wrap">
+                <h3 class="q-title">¿Qué es lo que falla con <u>${item.corto}</u>? *</h3>
+                <p class="q-meta">
+                  <span>Selección múltiple, máximo 2 · condicional obligatoria</span>
+                  <span class="counter-pill" id="counter-${subKey}">0 / 2 seleccionadas</span>
+                </p>
+              </div>
+            </div>
+            <div class="options-grid" data-multi-group="${subKey}" data-max="2" id="group-${subKey}"></div>
+            <input type="hidden" name="${subKey}" id="input-${subKey}">
+            <div class="otro-input-wrap hidden" id="otro-wrap-${subKey}">
+              <label for="input-${subKey}-otro">Indique el motivo de desacuerdo con ${item.corto} (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-${subKey}-otro" name="${subKey}_otro" maxlength="200" placeholder="Describa el motivo de desacuerdo...">
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      cat.items_p23_p24.forEach((item) => {
+        renderMultiChoice(`group-p23_1${item.id}`, `p23_1${item.id}`, cat.fallas_p23_1, 2);
+      });
+
+      const contP24 = document.getElementById("container-p24-rows");
+      contP24.innerHTML = cat.items_p23_p24.map((item) => {
+        const code24 = `p24${item.id}`;
+        return `
+          <div class="matrix-subrow" id="qcard-${code24}">
+            <div class="matrix-subrow-title">
+              <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand);">inventory_2</span>
+              ${item.label} *
+            </div>
+            <div class="options-grid" data-single-group="${code24}" id="group-${code24}"></div>
+            <input type="hidden" name="${code24}" id="input-${code24}" required>
+          </div>
+        `;
+      }).join("");
+
+      cat.items_p23_p24.forEach((item) => {
+        renderSingleChoice(`group-p24${item.id}`, `p24${item.id}`, cat.proveedores_p24);
+      });
+
+      document.getElementById("likert-p25").innerHTML = crearBotonesLikertHTML("acuerdo_1_5", false);
+      renderMultiChoice("group-p25_1", "p25_1", cat.fallas_procedimientos_p25_1, 2);
+
+      // Bloque 6 (P26, P27, P27.1, P28)
+      document.getElementById("likert-p26").innerHTML = crearBotonesLikertHTML("satisfaccion_1_5", false);
+
+      const enpsCont = document.getElementById("enps-group-p27");
+      let enpsHTML = "";
+      for (let n = 1; n <= 10; n++) {
+        const catClass = n <= 6 ? "detractor" : (n <= 8 ? "pasivo" : "promotor");
+        enpsHTML += `<button type="button" class="enps-btn ${catClass}" data-enps="${n}">${n}</button>`;
+      }
+      enpsCont.innerHTML = enpsHTML;
+
+      renderSingleChoice("group-p27_1", "p27_1", cat.motivos_disconformidad);
+    }
+
+    function renderSingleChoice(containerId, fieldName, options) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      el.innerHTML = options.map((opt) => {
+        const label = opt === "Otro" ? "Otro (especificar)" : opt;
+        return `
+          <button type="button" class="opt-btn single" data-val="${escapeAttr(opt)}">
+            <span class="opt-indicator"></span>
+            <span>${escapeHTML(label)}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderMultiChoice(containerId, fieldName, options, maxSelect) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      el.innerHTML = options.map((opt) => {
+        const label = opt === "Otro" ? "Otro (especificar)" : opt;
+        return `
+          <button type="button" class="opt-btn multi" data-val="${escapeAttr(opt)}">
+            <span class="opt-indicator">
+              <span class="material-symbols-outlined" style="font-size:14px; opacity:0;">check</span>
+            </span>
+            <span>${escapeHTML(label)}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function crearTarjetaLikertHTML(codigo, numero, texto, tipoEscala, conNA) {
+      return `
+        <div class="q-card" id="qcard-${codigo}">
+          <div class="q-header">
+            <span class="q-num">${numero}</span>
+            <div class="q-label-wrap">
+              <h3 class="q-title">${escapeHTML(texto)} *</h3>
+              <p class="q-meta">Escala 1 a 5 · obligatoria</p>
+            </div>
+          </div>
+          <div class="likert-row ${conNA ? 'with-na' : ''}" data-likert-group="${codigo}">
+            ${crearBotonesLikertHTML(tipoEscala, conNA)}
+          </div>
+          <input type="hidden" name="${codigo}" id="input-${codigo}" required>
+        </div>
+      `;
+    }
+
+    function crearBotonesLikertHTML(tipoEscala, conNA) {
+      const items = ESCALAS[tipoEscala] || ESCALAS.acuerdo_1_5;
+      let html = items.map((it) => `
+        <button type="button" class="likert-btn" data-val="${it.val}">
+          <div class="likert-top">
+            <span class="likert-num">${it.val}</span>
+            <span class="material-symbols-outlined likert-icon">${it.icon}</span>
+          </div>
+          <span class="likert-text">${it.label}</span>
+        </button>
+      `).join("");
+
+      if (conNA) {
+        html += `
+          <button type="button" class="likert-btn na-btn" data-val="No me corresponde / no lo uso">
+            <div class="likert-top">
+              <span class="material-symbols-outlined likert-icon" style="color:var(--ink-soft);">block</span>
+            </div>
+            <span class="likert-text">No me corresponde / no lo uso</span>
+          </button>
+        `;
+      }
+      return html;
+    }
+
+    /* ================= EVENTOS E INTERACCIÓN ================= */
+    function bindEvents() {
+      // Single choice groups
+      document.querySelectorAll("[data-single-group]").forEach((group) => {
+        const name = group.getAttribute("data-single-group");
+        const input = document.getElementById(`input-${name}`);
+        group.querySelectorAll(".opt-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            group.querySelectorAll(".opt-btn").forEach((b) => {
+              b.classList.remove("active");
+              b.querySelector(".opt-indicator").innerHTML = "";
+            });
+            btn.classList.add("active");
+            btn.querySelector(".opt-indicator").innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:#fff;display:block;"></span>`;
+            input.value = btn.getAttribute("data-val");
+            limpiarErrorTarjeta(`qcard-${name}`);
+            actualizarCondicionales();
+            guardarBorradorLocal();
+            actualizarProgresoGlobal();
+          });
+        });
+      });
+
+      // Multi choice groups (con tope máximo 2 o 3)
+      document.querySelectorAll("[data-multi-group]").forEach((group) => {
+        const name = group.getAttribute("data-multi-group");
+        const max = Number(group.getAttribute("data-max")) || 3;
+        const input = document.getElementById(`input-${name}`);
+        const counter = document.getElementById(`counter-${name}`);
+
+        group.querySelectorAll(".opt-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const isAlreadyActive = btn.classList.contains("active");
+            const activeBtns = group.querySelectorAll(".opt-btn.active");
+
+            if (!isAlreadyActive && activeBtns.length >= max) {
+              mostrarToast(`Podés elegir como máximo ${max} opciones en esta pregunta.`);
+              return;
+            }
+
+            btn.classList.toggle("active");
+            const checkIcon = btn.querySelector(".material-symbols-outlined");
+            if (checkIcon) {
+              checkIcon.style.opacity = btn.classList.contains("active") ? "1" : "0";
+            }
+
+            const selectedValues = Array.from(group.querySelectorAll(".opt-btn.active")).map((b) => b.getAttribute("data-val"));
+            input.value = JSON.stringify(selectedValues);
+
+            if (counter) {
+              counter.textContent = `${selectedValues.length} / ${max} seleccionadas`;
+              counter.classList.toggle("limit-reached", selectedValues.length >= max);
+            }
+
+            group.querySelectorAll(".opt-btn").forEach((b) => {
+              b.classList.toggle("disabled-max", selectedValues.length >= max && !b.classList.contains("active"));
+            });
+
+            limpiarErrorTarjeta(`qcard-${name}`);
+            actualizarCondicionales();
+            guardarBorradorLocal();
+            actualizarProgresoGlobal();
+          });
+        });
+      });
+
+      // Escalas Likert 1 a 5
+      document.querySelectorAll("[data-likert-group]").forEach((group) => {
+        const name = group.getAttribute("data-likert-group");
+        const input = document.getElementById(`input-${name}`);
+        group.querySelectorAll(".likert-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            group.querySelectorAll(".likert-btn").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            input.value = btn.getAttribute("data-val");
+            limpiarErrorTarjeta(`qcard-${name}`);
+            actualizarCondicionales();
+            guardarBorradorLocal();
+            actualizarProgresoGlobal();
+          });
+        });
+      });
+
+      // eNPS 1 a 10 (P27)
+      const enpsGroup = document.getElementById("enps-group-p27");
+      const inputP27 = document.getElementById("input-p27");
+      enpsGroup.querySelectorAll(".enps-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          enpsGroup.querySelectorAll(".enps-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          inputP27.value = btn.getAttribute("data-enps");
+          limpiarErrorTarjeta("qcard-p27");
+          actualizarCondicionales();
+          guardarBorradorLocal();
+          actualizarProgresoGlobal();
+        });
+      });
+
+      // Inputs de texto y contador de caracteres P7
+      const p7Porque = document.getElementById("input-p7-porque");
+      const charCountP7 = document.getElementById("char-count-p7");
+      p7Porque.addEventListener("input", () => {
+        charCountP7.textContent = `${p7Porque.value.length} / 250 caracteres`;
+        guardarBorradorLocal();
+        actualizarProgresoGlobal();
+      });
+
+      document.querySelectorAll(".form-input, .form-textarea").forEach((inp) => {
+        inp.addEventListener("input", () => {
+          guardarBorradorLocal();
+          actualizarProgresoGlobal();
+        });
+      });
+
+      // Navegación por bloques (Wizard y píldoras)
+      document.getElementById("btn-prev-block").addEventListener("click", () => {
+        if (currentBlock > 1) irABloque(currentBlock - 1);
+      });
+
+      document.getElementById("btn-next-block").addEventListener("click", () => {
+        if (!validarBloque(currentBlock)) return;
+        if (currentBlock < 7) irABloque(currentBlock + 1);
+      });
+
+      document.querySelectorAll("#block-pills-nav .block-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          const target = Number(pill.getAttribute("data-step"));
+          if (isFullViewMode) {
+            document.getElementById(`section-block-${target}`).scrollIntoView({ behavior: "smooth" });
+          } else {
+            if (target > currentBlock && !validarBloque(currentBlock)) return;
+            irABloque(target);
+          }
+        });
+      });
+
+      // Alternar modo Paso a Paso vs Vista Completa
+      document.getElementById("btn-toggle-view-mode").addEventListener("click", () => {
+        isFullViewMode = !isFullViewMode;
+        const icon = document.getElementById("view-mode-icon");
+        const txt = document.getElementById("view-mode-text");
+        const wizardControls = document.getElementById("wizard-nav-controls");
+
+        if (isFullViewMode) {
+          icon.textContent = "view_carousel";
+          txt.textContent = "Modo paso a paso";
+          wizardControls.classList.add("hidden");
+          for (let b = 1; b <= 7; b++) {
+            document.getElementById(`section-block-${b}`).classList.remove("hidden");
+          }
+        } else {
+          icon.textContent = "view_agenda";
+          txt.textContent = "Ver formulario completo";
+          wizardControls.classList.remove("hidden");
+          irABloque(currentBlock);
+        }
+      });
+
+      // Envío del formulario
+      document.getElementById("clima-survey-form").addEventListener("submit", onSubmitForm);
+
+      // Monitoreo de conexión online/offline
+      window.addEventListener("online", () => {
+        actualizarEstadoRed();
+        sincronizarColaPendiente();
+      });
+      window.addEventListener("offline", actualizarEstadoRed);
+    }
+
+    /* ================= LÓGICA DE CONDICIONALES EXACTA DEL PDF ================= */
+    function actualizarCondicionales() {
+      // 1) P5 -> P6 y P7
+      const valP5 = document.getElementById("input-p5").value;
+      const showP6 = valP5 && valP5 !== "Sí, conforme con ambas";
+      const showP7 = valP5 === "No con el área" || valP5 === "No con ninguna de las dos";
+
+      document.getElementById("qcard-p6").classList.toggle("hidden", !showP6);
+      document.getElementById("qcard-p7").classList.toggle("hidden", !showP7);
+
+      // Campo "Otro" en P6
+      const arrP6 = parseMultiValue("input-p6");
+      document.getElementById("otro-wrap-p6").classList.toggle("hidden", !arrP6.includes("Otro"));
+
+      // Campo "Otro" en P7
+      const valP7 = document.getElementById("input-p7").value;
+      document.getElementById("otro-wrap-p7").classList.toggle("hidden", valP7 !== "Otro");
+
+      // 2) P22 -> Campo "Otro"
+      const arrP22 = parseMultiValue("input-p22");
+      document.getElementById("otro-wrap-p22").classList.toggle("hidden", !arrP22.includes("Otro"));
+
+      // 3) P23 (a, b, c) -> P23.1 (a, b, c) aparece por cada fila contestada con 1 o 2
+      ["a", "b", "c"].forEach((id) => {
+        const val23 = document.getElementById(`input-p23${id}`).value;
+        const show23_1 = val23 === "1" || val23 === "2";
+        const card23_1 = document.getElementById(`qcard-p23_1${id}`);
+        if (card23_1) card23_1.classList.toggle("hidden", !show23_1);
+
+        const arr23_1 = parseMultiValue(`input-p23_1${id}`);
+        const otroWrap = document.getElementById(`otro-wrap-p23_1${id}`);
+        if (otroWrap) otroWrap.classList.toggle("hidden", !arr23_1.includes("Otro"));
+      });
+
+      // 4) P25 -> P25.1 aparece si P25 es 1 o 2
+      const valP25 = document.getElementById("input-p25").value;
+      const showP25_1 = valP25 === "1" || valP25 === "2";
+      document.getElementById("qcard-p25_1").classList.toggle("hidden", !showP25_1);
+      const arrP25_1 = parseMultiValue("input-p25_1");
+      document.getElementById("otro-wrap-p25_1").classList.toggle("hidden", !arrP25_1.includes("Otro"));
+
+      // 5) P26 y P27 -> P27.1 y P28 aparecen si P26 <= 3 ("Ni satisfecho ni insatisfecho", "Insatisfecho", "Muy insatisfecho") o si P27 <= 6
+      const valP26 = Number(document.getElementById("input-p26").value);
+      const valP27 = Number(document.getElementById("input-p27").value);
+      const condP26 = valP26 >= 1 && valP26 <= 3;
+      const condP27 = valP27 >= 1 && valP27 <= 6;
+      const showP27_1_P28 = condP26 || condP27;
+
+      document.getElementById("qcard-p27_1").classList.toggle("hidden", !showP27_1_P28);
+      document.getElementById("qcard-p28").classList.toggle("hidden", !showP27_1_P28);
+
+      const valP27_1 = document.getElementById("input-p27_1").value;
+      document.getElementById("otro-wrap-p27_1").classList.toggle("hidden", valP27_1 !== "Otro");
+    }
+
+    function parseMultiValue(inputId) {
+      const el = document.getElementById(inputId);
+      if (!el || !el.value) return [];
+      try {
+        const parsed = JSON.parse(el.value);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    /* ================= VALIDACIÓN EXHAUSTIVA POR BLOQUE ================= */
+    function obtenerRequisitosBloque(numBloque) {
+      const reqs = [];
+
+      if (numBloque === 1) {
+        ["p1", "p2", "p3", "p4", "p5"].forEach((code) => {
+          reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: `Complete la pregunta ${code.toUpperCase()}.` });
+        });
+        const valP5 = document.getElementById("input-p5").value;
+        if (valP5 && valP5 !== "Sí, conforme con ambas") {
+          const arrP6 = parseMultiValue("input-p6");
+          const otroOk = !arrP6.includes("Otro") || Boolean(document.getElementById("input-p6-otro").value.trim());
+          reqs.push({ id: "qcard-p6", ok: arrP6.length >= 1 && arrP6.length <= 3 && otroOk, msg: "En la pregunta 6, seleccione hasta 3 motivos (y especifique si eligió 'Otro')." });
+        }
+        if (valP5 === "No con el área" || valP5 === "No con ninguna de las dos") {
+          const valP7 = document.getElementById("input-p7").value;
+          const otro7Ok = valP7 !== "Otro" || Boolean(document.getElementById("input-p7-otro").value.trim());
+          const porque7Ok = Boolean(document.getElementById("input-p7-porque").value.trim());
+          reqs.push({ id: "qcard-p7", ok: Boolean(valP7) && otro7Ok && porque7Ok, msg: "En la pregunta 7, indique qué área prefiere y por qué." });
+        }
+      }
+
+      if (numBloque === 2) {
+        ["p8", "p9", "p10", "p11", "p12", "p13", "p14"].forEach((code) => {
+          reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: "Responda todas las filas del Bloque 2 (Ambiente laboral)." });
+        });
+      }
+
+      if (numBloque === 3) {
+        ["p15", "p16", "p17", "p18", "p19", "p20"].forEach((code) => {
+          reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: "Responda todas las filas del Bloque 3 (Motivación y compromiso)." });
+        });
+      }
+
+      if (numBloque === 4) {
+        reqs.push({ id: "qcard-p21", ok: Boolean(document.getElementById("input-p21").value), msg: "Responda la pregunta 21 sobre satisfacción con la capacitación." });
+        const arrP22 = parseMultiValue("input-p22");
+        const otro22Ok = !arrP22.includes("Otro") || Boolean(document.getElementById("input-p22-otro").value.trim());
+        reqs.push({ id: "qcard-p22", ok: arrP22.length >= 1 && arrP22.length <= 3 && otro22Ok, msg: "En la pregunta 22, seleccione entre 1 y 3 capacitaciones necesarias." });
+      }
+
+      if (numBloque === 5) {
+        ["a", "b", "c"].forEach((id) => {
+          const v23 = document.getElementById(`input-p23${id}`).value;
+          reqs.push({ id: `qcard-p23${id}`, ok: Boolean(v23), msg: `Responda el ítem 23.${id}.` });
+          if (v23 === "1" || v23 === "2") {
+            const arr23_1 = parseMultiValue(`input-p23_1${id}`);
+            const otroOk = !arr23_1.includes("Otro") || Boolean(document.getElementById(`input-p23_1${id}-otro`).value.trim());
+            reqs.push({ id: `qcard-p23_1${id}`, ok: arr23_1.length >= 1 && arr23_1.length <= 2 && otroOk, msg: `Indique qué falla en el ítem 23.1 (${id}).` });
+          }
+          const v24 = document.getElementById(`input-p24${id}`).value;
+          reqs.push({ id: `qcard-p24${id}`, ok: Boolean(v24), msg: `Responda quién le provee el elemento en 24.${id}.` });
+        });
+
+        const v25 = document.getElementById("input-p25").value;
+        reqs.push({ id: "qcard-p25", ok: Boolean(v25), msg: "Responda la pregunta 25 sobre claridad de los procedimientos." });
+        if (v25 === "1" || v25 === "2") {
+          const arr25_1 = parseMultiValue("input-p25_1");
+          const otro25Ok = !arr25_1.includes("Otro") || Boolean(document.getElementById("input-p25_1-otro").value.trim());
+          reqs.push({ id: "qcard-p25_1", ok: arr25_1.length >= 1 && arr25_1.length <= 2 && otro25Ok, msg: "En la pregunta 25.1, indique qué pesa en que los procedimientos no estén claros." });
+        }
+      }
+
+      if (numBloque === 6) {
+        const v26 = document.getElementById("input-p26").value;
+        const v27 = document.getElementById("input-p27").value;
+        reqs.push({ id: "qcard-p26", ok: Boolean(v26), msg: "Responda la pregunta 26 (Satisfacción general)." });
+        reqs.push({ id: "qcard-p27", ok: Boolean(v27), msg: "Responda la pregunta 27 (Escala de recomendación 1 a 10)." });
+
+        if ((Number(v26) >= 1 && Number(v26) <= 3) || (Number(v27) >= 1 && Number(v27) <= 6)) {
+          const v27_1 = document.getElementById("input-p27_1").value;
+          const otro27Ok = v27_1 !== "Otro" || Boolean(document.getElementById("input-p27_1-otro").value.trim());
+          reqs.push({ id: "qcard-p27_1", ok: Boolean(v27_1) && otro27Ok, msg: "Responda la pregunta 27.1 sobre qué pesó más en su valoración." });
+          reqs.push({ id: "qcard-p28", ok: Boolean(document.getElementById("input-p28").value.trim()), msg: "Complete la pregunta 28 comentando brevemente qué cambiaría." });
+        }
+      }
+
+      return reqs;
+    }
+
+    function validarBloque(numBloque) {
+      const reqs = obtenerRequisitosBloque(numBloque);
+      let primerFallo = null;
+      reqs.forEach((r) => {
+        const card = document.getElementById(r.id);
+        if (!r.ok) {
+          if (card) card.classList.add("has-error");
+          if (!primerFallo) primerFallo = r;
+        } else if (card) {
+          card.classList.remove("has-error");
+        }
+      });
+
+      if (primerFallo) {
+        mostrarToast(primerFallo.msg);
+        const targetEl = document.getElementById(primerFallo.id);
+        if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        return false;
+      }
+      return true;
+    }
+
+    function limpiarErrorTarjeta(cardId) {
+      const el = document.getElementById(cardId);
+      if (el) el.classList.remove("has-error");
+    }
+
+    function irABloque(step) {
+      currentBlock = step;
+      for (let b = 1; b <= 7; b++) {
+        const sec = document.getElementById(`section-block-${b}`);
+        if (sec) sec.classList.toggle("hidden", !isFullViewMode && b !== currentBlock);
+      }
+
+      document.getElementById("btn-prev-block").classList.toggle("hidden", currentBlock === 1);
+      document.getElementById("btn-next-block").classList.toggle("hidden", currentBlock === 7);
+      document.getElementById("progress-label").textContent = NOMBRES_BLOQUES[currentBlock];
+
+      document.querySelectorAll("#block-pills-nav .block-pill").forEach((pill) => {
+        const s = Number(pill.getAttribute("data-step"));
+        pill.classList.toggle("current", s === currentBlock);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function actualizarProgresoGlobal() {
+      let totalRequeridas = 0;
+      let totalCompletadas = 0;
+
+      for (let b = 1; b <= 6; b++) {
+        const reqs = obtenerRequisitosBloque(b);
+        totalRequeridas += reqs.length;
+        const okCount = reqs.filter((r) => r.ok).length;
+        totalCompletadas += okCount;
+
+        const pill = document.querySelector(`#block-pills-nav .block-pill[data-step="${b}"]`);
+        if (pill) {
+          pill.classList.toggle("completed", reqs.length > 0 && okCount === reqs.length);
+        }
+      }
+
+      const pct = totalRequeridas > 0 ? Math.round((totalCompletadas / totalRequeridas) * 100) : 0;
+      document.getElementById("progress-pct").textContent = `${pct}%`;
+      document.getElementById("progress-fill").style.width = `${pct}%`;
+    }
+
+    /* ================= AUTOGUARDADO EN LOCALSTORAGE (FASE 4.2.b) ================= */
+    function recolectarEstadoActual() {
+      const form = document.getElementById("clima-survey-form");
+      const fd = new FormData(form);
+      const raw = {};
+      for (const [k, v] of fd.entries()) {
+        raw[k] = v;
+      }
+      ["p6", "p22", "p23_1a", "p23_1b", "p23_1c", "p25_1"].forEach((mKey) => {
+        raw[mKey] = parseMultiValue(`input-${mKey}`);
+      });
+      return raw;
+    }
+
+    function guardarBorradorLocal() {
+      try {
+        const estado = recolectarEstadoActual();
+        localStorage.setItem(STORAGE_DRAFT_KEY, JSON.stringify({
+          updatedAt: new Date().toISOString(),
+          currentBlock,
+          data: estado
+        }));
+      } catch (e) {}
+    }
+
+    function restaurarBorradorLocal() {
+      try {
+        const raw = localStorage.getItem(STORAGE_DRAFT_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.data) return;
+        const d = parsed.data;
+
+        // Restaurar selección única
+        ["p1", "p2", "p3", "p4", "p5", "p7", "p24a", "p24b", "p24c", "p27_1"].forEach((k) => {
+          if (d[k]) activarBotonSingle(k, d[k]);
+        });
+
+        // Restaurar selección múltiple
+        ["p6", "p22", "p23_1a", "p23_1b", "p23_1c", "p25_1"].forEach((k) => {
+          if (Array.isArray(d[k]) && d[k].length > 0) activarBotonesMulti(k, d[k]);
+        });
+
+        // Restaurar escalas Likert
+        ["p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23a", "p23b", "p23c", "p25", "p26"].forEach((k) => {
+          if (d[k]) activarBotonLikert(k, d[k]);
+        });
+
+        // Restaurar eNPS P27
+        if (d.p27) {
+          const btn = document.querySelector(`#enps-group-p27 .enps-btn[data-enps="${d.p27}"]`);
+          if (btn) {
+            btn.classList.add("active");
+            document.getElementById("input-p27").value = d.p27;
+          }
+        }
+
+        // Restaurar campos de texto
+        ["p6_otro", "p7_otro", "p7_porque", "p22_otro", "p23_1a_otro", "p23_1b_otro", "p23_1c_otro", "p25_1_otro", "p27_1_otro", "p28", "p29"].forEach((k) => {
+          const el = document.querySelector(`[name="${k}"]`);
+          if (el && d[k]) el.value = d[k];
+        });
+      } catch (e) {}
+    }
+
+    function activarBotonSingle(groupName, val) {
+      const group = document.querySelector(`[data-single-group="${groupName}"]`);
+      const input = document.getElementById(`input-${groupName}`);
+      if (!group || !input) return;
+      group.querySelectorAll(".opt-btn").forEach((btn) => {
+        if (btn.getAttribute("data-val") === val) {
+          btn.classList.add("active");
+          btn.querySelector(".opt-indicator").innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:#fff;display:block;"></span>`;
+          input.value = val;
+        }
+      });
+    }
+
+    function activarBotonesMulti(groupName, valuesArray) {
+      const group = document.querySelector(`[data-multi-group="${groupName}"]`);
+      const input = document.getElementById(`input-${groupName}`);
+      const counter = document.getElementById(`counter-${groupName}`);
+      if (!group || !input) return;
+      const max = Number(group.getAttribute("data-max")) || 3;
+
+      group.querySelectorAll(".opt-btn").forEach((btn) => {
+        const v = btn.getAttribute("data-val");
+        if (valuesArray.includes(v)) {
+          btn.classList.add("active");
+          const checkIcon = btn.querySelector(".material-symbols-outlined");
+          if (checkIcon) checkIcon.style.opacity = "1";
+        }
+      });
+      input.value = JSON.stringify(valuesArray);
+      if (counter) counter.textContent = `${valuesArray.length} / ${max} seleccionadas`;
+    }
+
+    function activarBotonLikert(groupName, val) {
+      const group = document.querySelector(`[data-likert-group="${groupName}"]`);
+      const input = document.getElementById(`input-${groupName}`);
+      if (!group || !input) return;
+      group.querySelectorAll(".likert-btn").forEach((btn) => {
+        if (btn.getAttribute("data-val") === String(val)) {
+          btn.classList.add("active");
+          input.value = String(val);
+        }
+      });
+    }
+
+    function aplicarParametrosURL() {
+      const params = new URLSearchParams(window.location.search);
+      const areaParam = params.get("area");
+      if (areaParam) {
+        const match = window.CLIMA_SP_SCHEMA.catalogos.areas.find(
+          (a) => a.toLowerCase().includes(areaParam.toLowerCase())
+        );
+        if (match) {
+          activarBotonSingle("p1", match);
+        }
+      }
+      if (params.get("modo") === "admin" || params.get("lab") === "1") {
+        abrirModalLab();
+      }
+    }
+
+    /* ================= ENVÍO CON RESILIENCIA OFFLINE Y ANONIMATO (FASE 3 y 4) ================= */
+    async function onSubmitForm(e) {
+      e.preventDefault();
+
+      for (let b = 1; b <= 6; b++) {
+        if (!validarBloque(b)) {
+          if (!isFullViewMode) irABloque(b);
+          return;
+        }
+      }
+
+      const raw = recolectarEstadoActual();
+      const stats = window.CLIMA_SP_STATS;
+
+      // Construcción del registro anónimo estandarizado (Fase 3.2 y 3.3)
+      const payload = {
+        response_id: stats.generarUUID(),
+        timestamp_redondeado: stats.obtenerSelloTemporalRedondeado(),
+        codigo_instrumento: "FO-SGC-05-IDI.11",
+        es_simulacion_montecarlo: false,
+        p1: raw.p1,
+        p2: raw.p2,
+        p3: raw.p3,
+        p4: raw.p4,
+        p5: raw.p5,
+        p6: raw.p5 !== "Sí, conforme con ambas" ? raw.p6 : [],
+        p6_otro: raw.p6 && raw.p6.includes("Otro") ? stats.sanitizarTextoLibre(raw.p6_otro) : "",
+        p7: (raw.p5 === "No con el área" || raw.p5 === "No con ninguna de las dos") ? raw.p7 : "",
+        p7_otro: raw.p7 === "Otro" ? stats.sanitizarTextoLibre(raw.p7_otro) : "",
+        p7_porque: (raw.p5 === "No con el área" || raw.p5 === "No con ninguna de las dos") ? stats.sanitizarTextoLibre(raw.p7_porque) : "",
+        p8: Number(raw.p8),
+        p9: Number(raw.p9),
+        p10: Number(raw.p10),
+        p11: Number(raw.p11),
+        p12: Number(raw.p12),
+        p13: Number(raw.p13),
+        p14: Number(raw.p14),
+        p15: Number(raw.p15),
+        p16: Number(raw.p16),
+        p17: Number(raw.p17),
+        p18: Number(raw.p18),
+        p19: Number(raw.p19),
+        p20: Number(raw.p20),
+        p21: Number(raw.p21),
+        p22: raw.p22,
+        p22_otro: raw.p22 && raw.p22.includes("Otro") ? stats.sanitizarTextoLibre(raw.p22_otro) : "",
+        p23a: raw.p23a,
+        p23b: raw.p23b,
+        p23c: raw.p23c,
+        p23_1a: (raw.p23a === "1" || raw.p23a === "2") ? raw.p23_1a : [],
+        p23_1a_otro: stats.sanitizarTextoLibre(raw.p23_1a_otro),
+        p23_1b: (raw.p23b === "1" || raw.p23b === "2") ? raw.p23_1b : [],
+        p23_1b_otro: stats.sanitizarTextoLibre(raw.p23_1b_otro),
+        p23_1c: (raw.p23c === "1" || raw.p23c === "2") ? raw.p23_1c : [],
+        p23_1c_otro: stats.sanitizarTextoLibre(raw.p23_1c_otro),
+        p24a: raw.p24a,
+        p24b: raw.p24b,
+        p24c: raw.p24c,
+        p25: Number(raw.p25),
+        p25_1: (raw.p25 === "1" || raw.p25 === "2") ? raw.p25_1 : [],
+        p25_1_otro: stats.sanitizarTextoLibre(raw.p25_1_otro),
+        p26: Number(raw.p26),
+        p27: Number(raw.p27),
+        p27_1: (Number(raw.p26) <= 3 || Number(raw.p27) <= 6) ? raw.p27_1 : "",
+        p27_1_otro: stats.sanitizarTextoLibre(raw.p27_1_otro),
+        p28: (Number(raw.p26) <= 3 || Number(raw.p27) <= 6) ? stats.sanitizarTextoLibre(raw.p28) : "",
+        p29: stats.sanitizarTextoLibre(raw.p29)
+      };
+
+      const kpis = stats.calcularIndicesRespuesta(payload);
+      payload.igcl = kpis.igcl;
+      payload.ifn = kpis.ifn;
+      payload.enps_categoria = kpis.enps_categoria;
+      payload.indices_dimensiones = kpis.dimensiones;
+
+      const btnSubmit = document.getElementById("btn-submit-final");
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = `<span class="material-symbols-outlined">sync</span> Registrando respuesta anónima...`;
+
+      try {
+        // Guardar en repositorio local para interoperabilidad con el Monitor
+        const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
+        db.push(payload);
+        localStorage.setItem(STORAGE_DB_KEY, JSON.stringify(db));
+
+        if (SCRIPT_URL && navigator.onLine) {
+          await fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+        } else if (SCRIPT_URL && !navigator.onLine) {
+          encolarParaReintento(payload);
+        }
+
+        localStorage.removeItem(STORAGE_DRAFT_KEY);
+      } catch (err) {
+        encolarParaReintento(payload);
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = `<span class="material-symbols-outlined">send</span> Enviar Encuesta Anónima`;
+      }
+
+      document.getElementById("rec-uuid").textContent = payload.response_id;
+      document.getElementById("rec-time").textContent = payload.timestamp_redondeado;
+      document.getElementById("rec-igcl").textContent = `${payload.igcl}% (${payload.enps_categoria} en eNPS)`;
+      document.getElementById("modal-success").classList.add("open");
+    }
+
+    function encolarParaReintento(payload) {
+      try {
+        const q = JSON.parse(localStorage.getItem(STORAGE_QUEUE_KEY) || "[]");
+        q.push(payload);
+        localStorage.setItem(STORAGE_QUEUE_KEY, JSON.stringify(q));
+      } catch (e) {}
+    }
+
+    async function sincronizarColaPendiente() {
+      if (!SCRIPT_URL || !navigator.onLine) return;
+      try {
+        const q = JSON.parse(localStorage.getItem(STORAGE_QUEUE_KEY) || "[]");
+        if (q.length === 0) return;
+        const restantes = [];
+        for (const item of q) {
+          try {
+            await fetch(SCRIPT_URL, {
+              method: "POST",
+              mode: "no-cors",
+              body: JSON.stringify(item)
+            });
+          } catch (e) {
+            restantes.push(item);
+          }
+        }
+        localStorage.setItem(STORAGE_QUEUE_KEY, JSON.stringify(restantes));
+      } catch (e) {}
+    }
+
+    function reiniciarFormulario() {
+      document.getElementById("modal-success").classList.remove("open");
+      document.getElementById("clima-survey-form").reset();
+      document.querySelectorAll(".opt-btn.active, .likert-btn.active, .enps-btn.active").forEach((b) => {
+        b.classList.remove("active", "disabled-max");
+        const ind = b.querySelector(".opt-indicator");
+        if (ind && b.classList.contains("single")) ind.innerHTML = "";
+        const chk = b.querySelector(".material-symbols-outlined");
+        if (chk && b.classList.contains("multi")) chk.style.opacity = "0";
+      });
+      document.querySelectorAll('input[type="hidden"]').forEach((i) => { i.value = ""; });
+      document.querySelectorAll(".counter-pill").forEach((c) => {
+        c.textContent = c.id.includes("25_1") || c.id.includes("23_1") ? "0 / 2 seleccionadas" : "0 / 3 seleccionadas";
+        c.classList.remove("limit-reached");
+      });
+      localStorage.removeItem(STORAGE_DRAFT_KEY);
+      actualizarCondicionales();
+      actualizarProgresoGlobal();
+      irABloque(1);
+    }
+
+    /* ================= LABORATORIO METODOLÓGICO Y SIMULACIÓN MONTE CARLO ================= */
+    function abrirModalAnonimato() {
+      document.getElementById("modal-anonimato").classList.add("open");
+    }
+    function cerrarModalAnonimato() {
+      document.getElementById("modal-anonimato").classList.remove("open");
+    }
+    function abrirModalLab() {
+      actualizarVistaLaboratorio();
+      document.getElementById("modal-lab").classList.add("open");
+    }
+    function cerrarModalLab() {
+      document.getElementById("modal-lab").classList.remove("open");
+    }
+
+    function actualizarVistaLaboratorio() {
+      const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
+      const box = document.getElementById("lab-stats-summary");
+      if (db.length === 0) {
+        box.innerHTML = `<strong>Respuestas almacenadas localmente:</strong> 0 registros.<br>Podés inyectar el lote sintético de 100 casos (Fase 6.1) para verificar todas las fórmulas matemáticas.`;
+        return;
+      }
+
+      const stats = window.CLIMA_SP_STATS;
+      const cronbach = stats.calcularAlfaCronbach(db);
+      const igcls = db.map((r) => Number(r.igcl)).filter((n) => Number.isFinite(n));
+      const igclProm = igcls.length > 0 ? (igcls.reduce((a, b) => a + b, 0) / igcls.length).toFixed(1) : "-";
+
+      const promotores = db.filter((r) => Number(r.p27) >= 9).length;
+      const detractores = db.filter((r) => Number(r.p27) <= 6).length;
+      const enpsGlobal = (((promotores - detractores) / db.length) * 100).toFixed(1);
+      const margenError = stats.calcularMargenErrorFinito(db.length, 350);
+
+      box.innerHTML = `
+        <div><strong>Total de casos en base local (<em>n</em>):</strong> ${db.length} respuestas (Universo ref. <em>N</em>=350 → Margen de error <em>e</em> = ±${margenError}%)</div>
+        <div><strong>Índice Global de Clima Laboral (IGCL Promedio):</strong> ${igclProm}%</div>
+        <div><strong>eNPS Municipal (%Promotores − %Detractores):</strong> ${enpsGlobal} pts</div>
+        <div><strong>Fiabilidad Psicométrica (Alfa de Cronbach α):</strong> ${cronbach.alfa !== null ? cronbach.alfa : "N/A"} (${cronbach.interpretacion}, <em>K</em>=${cronbach.k_items} ítems Likert)</div>
+      `;
+    }
+
+    function ejecutarSimulacionMonteCarlo() {
+      const lote = window.CLIMA_SP_STATS.generarLoteSinteticoMonteCarlo(100);
+      const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
+      const unidos = db.concat(lote);
+      localStorage.setItem(STORAGE_DB_KEY, JSON.stringify(unidos));
+      actualizarVistaLaboratorio();
+      mostrarToast("Se inyectaron 100 casos simulados (Monte Carlo) con éxito.");
+    }
+
+    function purgarBaseLocal() {
+      localStorage.removeItem(STORAGE_DB_KEY);
+      actualizarVistaLaboratorio();
+      mostrarToast("Base local purgada correctamente (Fase 6.2).");
+    }
+
+    function exportarBaseCSV() {
+      const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
+      if (db.length === 0) {
+        mostrarToast("No hay respuestas cargadas para exportar.");
+        return;
+      }
+      const cols = [
+        "response_id", "timestamp_redondeado", "codigo_instrumento",
+        "p1", "p2", "p3", "p4", "p5", "p6", "p6_otro", "p7", "p7_otro", "p7_porque",
+        "p8", "p9", "p10", "p11", "p12", "p13", "p14",
+        "p15", "p16", "p17", "p18", "p19", "p20",
+        "p21", "p22", "p22_otro",
+        "p23a", "p23b", "p23c",
+        "p23_1a", "p23_1b", "p23_1c",
+        "p24a", "p24b", "p24c",
+        "p25", "p25_1", "p25_1_otro",
+        "p26", "p27", "p27_1", "p27_1_otro", "p28", "p29",
+        "igcl", "ifn", "enps_categoria"
+      ];
+      const esc = (v) => {
+        if (v === null || v === undefined) return '""';
+        const str = Array.isArray(v) ? v.join(" | ") : String(v);
+        return `"${str.replace(/"/g, '""')}"`;
+      };
+      const lines = [cols.join(",")];
+      db.forEach((row) => {
+        lines.push(cols.map((c) => esc(row[c])).join(","));
+      });
+      const blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "encuesta_clima_servicios_publicos_2026.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function actualizarEstadoRed() {
+      const el = document.getElementById("autosave-status");
+      if (navigator.onLine) {
+        el.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; color:var(--c-ok);">cloud_done</span><span>Guardado local automático activo</span>`;
+      } else {
+        el.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; color:var(--c-warn);">cloud_off</span><span>Modo sin conexión · Resiliencia activa</span>`;
+      }
+    }
+
+    let toastTimer = null;
+    function mostrarToast(msg) {
+      const banner = document.getElementById("toast-banner");
+      document.getElementById("toast-text").textContent = msg;
+      banner.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => banner.classList.remove("show"), 3600);
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/"/g, "&quot;");
+    }
+  </script>
+</body>
+</html>
