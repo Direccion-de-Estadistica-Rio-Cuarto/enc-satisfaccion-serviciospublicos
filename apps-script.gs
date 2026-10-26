@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * BACKEND SERVERLESS · ENCUESTA DE CLIMA LABORAL 2026 (FO-SGC-05-IDI.11)
- * Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto
+ * Subsecretaría de Servicios Públicos · Gobierno de Río Cuarto
  * Dirección General de Estadísticas, Control de Calidad y Procesos
  *
  * Fase 3: Arquitectura de datos, Backend y seguridad del anonimato

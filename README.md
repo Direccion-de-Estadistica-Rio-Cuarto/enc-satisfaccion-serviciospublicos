@@ -1,5 +1,5 @@
 # Encuesta de Clima Laboral 2026 · Servicios Públicos (`sat-serviciospublicos-survey`)
-**Municipalidad de Río Cuarto · Secretaría de Gestión y Participación Ciudadana**  
+**Gobierno de Río Cuarto · Secretaría de Gestión y Participación Ciudadana**  
 **Dirección General de Estadísticas, Control de Calidad y Procesos · Código: `FO-SGC-05-IDI.11`**
 
 Aplicación web en **HTML5** de relevamiento anónimo (Nivel 1: Captación) diseñada bajo arquitectura *Mobile-First*, con persistencia progresiva en `localStorage`, resiliencia ante cortes de conectividad y protocolo estricto de anonimato técnico y estadístico ($k\text{-anonimato con } n \ge 5$).

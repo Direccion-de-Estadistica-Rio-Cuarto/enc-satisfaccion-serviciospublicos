@@ -544,93 +544,145 @@
     /* --- Barra Sticky de Progreso y Pestañas ARIA (.pestanas) --- */
     .barra-progreso-sticky {
       position: sticky;
-      top: 0;
+      top: 10px;
       z-index: 35;
-      background: color-mix(in srgb, var(--superficie) 94%, transparent);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--borde);
-      padding-top: 10px;
+      background: color-mix(in srgb, var(--superficie) 96%, transparent);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 14px 18px 0;
       margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(20, 20, 15, 0.05);
     }
 
     .progreso-fila-superior {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .progreso-info {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.88rem;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progreso-bloque-actual {
+      font-size: 0.92rem;
       font-weight: 700;
+      color: var(--texto);
+      letter-spacing: -0.01em;
+    }
+
+    .estado--marca {
+      --color-estado: var(--marca);
+      background: color-mix(in srgb, var(--marca) 14%, var(--superficie));
+      border-color: color-mix(in srgb, var(--marca) 30%, transparent);
     }
 
     .progreso-pista {
       width: 100%;
-      height: 6px;
-      background: var(--fondo);
+      height: 8px;
+      background: color-mix(in srgb, var(--borde) 75%, var(--fondo));
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
     .progreso-relleno {
       height: 100%;
       width: 0%;
-      background: var(--marca);
+      background: linear-gradient(90deg, var(--marca-enlace), var(--marca));
       border-radius: 999px;
-      transition: width 0.25s ease;
+      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
+    }
+
+    .progreso-relleno.completo {
+      background: var(--ok);
     }
 
     .pestanas {
       display: flex;
-      gap: 2px;
+      gap: 4px;
       overflow-x: auto;
-      border-bottom: 1px solid var(--borde);
+      border-top: 1px solid color-mix(in srgb, var(--borde) 65%, transparent);
+      margin: 0 -18px;
+      padding: 0 12px;
       scrollbar-width: none;
     }
     .pestanas::-webkit-scrollbar { display: none; }
 
     .pestana {
+      flex: 1 1 auto;
+      justify-content: center;
       font: inherit;
       font-size: 0.84rem;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--texto-suave);
       background: transparent;
       border: 0;
       border-bottom: 3px solid transparent;
-      margin-bottom: -1px;
-      padding: 9px 12px;
+      padding: 10px 10px 9px;
       white-space: nowrap;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      transition: color 0.15s ease, border-color 0.15s ease;
+      gap: 7px;
+      border-radius: 6px 6px 0 0;
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
     }
 
-    .pestana:hover { color: var(--texto); }
+    .pestana:hover {
+      color: var(--texto);
+      background: color-mix(in srgb, var(--texto) 4%, transparent);
+    }
+
+    .pestana-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: color-mix(in srgb, var(--texto-suave) 14%, transparent);
+      color: var(--texto-suave);
+      flex-shrink: 0;
+      transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    }
 
     .pestana[aria-selected="true"] {
       color: var(--texto);
       font-weight: 700;
       border-bottom-color: var(--marca);
+      background: color-mix(in srgb, var(--marca) 8%, transparent);
     }
 
-    .pestana.completada .icono-check {
+    .pestana[aria-selected="true"] .pestana-num {
+      background: var(--marca);
+      color: var(--marca-texto);
+    }
+
+    .pestana.completada .pestana-num {
+      background: color-mix(in srgb, var(--ok) 18%, transparent);
       color: var(--ok);
-      font-size: 16px;
+    }
+
+    .pestana.completada[aria-selected="true"] .pestana-num {
+      background: var(--ok);
+      color: #ffffff;
     }
 
     .pestana:focus-visible {
       outline: 2px solid var(--marca);
       outline-offset: -2px;
-      border-radius: var(--radio) var(--radio) 0 0;
     }
 
     /* ==========================================================================
@@ -802,6 +854,52 @@
       cursor: not-allowed;
     }
 
+    .opt-btn:disabled,
+    .opt-btn.disabled-by-p1 {
+      opacity: 0.52;
+      cursor: not-allowed;
+      background: color-mix(in srgb, var(--texto-suave) 6%, var(--fondo));
+      border-style: dashed;
+      border-color: var(--borde);
+      color: var(--texto-suave);
+    }
+
+    .opt-btn:disabled:hover,
+    .opt-btn.disabled-by-p1:hover {
+      border-color: var(--borde);
+      background: color-mix(in srgb, var(--texto-suave) 6%, var(--fondo));
+    }
+
+    .opt-nota-bloqueada {
+      margin-left: auto;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--texto-suave);
+      background: color-mix(in srgb, var(--texto-suave) 14%, transparent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .opt-nota-previa {
+      margin-left: auto;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--marca-enlace);
+      background: color-mix(in srgb, var(--marca) 14%, transparent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .matrix-subrow.subrow-no-aplica {
+      background: color-mix(in srgb, var(--texto-suave) 5%, var(--fondo));
+      border-style: dashed;
+      opacity: 0.85;
+    }
+
     /* Campos de texto e inputs (alineados a .filtros input de componentes.css) */
     .otro-input-wrap {
       margin-top: 10px;
@@ -841,6 +939,37 @@
       outline: 2px solid var(--marca);
       outline-offset: 2px;
       background: var(--superficie);
+    }
+
+    .pie-campo-texto {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--texto-suave);
+    }
+
+    .contador-restantes {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--texto-suave) 12%, transparent);
+      color: var(--texto);
+      margin-left: auto;
+    }
+
+    .contador-restantes.alerta {
+      background: color-mix(in srgb, var(--alerta) 20%, transparent);
+      color: var(--texto);
+    }
+
+    .contador-restantes.vacio-requerido {
+      background: color-mix(in srgb, var(--marca) 14%, transparent);
+      color: var(--marca-enlace);
     }
 
     /* Escalas Likert 1 a 5 (con colores de tokens.css y texto en --texto para contraste WCAG AA) */
@@ -948,7 +1077,7 @@
       border-style: solid;
     }
 
-    /* Subfilas de matriz (P23 y P24) */
+    /* Subfilas de matriz (P23) y Tabla Matriz de doble entrada (P24) */
     .matrix-subrow {
       background: var(--fondo);
       border: 1px solid var(--borde);
@@ -965,6 +1094,178 @@
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+
+    .tabla-matriz-contenedor {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      background: var(--superficie);
+    }
+
+    .tabla-matriz {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .tabla-matriz thead th {
+      background: color-mix(in srgb, var(--marca) 8%, var(--fondo));
+      color: var(--texto);
+      font-weight: 700;
+      text-align: center;
+      padding: 12px 10px;
+      border-bottom: 2px solid var(--borde);
+      border-right: 1px solid var(--borde);
+      line-height: 1.25;
+      vertical-align: middle;
+    }
+
+    .tabla-matriz thead th:last-child {
+      border-right: 0;
+    }
+
+    .tabla-matriz thead th.col-item-matriz {
+      text-align: left;
+      min-width: 220px;
+      width: 32%;
+    }
+
+    .tabla-matriz thead th.col-bloqueada-p2 {
+      color: var(--texto-suave);
+      background: color-mix(in srgb, var(--texto-suave) 8%, var(--fondo));
+    }
+
+    .nota-col-p2 {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--texto-suave);
+    }
+
+    .tabla-matriz tbody tr {
+      border-bottom: 1px solid var(--borde);
+      transition: background-color 0.15s ease;
+    }
+
+    .tabla-matriz tbody tr:last-child {
+      border-bottom: 0;
+    }
+
+    .tabla-matriz tbody tr:hover:not(.subrow-no-aplica) {
+      background: color-mix(in srgb, var(--marca) 4%, var(--superficie));
+    }
+
+    .tabla-matriz tbody tr.has-error {
+      background: color-mix(in srgb, var(--grave) 10%, var(--superficie));
+      outline: 2px solid var(--grave);
+      outline-offset: -2px;
+    }
+
+    .tabla-matriz .celda-titulo-fila {
+      text-align: left;
+      padding: 14px 12px;
+      font-weight: 700;
+      color: var(--texto);
+      border-right: 1px solid var(--borde);
+      background: color-mix(in srgb, var(--fondo) 55%, var(--superficie));
+      vertical-align: middle;
+    }
+
+    .fila-titulo-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.35;
+    }
+
+    .nota-fila-na {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--texto-suave);
+      background: color-mix(in srgb, var(--texto-suave) 14%, transparent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .tabla-matriz .celda-opcion-matriz {
+      padding: 8px;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid var(--borde);
+    }
+
+    .tabla-matriz .celda-opcion-matriz:last-child {
+      border-right: 0;
+    }
+
+    .btn-celda-matriz {
+      width: 100%;
+      min-height: 44px;
+      justify-content: center;
+      padding: 8px 6px;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+    }
+
+    .btn-celda-matriz .etiqueta-celda-matriz {
+      display: none;
+      font-size: 0.85rem;
+    }
+
+    .btn-celda-matriz .opt-nota-bloqueada {
+      display: none;
+    }
+
+    .tabla-matriz tbody tr.subrow-no-aplica .celda-opcion-matriz {
+      opacity: 0.35;
+      pointer-events: none;
+      background: color-mix(in srgb, var(--texto-suave) 6%, var(--fondo));
+    }
+
+    @media (max-width: 720px) {
+      .tabla-matriz thead {
+        display: none;
+      }
+      .tabla-matriz,
+      .tabla-matriz tbody,
+      .tabla-matriz tr,
+      .tabla-matriz th.celda-titulo-fila,
+      .tabla-matriz td.celda-opcion-matriz {
+        display: block;
+        width: 100%;
+      }
+      .tabla-matriz tbody tr {
+        padding: 12px;
+        border-bottom: 2px solid var(--borde);
+      }
+      .tabla-matriz .celda-titulo-fila {
+        border-right: 0;
+        border-bottom: 1px solid var(--borde);
+        padding: 0 0 10px;
+        margin-bottom: 10px;
+        background: transparent;
+      }
+      .tabla-matriz .celda-opcion-matriz {
+        border-right: 0;
+        padding: 4px 0;
+        text-align: left;
+      }
+      .btn-celda-matriz {
+        justify-content: flex-start;
+        padding: 10px 12px;
+      }
+      .btn-celda-matriz .etiqueta-celda-matriz {
+        display: inline;
+      }
+      .btn-celda-matriz .opt-nota-bloqueada {
+        display: inline-flex;
+      }
     }
 
     /* Escala eNPS 1 a 10 (P27) */
@@ -1267,7 +1568,7 @@
         <div class="intro-cabecera">
           <div>
             <h2 id="titulo-encuesta">Encuesta de Clima Laboral 2026</h2>
-            <p class="bajada">Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto</p>
+            <p class="bajada">Subsecretaría de Servicios Públicos · Gobierno de Río Cuarto</p>
           </div>
           <button type="button" class="boton boton--secundario boton--chico" id="btn-toggle-view-mode">
             <span class="icono icono--chico" aria-hidden="true" id="view-mode-icon">view_agenda</span>
@@ -1312,10 +1613,10 @@
       <div class="barra-progreso-sticky" role="region" aria-label="Avance por bloques">
         <div class="progreso-fila-superior">
           <div class="progreso-info">
-            <span class="estado estado--ok texto-numero" id="progress-pct">0% completado</span>
-            <span id="progress-label" class="texto-chico">Bloque 1 de 7 · Datos generales</span>
+            <span class="estado estado--marca texto-numero" id="progress-pct">0% completado</span>
+            <span id="progress-label" class="progreso-bloque-actual">Bloque 1 de 7 · Datos generales</span>
           </div>
-          <span class="estado estado--neutro" id="autosave-status">
+          <span class="estado estado--ok" id="autosave-status">
             Guardado local automático activo
           </span>
         </div>
@@ -1325,13 +1626,34 @@
         </div>
 
         <div class="pestanas" id="block-pills-nav" role="tablist" aria-label="Bloques del cuestionario">
-          <button type="button" class="pestana" role="tab" aria-selected="true" data-step="1">1. Datos</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="2">2. Ambiente</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="3">3. Motivación</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="4">4. Capacitación</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="5">5. Recursos</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="6">6. Valoración</button>
-          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="7">7. Comentario</button>
+          <button type="button" class="pestana" role="tab" aria-selected="true" data-step="1">
+            <span class="pestana-num" aria-hidden="true">1</span>
+            <span>Datos</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="2">
+            <span class="pestana-num" aria-hidden="true">2</span>
+            <span>Ambiente</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="3">
+            <span class="pestana-num" aria-hidden="true">3</span>
+            <span>Motivación</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="4">
+            <span class="pestana-num" aria-hidden="true">4</span>
+            <span>Capacitación</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="5">
+            <span class="pestana-num" aria-hidden="true">5</span>
+            <span>Recursos</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="6">
+            <span class="pestana-num" aria-hidden="true">6</span>
+            <span>Valoración</span>
+          </button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="7">
+            <span class="pestana-num" aria-hidden="true">7</span>
+            <span>Comentario</span>
+          </button>
         </div>
       </div>
 
@@ -1430,8 +1752,12 @@
             <div class="options-grid" data-multi-group="p6" data-max="3" id="group-p6"></div>
             <input type="hidden" name="p6" id="input-p6">
             <div class="otro-input-wrap hidden" id="otro-wrap-p6">
-              <label for="input-p6-otro">Indique qué motiva su disconformidad (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-p6-otro" name="p6_otro" maxlength="200" placeholder="Describa brevemente el motivo de su disconformidad...">
+              <label for="input-p6-otro">Indique qué motiva su disconformidad (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-p6-otro" name="p6_otro" maxlength="250" data-req-nonempty="true" placeholder="Describa en una línea el motivo de su disconformidad...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-p6-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
 
@@ -1441,23 +1767,33 @@
               <span class="q-num cond">7</span>
               <div class="q-label-wrap">
                 <h4 class="q-title">¿En qué área preferiría trabajar? *</h4>
-                <p class="q-meta">Selección única · condicional obligatoria</p>
+                <p class="q-meta">
+                  <span>Selección única · condicional obligatoria (no puede elegir la misma área de la cual proviene en P1)</span>
+                  <span class="estado estado--marca" id="aviso-p7-origen">Seleccione primero su área en P1</span>
+                </p>
               </div>
             </div>
             <div class="options-grid" data-single-group="p7" id="group-p7"></div>
             <input type="hidden" name="p7" id="input-p7">
 
             <div class="otro-input-wrap hidden" id="otro-wrap-p7">
-              <label for="input-p7-otro">Indique en qué otra área prefiere trabajar (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-p7-otro" name="p7_otro" maxlength="160" placeholder="Escriba el área en la que preferiría trabajar...">
+              <label for="input-p7-otro">Indique en qué otra área prefiere trabajar (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-p7-otro" name="p7_otro" maxlength="250" data-req-nonempty="true" placeholder="Escriba en una línea el área en la que preferiría trabajar...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-p7-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
 
             <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--borde);">
               <label for="input-p7-porque" style="display:block; font-size:0.92rem; font-weight:700; color:var(--texto); margin-bottom:6px;">
-                ¿Por qué prefiere dicha área? * <span class="texto-suave texto-chico" style="font-weight:500;">(obligatorio · máx. 250 caracteres)</span>
+                ¿Por qué prefiere dicha área? * <span class="texto-suave texto-chico" style="font-weight:500;">(obligatorio · sin envío vacío)</span>
               </label>
-              <textarea class="form-textarea" id="input-p7-porque" name="p7_porque" rows="2" maxlength="250" placeholder="Explique brevemente por qué prefiere trabajar en esa área..."></textarea>
-              <div class="texto-chico texto-suave texto-numero" style="text-align:right; margin-top:4px;" id="char-count-p7">0 / 250 caracteres</div>
+              <input type="text" class="form-input" id="input-p7-porque" name="p7_porque" maxlength="250" data-req-nonempty="true" placeholder="Explique brevemente en una línea por qué prefiere trabajar en esa área...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" id="char-count-p7" data-count-for="input-p7-porque">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
         </section>
@@ -1548,8 +1884,12 @@
             <div class="options-grid" data-multi-group="p22" data-max="3" id="group-p22"></div>
             <input type="hidden" name="p22" id="input-p22" required>
             <div class="otro-input-wrap hidden" id="otro-wrap-p22">
-              <label for="input-p22-otro">Indique qué capacitación le gustaría realizar (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-p22-otro" name="p22_otro" maxlength="200" placeholder="Escriba la temática o curso que considera necesario...">
+              <label for="input-p22-otro">Indique qué capacitación le gustaría realizar (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-p22-otro" name="p22_otro" maxlength="250" data-req-nonempty="true" placeholder="Escriba en una línea la temática o curso que considera necesario...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-p22-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
         </section>
@@ -1629,8 +1969,12 @@
             <div class="options-grid" data-multi-group="p25_1" data-max="2" id="group-p25_1"></div>
             <input type="hidden" name="p25_1" id="input-p25_1">
             <div class="otro-input-wrap hidden" id="otro-wrap-p25_1">
-              <label for="input-p25_1-otro">Indique el motivo de desacuerdo (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-p25_1-otro" name="p25_1_otro" maxlength="200" placeholder="Describa el motivo...">
+              <label for="input-p25_1-otro">Indique el motivo de desacuerdo (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-p25_1-otro" name="p25_1_otro" maxlength="250" data-req-nonempty="true" placeholder="Describa en una línea el motivo...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-p25_1-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
         </section>
@@ -1690,8 +2034,12 @@
             <div class="options-grid" data-single-group="p27_1" id="group-p27_1"></div>
             <input type="hidden" name="p27_1" id="input-p27_1">
             <div class="otro-input-wrap hidden" id="otro-wrap-p27_1">
-              <label for="input-p27_1-otro">Indique el motivo de su valoración (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-p27_1-otro" name="p27_1_otro" maxlength="200" placeholder="Describa el motivo principal de su valoración...">
+              <label for="input-p27_1-otro">Indique el motivo de su valoración (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-p27_1-otro" name="p27_1_otro" maxlength="250" data-req-nonempty="true" placeholder="Describa en una línea el motivo principal de su valoración...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-p27_1-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
 
@@ -1701,10 +2049,14 @@
               <span class="q-num cond">28</span>
               <div class="q-label-wrap">
                 <h4 class="q-title">Cuéntenos brevemente qué cambiaría *</h4>
-                <p class="q-meta">Texto libre · obligatorio en este caso</p>
+                <p class="q-meta">Área de texto multilínea · condicional</p>
               </div>
             </div>
-            <textarea class="form-textarea" id="input-p28" name="p28" rows="3" maxlength="500" placeholder="Escribí tu comentario aquí"></textarea>
+            <textarea class="form-textarea" id="input-p28" name="p28" rows="4" maxlength="2000" data-req-nonempty="true" placeholder="Escribí tu comentario aquí"></textarea>
+            <div class="pie-campo-texto">
+              <span>Área multilínea (Textarea) · estándar 1.000 a 2.000 caracteres (aprox. 150 a 300 palabras)</span>
+              <span class="contador-restantes vacio-requerido" data-count-for="input-p28">2.000 caracteres restantes (0 / 2.000)</span>
+            </div>
           </div>
         </section>
 
@@ -1726,10 +2078,14 @@
               <span class="q-num">29</span>
               <div class="q-label-wrap">
                 <h4 class="q-title">Escriba de modo simple sus observaciones o sugerencias para mejorar su lugar de trabajo. Puede incluir lo que funciona bien y debería seguir igual, y lo que cambiaría (por ejemplo: condiciones del lugar, trato entre compañeros, recursos, organización, etc.).</h4>
-                <p class="q-meta">Texto libre · opcional</p>
+                <p class="q-meta">Área de texto multilínea · opcional</p>
               </div>
             </div>
-            <textarea class="form-textarea" id="input-p29" name="p29" rows="4" maxlength="1000" placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+            <textarea class="form-textarea" id="input-p29" name="p29" rows="5" maxlength="2000" placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+            <div class="pie-campo-texto">
+              <span>Área multilínea (Textarea) · estándar 1.000 a 2.000 caracteres (aprox. 150 a 300 palabras) · Opcional</span>
+              <span class="contador-restantes" data-count-for="input-p29">2.000 caracteres restantes (0 / 2.000)</span>
+            </div>
           </div>
 
           <div style="margin-top:20px;">
@@ -2118,8 +2474,12 @@
             <div class="options-grid" data-multi-group="${subKey}" data-max="2" id="group-${subKey}"></div>
             <input type="hidden" name="${subKey}" id="input-${subKey}">
             <div class="otro-input-wrap hidden" id="otro-wrap-${subKey}">
-              <label for="input-${subKey}-otro">Indique el motivo de desacuerdo con ${item.corto} (obligatorio): *</label>
-              <input type="text" class="form-input" id="input-${subKey}-otro" name="${subKey}_otro" maxlength="200" placeholder="Describa el motivo de desacuerdo...">
+              <label for="input-${subKey}-otro">Indique el motivo de desacuerdo con ${item.corto} (obligatorio · sin envío vacío): *</label>
+              <input type="text" class="form-input" id="input-${subKey}-otro" name="${subKey}_otro" maxlength="250" data-req-nonempty="true" placeholder="Describa en una línea el motivo de desacuerdo...">
+              <div class="pie-campo-texto">
+                <span>Campo de una línea · estándar 100 a 250 caracteres (aprox. 15 a 40 palabras)</span>
+                <span class="contador-restantes vacio-requerido" data-count-for="input-${subKey}-otro">250 caracteres restantes (0 / 250)</span>
+              </div>
             </div>
           </div>
         `;
@@ -2129,23 +2489,50 @@
         renderMultiChoice(`group-p23_1${item.id}`, `p23_1${item.id}`, cat.fallas_p23_1, 2);
       });
 
-      document.getElementById("container-p24-rows").innerHTML = cat.items_p23_p24.map((item) => {
-        const code24 = `p24${item.id}`;
-        return `
-          <div class="matrix-subrow" id="qcard-${code24}">
-            <div class="matrix-subrow-title">
-              <span class="icono icono--chico" aria-hidden="true" style="color:var(--marca-enlace);">inventory_2</span>
-              ${item.label} *
-            </div>
-            <div class="options-grid" data-single-group="${code24}" id="group-${code24}"></div>
-            <input type="hidden" name="${code24}" id="input-${code24}" required>
-          </div>
-        `;
-      }).join("");
-
-      cat.items_p23_p24.forEach((item) => {
-        renderSingleChoice(`group-p24${item.id}`, `p24${item.id}`, cat.proveedores_p24);
-      });
+      document.getElementById("container-p24-rows").innerHTML = `
+        <div class="tabla-matriz-contenedor">
+          <table class="tabla-matriz" aria-label="Matriz de provisión habitual de elementos (Pregunta 24)">
+            <thead>
+              <tr>
+                <th scope="col" class="col-item-matriz">Elemento / recurso (filas de P23)</th>
+                ${cat.proveedores_p24.map((prov) => `
+                  <th scope="col" class="col-opcion-matriz" data-col-prov="${escapeAttr(prov)}">
+                    <span>${escapeHTML(prov)}</span>
+                    <span class="nota-col-p2 hidden">No aplica según P2</span>
+                  </th>
+                `).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              ${cat.items_p23_p24.map((item) => {
+                const code24 = `p24${item.id}`;
+                return `
+                  <tr class="fila-matriz" id="qcard-${code24}" data-single-group="${code24}">
+                    <th scope="row" class="celda-titulo-fila">
+                      <div class="fila-titulo-inner">
+                        <span class="icono icono--chico" aria-hidden="true" style="color:var(--marca-enlace); margin-top:2px;">inventory_2</span>
+                        <span>${escapeHTML(item.label)} *</span>
+                      </div>
+                      <div class="nota-fila-na hidden" id="nota-na-${code24}">
+                        No requiere respuesta · declaró «No me corresponde / no lo uso» en la pregunta 23.${item.id}
+                      </div>
+                      <input type="hidden" name="${code24}" id="input-${code24}" required>
+                    </th>
+                    ${cat.proveedores_p24.map((prov) => `
+                      <td class="celda-opcion-matriz">
+                        <button type="button" class="opt-btn single btn-celda-matriz" data-single-row="${code24}" data-val="${escapeAttr(prov)}" aria-label="${escapeAttr(item.corto)} — ${escapeAttr(prov)}">
+                          <span class="opt-indicator" aria-hidden="true"></span>
+                          <span class="etiqueta-celda-matriz">${escapeHTML(prov)}</span>
+                        </button>
+                      </td>
+                    `).join("")}
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
 
       document.getElementById("likert-p25").innerHTML = crearBotonesLikertHTML("acuerdo_1_5", false);
       renderMultiChoice("group-p25_1", "p25_1", cat.fallas_procedimientos_p25_1, 2);
@@ -2242,6 +2629,7 @@
         const input = document.getElementById(`input-${name}`);
         group.querySelectorAll(".opt-btn").forEach((btn) => {
           btn.addEventListener("click", () => {
+            if (btn.disabled || btn.classList.contains("disabled-by-p1")) return;
             group.querySelectorAll(".opt-btn").forEach((b) => {
               b.classList.remove("active");
               b.querySelector(".opt-indicator").innerHTML = "";
@@ -2330,20 +2718,18 @@
         });
       });
 
-      // Contador P7
-      const p7Porque = document.getElementById("input-p7-porque");
-      const charCountP7 = document.getElementById("char-count-p7");
-      p7Porque.addEventListener("input", () => {
-        charCountP7.textContent = `${p7Porque.value.length} / 250 caracteres`;
-        guardarBorradorLocal();
-        actualizarProgresoGlobal();
-      });
-
+      // Contadores de caracteres restantes en todos los campos de texto (Single-line y Textarea)
       document.querySelectorAll(".form-input, .form-textarea").forEach((inp) => {
         inp.addEventListener("input", () => {
+          actualizarContadorCaracteres(inp);
           guardarBorradorLocal();
           actualizarProgresoGlobal();
         });
+        if (inp.tagName === "INPUT") {
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") e.preventDefault();
+          });
+        }
       });
 
       document.getElementById("btn-prev-block").addEventListener("click", () => {
@@ -2407,22 +2793,197 @@
       window.addEventListener("offline", actualizarEstadoRed);
     }
 
+    function aplicarBloqueoBoton(btn, inputEl, bloqueado, textoNota) {
+      const valBtn = btn.getAttribute("data-val");
+      btn.disabled = bloqueado;
+      btn.classList.toggle("disabled-by-p1", bloqueado);
+      btn.setAttribute("aria-disabled", String(bloqueado));
+
+      let nota = btn.querySelector(".opt-nota-bloqueada");
+      if (bloqueado) {
+        if (!nota) {
+          nota = document.createElement("span");
+          nota.className = "opt-nota-bloqueada";
+          btn.appendChild(nota);
+        }
+        nota.textContent = textoNota;
+        if (btn.classList.contains("active")) {
+          btn.classList.remove("active");
+          const ind = btn.querySelector(".opt-indicator");
+          if (ind) ind.innerHTML = "";
+          if (inputEl && inputEl.value === valBtn) inputEl.value = "";
+        }
+      } else if (nota) {
+        nota.remove();
+      }
+    }
+
+    function limpiarGrupoSingle(fieldName) {
+      const group = document.getElementById(`group-${fieldName}`) || document.querySelector(`[data-single-group="${fieldName}"]`);
+      const input = document.getElementById(`input-${fieldName}`);
+      if (group) {
+        group.querySelectorAll(".opt-btn").forEach((b) => {
+          b.classList.remove("active");
+          const ind = b.querySelector(".opt-indicator");
+          if (ind) ind.innerHTML = "";
+        });
+      }
+      if (input) input.value = "";
+      limpiarErrorTarjeta(`qcard-${fieldName}`);
+    }
+
+    function limpiarGrupoMulti(fieldName, max = 3) {
+      const group = document.getElementById(`group-${fieldName}`);
+      const input = document.getElementById(`input-${fieldName}`);
+      const counter = document.getElementById(`counter-${fieldName}`);
+      if (group) {
+        group.querySelectorAll(".opt-btn").forEach((b) => {
+          b.classList.remove("active", "disabled-max");
+          const ic = b.querySelector(".icono");
+          if (ic) ic.style.opacity = "0";
+        });
+      }
+      if (input) input.value = "";
+      if (counter) {
+        counter.textContent = `0 / ${max} seleccionadas`;
+        counter.className = "estado estado--neutro";
+      }
+      limpiarErrorTarjeta(`qcard-${fieldName}`);
+    }
+
+    function actualizarContadorCaracteres(inp) {
+      if (!inp || !inp.id) return;
+      const badge = document.querySelector(`[data-count-for="${inp.id}"]`);
+      if (!badge) return;
+      const max = Number(inp.getAttribute("maxlength")) || 250;
+      const len = inp.value.length;
+      const trimLen = inp.value.trim().length;
+      const restantes = Math.max(0, max - len);
+      const fmt = (n) => n.toLocaleString("es-AR");
+
+      badge.textContent = `${fmt(restantes)} caracteres restantes (${fmt(len)} / ${fmt(max)})`;
+
+      const esRequeridoNoVacio = inp.getAttribute("data-req-nonempty") === "true";
+      badge.classList.toggle("vacio-requerido", esRequeridoNoVacio && trimLen === 0);
+      badge.classList.toggle("alerta", restantes <= Math.ceil(max * 0.1));
+    }
+
+    function actualizarTodosLosContadores() {
+      document.querySelectorAll(".form-input, .form-textarea").forEach((inp) => {
+        actualizarContadorCaracteres(inp);
+      });
+    }
+
+    function limpiarCampoTexto(inputId) {
+      const el = document.getElementById(inputId);
+      if (el) {
+        if (el.value) el.value = "";
+        actualizarContadorCaracteres(el);
+      }
+    }
+
+    function normalizarTextoComparacion(txt) {
+      return String(txt || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+    }
+
     function actualizarCondicionales() {
+      const valP1 = document.getElementById("input-p1").value;
+      const valP2 = document.getElementById("input-p2").value;
+
+      // Regla 3: Cruce P1 (Área) -> P4 (Tarea)
+      const groupP4 = document.getElementById("group-p4");
+      const inputP4 = document.getElementById("input-p4");
+      if (groupP4 && inputP4) {
+        groupP4.querySelectorAll(".opt-btn").forEach((btn) => {
+          const valBtn = btn.getAttribute("data-val");
+          const coincideConP1 =
+            (valP1 === "Maestranza" && valBtn === "Maestranza") ||
+            (valP1 === "Administración" && valBtn === "Administrativo");
+          aplicarBloqueoBoton(btn, inputP4, coincideConP1, "Ya elegida en P1");
+        });
+      }
+
+      const valP4 = document.getElementById("input-p4").value;
+
+      // Regla P7: No puede elegir la misma área de la cual proviene (según P1 y/o tarea en P4)
+      const groupP7 = document.getElementById("group-p7");
+      const inputP7 = document.getElementById("input-p7");
+      const avisoP7Origen = document.getElementById("aviso-p7-origen");
+      if (avisoP7Origen) {
+        if (!valP1) {
+          avisoP7Origen.textContent = "Seleccione primero su área de origen en P1";
+          avisoP7Origen.className = "estado estado--alerta";
+        } else {
+          avisoP7Origen.textContent = `Área de origen (P1): ${valP1} (bloqueada)`;
+          avisoP7Origen.className = "estado estado--marca";
+        }
+      }
+
+      if (groupP7 && inputP7) {
+        groupP7.querySelectorAll(".opt-btn").forEach((btn) => {
+          const valBtn = btn.getAttribute("data-val");
+          if (!valP1) {
+            aplicarBloqueoBoton(btn, inputP7, true, "Elija primero P1");
+          } else {
+            const esMismaAreaP1 = valBtn === valP1;
+            const esMismaPorP4 =
+              (valP4 === "Maestranza" && valBtn === "Maestranza") ||
+              (valP4 === "Administrativo" && valBtn === "Administración");
+            const bloquear = esMismaAreaP1 || esMismaPorP4;
+            const motivo = esMismaAreaP1 ? "Área de origen (P1)" : "Vinculada a P4";
+            aplicarBloqueoBoton(btn, inputP7, bloquear, motivo);
+          }
+        });
+      }
+
+      // Regla 5 (en Bloque 1): P5 -> P6 y P7 con limpieza automática de datos huérfanos
       const valP5 = document.getElementById("input-p5").value;
-      const showP6 = valP5 && valP5 !== "Sí, conforme con ambas";
+      const showP6 = Boolean(valP5) && valP5 !== "Sí, conforme con ambas";
       const showP7 = valP5 === "No con el área" || valP5 === "No con ninguna de las dos";
 
       document.getElementById("qcard-p6").classList.toggle("hidden", !showP6);
+      if (!showP6) {
+        limpiarGrupoMulti("p6", 3);
+        limpiarCampoTexto("input-p6-otro");
+      }
+
       document.getElementById("qcard-p7").classList.toggle("hidden", !showP7);
+      if (!showP7) {
+        limpiarGrupoSingle("p7");
+        limpiarCampoTexto("input-p7-otro");
+        limpiarCampoTexto("input-p7-porque");
+      }
 
       const arrP6 = parseMultiValue("input-p6");
-      document.getElementById("otro-wrap-p6").classList.toggle("hidden", !arrP6.includes("Otro"));
+      const showP6Otro = showP6 && arrP6.includes("Otro");
+      document.getElementById("otro-wrap-p6").classList.toggle("hidden", !showP6Otro);
+      if (!showP6Otro) limpiarCampoTexto("input-p6-otro");
 
-      const valP7 = document.getElementById("input-p7").value;
-      document.getElementById("otro-wrap-p7").classList.toggle("hidden", valP7 !== "Otro");
+      const valP7Actual = document.getElementById("input-p7").value;
+      const showP7Otro = showP7 && valP7Actual === "Otro";
+      document.getElementById("otro-wrap-p7").classList.toggle("hidden", !showP7Otro);
+      if (!showP7Otro) limpiarCampoTexto("input-p7-otro");
 
+      // Bloque 4: P22 Otro
       const arrP22 = parseMultiValue("input-p22");
-      document.getElementById("otro-wrap-p22").classList.toggle("hidden", !arrP22.includes("Otro"));
+      const showP22Otro = arrP22.includes("Otro");
+      document.getElementById("otro-wrap-p22").classList.toggle("hidden", !showP22Otro);
+      if (!showP22Otro) limpiarCampoTexto("input-p22-otro");
+
+      // Reglas 1, 2 y 5 en Bloque 5: P23 (a,b,c) -> P23.1 (a,b,c) y Matriz P24 (a,b,c) + cruce P2 -> P24
+      const noEsCooperativa = Boolean(valP2) && valP2 !== "Cooperativa";
+
+      document.querySelectorAll(".tabla-matriz thead th[data-col-prov]").forEach((th) => {
+        const prov = th.getAttribute("data-col-prov");
+        const colBloqueada = noEsCooperativa && (prov === "Cooperativa" || prov === "Ambos");
+        th.classList.toggle("col-bloqueada-p2", colBloqueada);
+        const notaCol = th.querySelector(".nota-col-p2");
+        if (notaCol) notaCol.classList.toggle("hidden", !colBloqueada);
+      });
 
       ["a", "b", "c"].forEach((id) => {
         const val23 = document.getElementById(`input-p23${id}`).value;
@@ -2430,17 +2991,63 @@
         const card23_1 = document.getElementById(`qcard-p23_1${id}`);
         if (card23_1) card23_1.classList.toggle("hidden", !show23_1);
 
+        if (!show23_1) {
+          limpiarGrupoMulti(`p23_1${id}`, 2);
+          limpiarCampoTexto(`input-p23_1${id}-otro`);
+        }
+
         const arr23_1 = parseMultiValue(`input-p23_1${id}`);
+        const show23_1Otro = show23_1 && arr23_1.includes("Otro");
         const otroWrap = document.getElementById(`otro-wrap-p23_1${id}`);
-        if (otroWrap) otroWrap.classList.toggle("hidden", !arr23_1.includes("Otro"));
+        if (otroWrap) otroWrap.classList.toggle("hidden", !show23_1Otro);
+        if (!show23_1Otro) limpiarCampoTexto(`input-p23_1${id}-otro`);
+
+        // Regla 1 en Matriz P24: Si en P23 eligió "No me corresponde / no lo uso", desactivar esa fila en P24
+        const esNoCorresponde = val23 === "No me corresponde / no lo uso";
+        const fila24 = document.getElementById(`qcard-p24${id}`);
+        const input24 = document.getElementById(`input-p24${id}`);
+        const notaNA24 = document.getElementById(`nota-na-p24${id}`);
+
+        if (fila24 && input24) {
+          fila24.classList.toggle("subrow-no-aplica", esNoCorresponde);
+          if (notaNA24) notaNA24.classList.toggle("hidden", !esNoCorresponde);
+
+          if (esNoCorresponde) {
+            fila24.querySelectorAll(".opt-btn").forEach((b) => {
+              b.classList.remove("active");
+              const ind = b.querySelector(".opt-indicator");
+              if (ind) ind.innerHTML = "";
+            });
+            input24.value = "No aplica";
+            limpiarErrorTarjeta(`qcard-p24${id}`);
+          } else {
+            if (input24.value === "No aplica") input24.value = "";
+
+            // Regla 2 en Matriz P24: Si en P2 no es Cooperativa, desactivar columnas "Cooperativa" y "Ambos"
+            fila24.querySelectorAll(".opt-btn").forEach((btn) => {
+              const vBtn = btn.getAttribute("data-val");
+              const bloquearPorP2 = noEsCooperativa && (vBtn === "Cooperativa" || vBtn === "Ambos");
+              aplicarBloqueoBoton(btn, input24, bloquearPorP2, "No aplica según P2");
+            });
+          }
+        }
       });
 
+      // Bloque 5: P25 -> P25.1
       const valP25 = document.getElementById("input-p25").value;
       const showP25_1 = valP25 === "1" || valP25 === "2";
       document.getElementById("qcard-p25_1").classList.toggle("hidden", !showP25_1);
-      const arrP25_1 = parseMultiValue("input-p25_1");
-      document.getElementById("otro-wrap-p25_1").classList.toggle("hidden", !arrP25_1.includes("Otro"));
+      if (!showP25_1) {
+        limpiarGrupoMulti("p25_1", 2);
+        limpiarCampoTexto("input-p25_1-otro");
+      }
 
+      const arrP25_1 = parseMultiValue("input-p25_1");
+      const showP25_1Otro = showP25_1 && arrP25_1.includes("Otro");
+      document.getElementById("otro-wrap-p25_1").classList.toggle("hidden", !showP25_1Otro);
+      if (!showP25_1Otro) limpiarCampoTexto("input-p25_1-otro");
+
+      // Bloque 6: P26 y P27 -> P27.1 y P28 + Regla 4 (continuidad visual P6 -> P27.1)
       const valP26 = Number(document.getElementById("input-p26").value);
       const valP27 = Number(document.getElementById("input-p27").value);
       const showP27_1_P28 = (valP26 >= 1 && valP26 <= 3) || (valP27 >= 1 && valP27 <= 6);
@@ -2448,8 +3055,37 @@
       document.getElementById("qcard-p27_1").classList.toggle("hidden", !showP27_1_P28);
       document.getElementById("qcard-p28").classList.toggle("hidden", !showP27_1_P28);
 
+      if (!showP27_1_P28) {
+        limpiarGrupoSingle("p27_1");
+        limpiarCampoTexto("input-p27_1-otro");
+        limpiarCampoTexto("input-p28");
+        limpiarErrorTarjeta("qcard-p28");
+      } else {
+        // Regla 4: Indicar en P27.1 cuáles opciones ya fueron seleccionadas en P6
+        const group27_1 = document.getElementById("group-p27_1");
+        if (group27_1) {
+          group27_1.querySelectorAll(".opt-btn").forEach((btn) => {
+            const vBtn = btn.getAttribute("data-val");
+            const elegidaEnP6 = vBtn !== "Otro" && arrP6.includes(vBtn);
+            let badgeP6 = btn.querySelector(".opt-nota-previa");
+            if (elegidaEnP6) {
+              if (!badgeP6) {
+                badgeP6 = document.createElement("span");
+                badgeP6.className = "opt-nota-previa";
+                badgeP6.textContent = "Marcada en P6";
+                btn.appendChild(badgeP6);
+              }
+            } else if (badgeP6) {
+              badgeP6.remove();
+            }
+          });
+        }
+      }
+
       const valP27_1 = document.getElementById("input-p27_1").value;
-      document.getElementById("otro-wrap-p27_1").classList.toggle("hidden", valP27_1 !== "Otro");
+      const showP27_1Otro = showP27_1_P28 && valP27_1 === "Otro";
+      document.getElementById("otro-wrap-p27_1").classList.toggle("hidden", !showP27_1Otro);
+      if (!showP27_1Otro) limpiarCampoTexto("input-p27_1-otro");
     }
 
     function parseMultiValue(inputId) {
@@ -2476,10 +3112,22 @@
           reqs.push({ id: "qcard-p6", ok: arrP6.length >= 1 && arrP6.length <= 3 && otroOk, msg: "En la pregunta 6, seleccione hasta 3 motivos (y especifique si eligió 'Otro')." });
         }
         if (valP5 === "No con el área" || valP5 === "No con ninguna de las dos") {
+          const valP1 = document.getElementById("input-p1").value;
           const valP7 = document.getElementById("input-p7").value;
-          const otro7Ok = valP7 !== "Otro" || Boolean(document.getElementById("input-p7-otro").value.trim());
+          const txtP7Otro = document.getElementById("input-p7-otro").value.trim();
+          const otro7Ok = valP7 !== "Otro" || Boolean(txtP7Otro);
+          const noRepiteAreaEnOtro =
+            valP7 !== "Otro" ||
+            !valP1 ||
+            normalizarTextoComparacion(txtP7Otro) !== normalizarTextoComparacion(valP1);
+          const distintaDeOrigen = Boolean(valP1) && Boolean(valP7) && valP7 !== valP1 && noRepiteAreaEnOtro;
           const porque7Ok = Boolean(document.getElementById("input-p7-porque").value.trim());
-          reqs.push({ id: "qcard-p7", ok: Boolean(valP7) && otro7Ok && porque7Ok, msg: "En la pregunta 7, indique qué área prefiere y por qué." });
+
+          let msgP7 = "En la pregunta 7, indique qué área prefiere (distinta a su área actual) y por qué.";
+          if (!noRepiteAreaEnOtro || (valP7 && valP7 === valP1)) {
+            msgP7 = `En la pregunta 7 no puede elegir la misma área de la cual proviene (${valP1}).`;
+          }
+          reqs.push({ id: "qcard-p7", ok: distintaDeOrigen && otro7Ok && porque7Ok, msg: msgP7 });
         }
       }
       if (numBloque === 2) {
@@ -2507,8 +3155,10 @@
             const otroOk = !arr23_1.includes("Otro") || Boolean(document.getElementById(`input-p23_1${id}-otro`).value.trim());
             reqs.push({ id: `qcard-p23_1${id}`, ok: arr23_1.length >= 1 && arr23_1.length <= 2 && otroOk, msg: `Indique qué falla en el ítem 23.1 (${id}).` });
           }
-          const v24 = document.getElementById(`input-p24${id}`).value;
-          reqs.push({ id: `qcard-p24${id}`, ok: Boolean(v24), msg: `Responda quién le provee el elemento en 24.${id}.` });
+          if (v23 !== "No me corresponde / no lo uso") {
+            const v24 = document.getElementById(`input-p24${id}`).value;
+            reqs.push({ id: `qcard-p24${id}`, ok: Boolean(v24) && v24 !== "No aplica", msg: `Responda quién le provee el elemento en 24.${id}.` });
+          }
         });
         const v25 = document.getElementById("input-p25").value;
         reqs.push({ id: "qcard-p25", ok: Boolean(v25), msg: "Responda la pregunta 25 sobre claridad de los procedimientos." });
@@ -2593,14 +3243,20 @@
         if (pill) {
           const completo = reqs.length > 0 && okCount === reqs.length;
           pill.classList.toggle("completada", completo);
+          const numBadge = pill.querySelector(".pestana-num");
+          if (numBadge) {
+            numBadge.textContent = completo ? "✓" : String(b);
+          }
         }
       }
 
       const pct = totalRequeridas > 0 ? Math.round((totalCompletadas / totalRequeridas) * 100) : 0;
       const badge = document.getElementById("progress-pct");
-      badge.textContent = `${pct}% completado`;
-      badge.className = pct === 100 ? "estado estado--ok texto-numero" : (pct >= 40 ? "estado estado--alerta texto-numero" : "estado estado--neutro texto-numero");
-      document.getElementById("progress-fill").style.width = `${pct}%`;
+      badge.textContent = `${pct}% completado (${totalCompletadas}/${totalRequeridas})`;
+      badge.className = pct === 100 ? "estado estado--ok texto-numero" : "estado estado--marca texto-numero";
+      const fill = document.getElementById("progress-fill");
+      fill.style.width = `${pct}%`;
+      fill.classList.toggle("completo", pct === 100);
     }
 
     function recolectarEstadoActual() {
@@ -2653,6 +3309,7 @@
           const el = document.querySelector(`[name="${k}"]`);
           if (el && d[k]) el.value = d[k];
         });
+        actualizarTodosLosContadores();
       } catch (e) {}
     }
 

@@ -2,7 +2,7 @@
  * ============================================================================
  * DICCIONARIO DE DATOS, MODELO ESTADÍSTICO Y FÓRMULAS PSICOMÉTRICAS (FASE 1 y 2)
  * Proyecto: Encuesta de Clima Laboral 2026 · Subsecretaría de Servicios Públicos
- * Código Documental: FO-SGC-05-IDI.11 · Municipalidad de Río Cuarto
+ * Código Documental: FO-SGC-05-IDI.11 · Gobierno de Río Cuarto
  * Dirección General de Estadísticas, Control de Calidad y Procesos
  * ============================================================================
  */
@@ -13,7 +13,7 @@ window.CLIMA_SP_SCHEMA = {
     version: "1.0",
     anio: 2026,
     dependencia: "Subsecretaría de Servicios Públicos",
-    organismo: "Municipalidad de Río Cuarto",
+    organismo: "Gobierno de Río Cuarto",
     direccion: "Dirección General de Estadísticas, Control de Calidad y Procesos",
     k_anonimato_min: 5,
     confianza_z: 1.96
@@ -415,7 +415,9 @@ window.CLIMA_SP_STATS = {
       const area = pick(cat.areas);
       const modalidad = pick(cat.modalidades);
       const antiguedad = pick(cat.antiguedad);
-      const tarea = pick(cat.tareas);
+      const tarea = pick(cat.tareas.filter((t) =>
+        t !== area && !(area === "Administración" && t === "Administrativo")
+      ));
 
       let p5 = "Sí, conforme con ambas";
       if (latente < 2.6) p5 = pick(["No con el área", "No con las tareas", "No con ninguna de las dos"]);
@@ -454,9 +456,12 @@ window.CLIMA_SP_STATS = {
       const p23_1c = (p23c === "1" || p23c === "2") ? pickN(cat.fallas_p23_1, 2) : [];
 
       const provDefault = modalidad === "Cooperativa" ? "Cooperativa" : "Municipalidad";
-      const p24a = Math.random() < 0.75 ? provDefault : pick(cat.proveedores_p24);
-      const p24b = Math.random() < 0.75 ? provDefault : pick(cat.proveedores_p24);
-      const p24c = Math.random() < 0.75 ? provDefault : pick(cat.proveedores_p24);
+      const provPermitidos = modalidad === "Cooperativa"
+        ? cat.proveedores_p24
+        : cat.proveedores_p24.filter((p) => p !== "Cooperativa" && p !== "Ambos");
+      const p24a = p23a === "No me corresponde / no lo uso" ? "No aplica" : (Math.random() < 0.75 ? provDefault : pick(provPermitidos));
+      const p24b = p23b === "No me corresponde / no lo uso" ? "No aplica" : (Math.random() < 0.75 ? provDefault : pick(provPermitidos));
+      const p24c = p23c === "No me corresponde / no lo uso" ? "No aplica" : (Math.random() < 0.75 ? provDefault : pick(provPermitidos));
 
       const p25 = genLikert(-0.1);
       const p25_1 = p25 <= 2 ? pickN(cat.fallas_procedimientos_p25_1, 2) : [];
