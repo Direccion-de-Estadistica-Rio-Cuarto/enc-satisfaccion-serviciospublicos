@@ -186,7 +186,8 @@ function doPost(e) {
       data = (e && e.parameter) || {};
     }
 
-    const responseId = sanitizarServidor(data.response_id, 64) || Utilities.getUuid();
+    const rawUuid = String(data.response_id || "").replace(/[^a-zA-Z0-9-]/g, "").substring(0, 64);
+    const responseId = rawUuid || Utilities.getUuid();
 
     // Control de respuestas duplicadas por UUID (Fase 3.3.a)
     const lastRow = sheet.getLastRow();
