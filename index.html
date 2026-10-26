@@ -1768,7 +1768,10 @@
               <span class="q-num">4</span>
               <div class="q-label-wrap">
                 <h4 class="q-title">Tarea que desempeña *</h4>
-                <p class="q-meta">Selección única · obligatoria</p>
+                <p class="q-meta">
+                  <span>Selección única · obligatoria</span>
+                  <span class="estado estado--marca hidden" id="aviso-p4-fijada">Definida en P1</span>
+                </p>
               </div>
             </div>
             <div class="options-grid" data-single-group="p4" id="group-p4"></div>
@@ -2876,12 +2879,16 @@
 
       let nota = btn.querySelector(".opt-nota-bloqueada");
       if (bloqueado) {
-        if (!nota) {
-          nota = document.createElement("span");
-          nota.className = "opt-nota-bloqueada";
-          btn.appendChild(nota);
+        if (textoNota) {
+          if (!nota) {
+            nota = document.createElement("span");
+            nota.className = "opt-nota-bloqueada";
+            btn.appendChild(nota);
+          }
+          nota.textContent = textoNota;
+        } else if (nota) {
+          nota.remove();
         }
-        nota.textContent = textoNota;
         if (btn.classList.contains("active")) {
           btn.classList.remove("active");
           const ind = btn.querySelector(".opt-indicator");
@@ -3059,16 +3066,52 @@
       const valP2 = document.getElementById("input-p2").value;
 
       // Regla 3: Cruce P1 (Área) -> P4 (Tarea)
+      // Si en P1 eligió "Administración" o "Maestranza", la tarea en P4 ya queda determinada por P1
+      // y ninguna otra opción de P4 debe ser elegible.
       const groupP4 = document.getElementById("group-p4");
       const inputP4 = document.getElementById("input-p4");
+      const avisoP4Fijada = document.getElementById("aviso-p4-fijada");
+      const tareaFijadaPorP1 =
+        valP1 === "Administración"
+          ? "Administrativo"
+          : valP1 === "Maestranza"
+            ? "Maestranza"
+            : "";
+
       if (groupP4 && inputP4) {
-        groupP4.querySelectorAll(".opt-btn").forEach((btn) => {
-          const valBtn = btn.getAttribute("data-val");
-          const coincideConP1 =
-            (valP1 === "Maestranza" && valBtn === "Maestranza") ||
-            (valP1 === "Administración" && valBtn === "Administrativo");
-          aplicarBloqueoBoton(btn, inputP4, coincideConP1, "Ya elegida en P1");
-        });
+        if (tareaFijadaPorP1) {
+          groupP4.querySelectorAll(".opt-btn").forEach((btn) => {
+            const valBtn = btn.getAttribute("data-val");
+            const coincideConP1 = valBtn === tareaFijadaPorP1;
+            btn.classList.remove("active");
+            const ind = btn.querySelector(".opt-indicator");
+            if (ind) ind.innerHTML = "";
+            aplicarBloqueoBoton(
+              btn,
+              inputP4,
+              true,
+              coincideConP1 ? "Ya elegida en P1" : ""
+            );
+          });
+          inputP4.value = tareaFijadaPorP1;
+          inputP4.setAttribute("data-locked-by-p1", "true");
+          limpiarErrorTarjeta("qcard-p4");
+          if (avisoP4Fijada) {
+            avisoP4Fijada.textContent = `Ya definida en P1 (${tareaFijadaPorP1}) · opciones bloqueadas`;
+            avisoP4Fijada.classList.remove("hidden");
+          }
+        } else {
+          if (inputP4.getAttribute("data-locked-by-p1") === "true") {
+            inputP4.value = "";
+            inputP4.removeAttribute("data-locked-by-p1");
+          }
+          groupP4.querySelectorAll(".opt-btn").forEach((btn) => {
+            aplicarBloqueoBoton(btn, inputP4, false, "");
+          });
+          if (avisoP4Fijada) {
+            avisoP4Fijada.classList.add("hidden");
+          }
+        }
       }
 
       const valP4 = document.getElementById("input-p4").value;
