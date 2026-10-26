@@ -2251,12 +2251,6 @@
       <p>
         Tu respuesta fue registrada de forma <strong>100% anónima y confidencial</strong> dentro del Sistema de Gestión de Calidad y Procesos (<code>FO-SGC-05-IDI.11</code>).
       </p>
-      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-        <button type="button" class="boton boton--primario" onclick="reiniciarFormulario()">
-          <span class="icono" aria-hidden="true">restart_alt</span>
-          Cargar otra respuesta
-        </button>
-      </div>
     </div>
   </dialog>
 
@@ -3742,8 +3736,8 @@
       } catch (err) {
         encolarParaReintento(payload);
       } finally {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = `<span class="icono" aria-hidden="true">send</span> Enviar Encuesta Anónima`;
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<span class="icono" aria-hidden="true">check_circle</span> Respuesta enviada`;
       }
 
       const modalExito = document.getElementById("modal-exito");
