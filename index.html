@@ -2372,7 +2372,7 @@
     })();
 
     /* --- 3. Lógica del Cuestionario FO-SGC-05-IDI.11 --- */
-    const SCRIPT_URL = "";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmqfJ-rwZYMtW5tmtTK4nVznR2PqX9G_s-fU5cg__q02LoTzwB6YDjPajkjpMOxDWCoA/exec";
     const STORAGE_DRAFT_KEY = "borrador_clima_sp_2026_v1";
     const STORAGE_DB_KEY = "respuestas_clima_sp_2026";
     const STORAGE_QUEUE_KEY = "cola_envios_clima_sp_2026";
@@ -3446,7 +3446,7 @@
           await fetch(SCRIPT_URL, {
             method: "POST",
             mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload)
           });
         } else if (SCRIPT_URL && !navigator.onLine) {
@@ -3513,6 +3513,7 @@
       });
       localStorage.removeItem(STORAGE_DRAFT_KEY);
       actualizarCondicionales();
+      actualizarTodosLosContadores();
       actualizarProgresoGlobal();
       irABloque(1);
     }
