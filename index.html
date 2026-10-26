@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Encuesta de Clima Laboral 2026 · Subsecretaría de Servicios Públicos · Gobierno de Río Cuarto</title>
-  <meta name="description" content="Encuesta de Clima Laboral 2026 (FO-SGC-05-IDI.11) — Subsecretaría de Servicios Públicos · Dirección General de Estadísticas, Control de Calidad y Procesos — Municipalidad de Río Cuarto.">
-  <meta name="author" content="Dirección General de Estadísticas, Control de Calidad y Procesos — Municipalidad de Río Cuarto">
+  <link rel="icon" type="image/png" href="assets/fav.png">
 
-  <!-- Anti-flicker para el tema claro/oscuro -->
+  <title>Encuesta de Clima Laboral 2026 · Servicios Públicos — Gobierno de Río Cuarto</title>
+  <meta name="description" content="Encuesta de Clima Laboral 2026 (FO-SGC-05-IDI.11) de la Subsecretaría de Servicios Públicos para identificar fortalezas y oportunidades de mejora.">
+  <meta name="author" content="Dir. de Estadística, Control de Calidad y Procesos — Gobierno de Río Cuarto">
+  <meta name="dcterms.modified" content="2026-10">
+  <meta name="ods" content="8, 16">
+
+  <!-- Aplica el tema guardado ANTES de pintar la página, para evitar parpadeo (estándar rcu-tablero-template) -->
   <script>
     (function () {
       try {
-        var t = localStorage.getItem('clima_sp_tema');
+        var t = localStorage.getItem('tablero-tema');
         if (t === 'claro' || t === 'oscuro') {
           document.documentElement.setAttribute('data-tema', t);
         }
@@ -19,556 +23,665 @@
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0" rel="stylesheet">
   <script src="schema.js"></script>
 
   <style>
+    /* ==========================================================================
+       1. FUENTES E ÍCONOS AUTOALOJADOS (fuentes.css + iconos.css — Cero CDN)
+       ========================================================================== */
+    @font-face {
+      font-family: 'Google Sans';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('assets/sans.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Material Symbols Outlined';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('assets/icon.woff2') format('woff2');
+    }
+
+    .icono {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      color: currentColor;
+      vertical-align: middle;
+      user-select: none;
+    }
+
+    .icono--chico  { font-size: 18px; }
+    .icono--grande { font-size: 30px; }
+
+    /* ==========================================================================
+       2. TOKENS OFICIALES DEL SISTEMA DE DISEÑO (tokens.css — Auditado WCAG AA)
+       ========================================================================== */
     :root {
       color-scheme: light;
-      --bg: #ffffff;
-      --bg-alt: #f4f5f7;
-      --bg-soft: #eef2f6;
-      --ink: #14171a;
-      --ink-soft: #525b66;
-      --ink-muted: #76808c;
-      --line: #dde2e8;
-      --brand: #009DE0;
-      --brand-d: #0077ad;
-      --brand-bg: #e0f4fc;
-      --brand-border: rgba(0, 157, 224, 0.35);
 
-      --c-ok: #059669;
-      --c-ok-bg: #d1fae5;
-      --c-warn: #d97706;
-      --c-warn-bg: #fef3c7;
-      --c-alert: #dc2626;
-      --c-alert-bg: #fee2e2;
-      --c-purple: #6d28d9;
-      --c-purple-bg: #ede9fe;
+      --fondo: #f4f3f0;
+      --superficie: #ffffff;
+      --borde: #e2e1dc;
+      --texto: #14140f;
+      --texto-suave: #57564f;
 
-      --radius: 16px;
-      --radius-sm: 11px;
-      --shadow: 0 1px 3px rgba(20, 23, 26, 0.06), 0 4px 14px rgba(20, 23, 26, 0.04);
-      --shadow-lift: 0 10px 28px rgba(20, 23, 26, 0.12), 0 3px 8px rgba(20, 23, 26, 0.06);
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      /* --marca para FONDOS; --marca-enlace para cuando el celeste ES TEXTO */
+      --marca: #009de0;
+      --marca-texto: #ffffff;
+      --marca-enlace: #007eb3;
+
+      --serie-1: #009de0;
+      --serie-2: #eb6e22;
+      --serie-3: #00a85a;
+      --serie-4: #ff3cb2;
+      --serie-5: #6a4cff;
+      --serie-6: #b88b04;
+      --serie-7: #0a6079;
+      --serie-8: #e23b3b;
+
+      /* Estados: el color va al fondo (tinte) y al punto/borde, NUNCA al texto */
+      --ok: #008300;
+      --alerta: #eda100;
+      --grave: #d14342;
+
+      --acento: #d9209a;
+      --acento-texto: #ffffff;
+
+      --fuente: 'Google Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --radio: 12px;
+      --espacio: 16px;
+      --ancho-max: 900px;
+      --alto-control: 44px;
+      --filtro-escudo: none;
     }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-tema="claro"]) {
         color-scheme: dark;
-        --bg: #15191f;
-        --bg-alt: #0d1014;
-        --bg-soft: #1e242d;
-        --ink: #f1f5f9;
-        --ink-soft: #a8b3c2;
-        --ink-muted: #788496;
-        --line: #28303d;
-        --brand: #1cb0f0;
-        --brand-d: #58c7f7;
-        --brand-bg: #0f2c3d;
-        --brand-border: rgba(28, 176, 240, 0.4);
-        --c-ok-bg: #083828;
-        --c-warn-bg: #3b2809;
-        --c-alert-bg: #3d1414;
-        --c-purple-bg: #2a1854;
+        --fondo: #121211;
+        --superficie: #1b1b19;
+        --borde: #37372f;
+        --texto: #f6f6f2;
+        --texto-suave: #b9b8ad;
+
+        --marca: #0a86bd;
+        --marca-texto: #ffffff;
+        --marca-enlace: #148bc0;
+
+        --serie-1: #35b4ea;
+        --serie-2: #ff8f4d;
+        --serie-3: #1fc47c;
+        --serie-4: #ff63c4;
+        --serie-5: #9585ff;
+        --serie-6: #ffca3a;
+        --serie-7: #4fa6bf;
+        --serie-8: #ef6a6a;
+
+        --filtro-escudo: brightness(0) invert(0.78);
       }
     }
 
     :root[data-tema="oscuro"] {
       color-scheme: dark;
-      --bg: #15191f;
-      --bg-alt: #0d1014;
-      --bg-soft: #1e242d;
-      --ink: #f1f5f9;
-      --ink-soft: #a8b3c2;
-      --ink-muted: #788496;
-      --line: #28303d;
-      --brand: #1cb0f0;
-      --brand-d: #58c7f7;
-      --brand-bg: #0f2c3d;
-      --brand-border: rgba(28, 176, 240, 0.4);
-      --c-ok-bg: #083828;
-      --c-warn-bg: #3b2809;
-      --c-alert-bg: #3d1414;
-      --c-purple-bg: #2a1854;
+      --fondo: #121211;
+      --superficie: #1b1b19;
+      --borde: #37372f;
+      --texto: #f6f6f2;
+      --texto-suave: #b9b8ad;
+
+      --marca: #0a86bd;
+      --marca-texto: #ffffff;
+      --marca-enlace: #148bc0;
+
+      --serie-1: #35b4ea;
+      --serie-2: #ff8f4d;
+      --serie-3: #1fc47c;
+      --serie-4: #ff63c4;
+      --serie-5: #9585ff;
+      --serie-6: #ffca3a;
+      --serie-7: #4fa6bf;
+      --serie-8: #ef6a6a;
+
+      --filtro-escudo: brightness(0) invert(0.78);
     }
 
+    /* ==========================================================================
+       3. ESTRUCTURA BASE Y COMPONENTES OFICIALES (base.css + componentes.css)
+       ========================================================================== */
     * {
       box-sizing: border-box;
     }
 
     html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg-alt);
-      color: var(--ink);
-      font-family: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.48;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    .material-symbols-outlined {
-      font-family: 'Material Symbols Outlined';
-      font-weight: normal;
-      font-style: normal;
-      font-size: 20px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-      user-select: none;
-      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: var(--fuente);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .wrap {
-      max-width: 820px;
+    .contenedor {
+      max-width: var(--ancho-max);
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 var(--espacio);
     }
 
-    .hidden {
+    .hidden, [hidden] {
       display: none !important;
     }
 
-    /* ================= HEADER INSTITUCIONAL ================= */
-    .topbar {
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
-      padding: 12px 0;
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-muni {
-      height: 38px;
-      width: auto;
-      display: block;
-    }
-
-    .brand-divider {
-      width: 1px;
-      height: 30px;
-      background: var(--line);
-    }
-
-    .brand-titles {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-titles .org-top {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--brand-d);
-    }
-
-    .brand-titles .org-sub {
-      font-size: 12px;
+    /* Enlace accesible "Saltar al contenido" (Ley 26.653 / WCAG 2.1 AA) */
+    .saltar-contenido {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 100;
+      padding: 10px 16px;
+      border-radius: var(--radio);
+      background: var(--marca);
+      color: var(--marca-texto);
       font-weight: 600;
-      color: var(--ink-soft);
+      text-decoration: none;
+      transform: translateY(-200%);
     }
 
-    .topbar-actions {
+    .saltar-contenido:focus-visible {
+      transform: none;
+      outline: 2px solid var(--texto);
+      outline-offset: 2px;
+    }
+
+    /* --- Header Oficial (.encabezado) --- */
+    .encabezado {
+      background: var(--marca);
+      color: var(--marca-texto);
+      padding: 18px 0;
+    }
+
+    .encabezado .contenedor {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
     }
 
-    .code-pill {
-      font-size: 11px;
+    .encabezado .logo {
+      height: 46px;
+      width: auto;
+      flex: 0 0 auto;
+    }
+
+    .encabezado .separador {
+      width: 1px;
+      align-self: stretch;
+      background: var(--marca-texto);
+      opacity: 0.4;
+    }
+
+    .encabezado .titulos {
+      min-width: 0;
+    }
+
+    /* 1.17rem (18.7px) + 700: califica como texto grande WCAG AA sobre --marca */
+    .encabezado .titulos h1 {
+      margin: 0;
+      font-size: 1.17rem;
       font-weight: 700;
-      color: var(--brand-d);
-      background: var(--brand-bg);
-      border: 1px solid var(--brand-border);
-      padding: 4px 10px;
-      border-radius: 999px;
-      letter-spacing: 0.02em;
+      line-height: 1.2;
     }
 
-    .icon-btn {
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      color: var(--ink);
+    .encabezado .titulos p {
+      margin: 2px 0 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 600px) {
+      .encabezado { padding: 14px 0; }
+      .encabezado .contenedor { gap: 12px; }
+      .encabezado .logo { height: 38px; }
+      .encabezado .titulos p { font-size: 0.8rem; }
+    }
+
+    .boton-tema {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 38px;
       height: 38px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      margin-left: auto;
+      flex: 0 0 auto;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--marca-texto);
       cursor: pointer;
-      transition: all 0.15s var(--ease);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .icon-btn:hover {
-      border-color: var(--brand);
-      color: var(--brand-d);
+    .boton-tema:hover { background: rgba(255, 255, 255, 0.28); }
+    .boton-tema:focus-visible {
+      outline: 2px solid var(--marca-texto);
+      outline-offset: 2px;
     }
+    .boton-tema svg { width: 19px; height: 19px; }
+    .boton-tema .icono-sol { display: none; }
+    .boton-tema .icono-luna { display: block; }
+    .boton-tema.es-oscuro .icono-sol { display: block; }
+    .boton-tema.es-oscuro .icono-luna { display: none; }
 
-    /* ================= BARRA DE PROGRESO STICKY ================= */
-    .progress-sticky {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-      padding: 10px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    }
+    /* --- Tipografía y Clases de Texto (componentes.css) --- */
+    .titulo-xl { font-size: 2rem; font-weight: 700; line-height: 1.15; margin: 0; }
+    .titulo-l  { font-size: 1.5rem; font-weight: 700; line-height: 1.2; margin: 0; }
+    .titulo-m  { font-size: 1.1rem; font-weight: 600; line-height: 1.25; margin: 0; }
+    .titulo-s  { font-size: 1.05rem; font-weight: 600; line-height: 1.3; margin: 0; }
+    .texto { font-size: 1rem; color: var(--texto); }
+    .texto-suave { color: var(--texto-suave); }
+    .texto-chico { font-size: 0.85rem; }
+    .texto-numero { font-variant-numeric: tabular-nums; }
 
-    .progress-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 7px;
-      flex-wrap: wrap;
-    }
-
-    .progress-status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .progress-pct-badge {
-      background: var(--brand);
-      color: #fff;
-      font-size: 11.5px;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    .autosave-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--ink-soft);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 7px;
-      background: var(--bg-soft);
-      border-radius: 999px;
+    .solo-lectores {
+      position: absolute;
+      width: 1px;
+      height: 1px;
       overflow: hidden;
-      margin-bottom: 8px;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--brand) 0%, #00c96b 100%);
-      border-radius: 999px;
-      transition: width 0.3s var(--ease);
-    }
-
-    .block-nav-pills {
-      display: flex;
-      gap: 5px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-      scrollbar-width: none;
-    }
-
-    .block-nav-pills::-webkit-scrollbar {
-      display: none;
-    }
-
-    .block-pill {
-      flex: 1;
-      min-width: 92px;
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 5px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--ink-soft);
-      cursor: pointer;
-      display: flex;
+    /* --- Botones Oficiales (.boton) --- */
+    .boton {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      white-space: nowrap;
-      transition: all 0.15s var(--ease);
-      font-family: inherit;
-    }
-
-    .block-pill.current {
-      border-color: var(--brand);
-      background: var(--brand-bg);
-      color: var(--brand-d);
-    }
-
-    .block-pill.completed {
-      border-color: rgba(5, 150, 105, 0.4);
-      background: var(--c-ok-bg);
-      color: var(--c-ok);
-    }
-
-    /* ================= TARJETA DE PROPÓSITO E INTRO ================= */
-    .hero-card {
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--brand);
-      border-radius: var(--radius);
-      padding: 22px;
-      margin: 20px 0 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .hero-tag {
-      font-size: 11.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--brand-d);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .mode-switch-btn {
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--ink-soft);
+      font: inherit;
+      font-weight: 600;
+      line-height: 1;
+      min-height: var(--alto-control);
+      padding: 0 16px;
+      border-radius: var(--radio);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--texto);
       cursor: pointer;
+      text-decoration: none;
+      transition: filter 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .boton:hover { filter: brightness(0.96); }
+    .boton:active { filter: brightness(0.92); }
+    .boton:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
+    }
+    .boton[disabled], .boton.deshabilitado {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: none;
+    }
+
+    .boton--primario {
+      background: var(--marca);
+      color: var(--marca-texto);
+      border-color: var(--marca);
+    }
+
+    .boton--secundario {
+      background: var(--superficie);
+      color: var(--texto);
+      border-color: var(--borde);
+    }
+    .boton--secundario:hover { background: var(--fondo); }
+
+    .boton--sutil {
+      background: transparent;
+      color: var(--marca-enlace);
+      border-color: transparent;
+    }
+    .boton--sutil:hover {
+      background: color-mix(in srgb, var(--marca) 12%, transparent);
+    }
+
+    .boton--peligro {
+      background: var(--grave);
+      color: #ffffff;
+      border-color: var(--grave);
+    }
+
+    .boton--chico {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 0.85rem;
+    }
+
+    .boton--grande {
+      min-height: 54px;
+      padding: 0 22px;
+      font-size: 1.05rem;
+    }
+
+    .boton--pildora {
+      border-radius: 999px;
+      padding: 10px 18px;
+    }
+    .boton--pildora .icono { color: var(--marca-enlace); }
+    .boton--pildora img { width: 20px; height: 20px; }
+
+    /* --- Etiquetas de Estado (.estado — texto neutro, punto + tinte con color) --- */
+    .estado {
       display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: inherit;
-    }
-
-    .mode-switch-btn:hover {
-      border-color: var(--brand);
-      color: var(--brand-d);
-    }
-
-    .hero-card h1 {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      margin: 0 0 4px;
-      color: var(--ink);
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ink-soft);
-      margin: 0 0 14px;
-    }
-
-    .purpose-box {
-      background: var(--brand-bg);
-      border: 1px solid var(--brand-border);
-      border-radius: var(--radius-sm);
-      padding: 15px 18px;
-    }
-
-    .purpose-box h2 {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--brand-d);
-      margin: 0 0 6px;
-      display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--texto);
+      font-variant-numeric: tabular-nums;
     }
 
-    .purpose-box p {
-      font-size: 13.5px;
-      margin: 0 0 10px;
-      color: var(--ink);
+    .estado::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-estado);
+      flex-shrink: 0;
     }
 
-    .purpose-list {
-      margin: 0 0 10px;
-      padding-left: 18px;
-      font-size: 13px;
-      color: var(--ink);
+    .estado--ok {
+      --color-estado: var(--ok);
+      background: color-mix(in srgb, var(--ok) 14%, transparent);
+    }
+    .estado--alerta {
+      --color-estado: var(--alerta);
+      background: color-mix(in srgb, var(--alerta) 14%, transparent);
+    }
+    .estado--grave {
+      --color-estado: var(--grave);
+      background: color-mix(in srgb, var(--grave) 14%, transparent);
+    }
+    .estado--neutro {
+      --color-estado: var(--texto-suave);
+      background: color-mix(in srgb, var(--texto-suave) 12%, transparent);
     }
 
-    .purpose-list li {
-      margin-bottom: 4px;
-    }
-
-    .purpose-thanks {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--brand-d);
-      margin: 0;
-    }
-
-    .anon-guarantee-bar {
+    /* --- Avisos / Callouts Oficiales (.aviso) --- */
+    .aviso {
+      --color-estado: var(--marca);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px dashed var(--line);
-      font-size: 12px;
-      color: var(--ink-soft);
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      color: var(--texto);
+      background: color-mix(in srgb, var(--color-estado) 12%, var(--superficie));
+      border: 1px solid color-mix(in srgb, var(--color-estado) 45%, transparent);
+      border-left: 5px solid var(--color-estado);
+      border-radius: var(--radio);
+    }
+    .aviso .icono { flex: none; margin-top: 2px; color: var(--marca-enlace); }
+    .aviso p { margin: 0; }
+    .aviso strong { display: block; margin-bottom: 2px; }
+    .aviso--info   { --color-estado: var(--marca); }
+    .aviso--ok     { --color-estado: var(--ok); }
+    .aviso--ok .icono { color: var(--ok); }
+    .aviso--alerta { --color-estado: var(--alerta); }
+    .aviso--alerta .icono { color: var(--serie-6); }
+    .aviso--grave  { --color-estado: var(--grave); }
+    .aviso--grave .icono { color: var(--grave); }
+
+    /* --- Sección Intro y Píldoras (.intro + .actualizado) --- */
+    main {
+      padding: 22px 0 12px;
     }
 
-    .anon-badges {
+    .intro {
+      margin-bottom: 18px;
+    }
+
+    .intro-cabecera {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .intro h2 {
+      margin: 0 0 4px;
+      font-size: 1.65rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .intro .bajada {
+      margin: 0;
+      color: var(--texto-suave);
+      max-width: 65ch;
+      font-size: 1rem;
+    }
+
+    .intro-pildoras {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-top: 10px;
     }
 
-    .anon-Chip {
+    .intro .actualizado {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      background: var(--bg-soft);
-      padding: 4px 9px;
-      border-radius: 6px;
+      gap: 6px;
+      margin: 0;
+      padding: 5px 14px 5px 10px;
+      font-size: 0.82rem;
       font-weight: 600;
-      font-size: 11.5px;
+      color: var(--texto);
+      background: color-mix(in srgb, var(--marca) 12%, var(--superficie));
+      border: 1px solid color-mix(in srgb, var(--marca) 30%, transparent);
+      border-radius: 999px;
     }
 
-    .link-btn {
-      background: none;
-      border: none;
-      color: var(--brand-d);
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 0;
-      font-family: inherit;
+    .intro .actualizado .icono {
+      font-size: 18px;
+      color: var(--marca-enlace);
     }
 
-    /* ================= SECCIONES / BLOQUES DEL FORMULARIO ================= */
-    .form-section {
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 24px 22px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      transition: all 0.2s var(--ease);
+    /* --- Paneles y KPIs (.panel, .indicadores, .kpi) --- */
+    .panel {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 20px;
+      margin-bottom: 18px;
+      min-width: 0;
     }
 
-    .sec-header {
-      border-bottom: 2px solid var(--line);
-      padding-bottom: 12px;
+    .indicadores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 14px 16px;
+    }
+    .kpi .etiqueta { font-size: 0.8rem; color: var(--texto-suave); margin: 0 0 4px; }
+    .kpi .valor { font-size: 1.65rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; margin: 0; }
+    .kpi .detalle { font-size: 0.78rem; color: var(--texto-suave); margin: 4px 0 0; }
+
+    /* --- Barra Sticky de Progreso y Pestañas ARIA (.pestanas) --- */
+    .barra-progreso-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 35;
+      background: color-mix(in srgb, var(--superficie) 94%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--borde);
+      padding-top: 10px;
       margin-bottom: 18px;
     }
 
-    .sec-badge-row {
+    .progreso-fila-superior {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 4px;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
     }
 
-    .sec-kicker {
-      font-size: 11.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--brand-d);
-      background: var(--brand-bg);
-      padding: 3px 9px;
-      border-radius: 6px;
-    }
-
-    .sec-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin: 4px 0 0;
+    .progreso-info {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--ink);
+      font-size: 0.88rem;
+      font-weight: 700;
     }
 
-    .scale-legend {
-      background: var(--bg-soft);
-      border-left: 4px solid var(--brand);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 12.5px;
-      color: var(--ink-soft);
-      margin-bottom: 18px;
-      line-height: 1.45;
+    .progreso-pista {
+      width: 100%;
+      height: 6px;
+      background: var(--fondo);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 6px;
     }
 
-    .scale-legend strong {
-      color: var(--ink);
+    .progreso-relleno {
+      height: 100%;
+      width: 0%;
+      background: var(--marca);
+      border-radius: 999px;
+      transition: width 0.25s ease;
     }
 
-    /* ================= PREGUNTAS Y CONTROLES ================= */
+    .pestanas {
+      display: flex;
+      gap: 2px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--borde);
+      scrollbar-width: none;
+    }
+    .pestanas::-webkit-scrollbar { display: none; }
+
+    .pestana {
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+      background: transparent;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      padding: 9px 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .pestana:hover { color: var(--texto); }
+
+    .pestana[aria-selected="true"] {
+      color: var(--texto);
+      font-weight: 700;
+      border-bottom-color: var(--marca);
+    }
+
+    .pestana.completada .icono-check {
+      color: var(--ok);
+      font-size: 16px;
+    }
+
+    .pestana:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: -2px;
+      border-radius: var(--radio) var(--radio) 0 0;
+    }
+
+    /* ==========================================================================
+       4. ESTILOS ESPECÍFICOS DE LA ENCUESTA (Usa tokens.css sin hex sueltos)
+       ========================================================================== */
+    .cabecera-bloque {
+      border-bottom: 1px solid var(--borde);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .cabecera-bloque-izq {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cabecera-bloque-izq .icono {
+      color: var(--marca-enlace);
+      font-size: 24px;
+    }
+
     .q-card {
       padding: 16px 0;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--borde);
     }
 
-    .q-card:first-of-type {
-      padding-top: 4px;
-    }
+    .q-card:first-of-type { padding-top: 4px; }
+    .q-card:last-of-type  { border-bottom: 0; padding-bottom: 4px; }
 
-    .q-card:last-of-type {
-      border-bottom: none;
-      padding-bottom: 4px;
-    }
-
+    /* Tarjeta condicional (sigue el molde de .aviso--info) */
     .q-card.conditional-card {
-      background: color-mix(in srgb, var(--brand-bg) 42%, var(--bg));
-      border: 1.5px solid var(--brand-border);
-      border-radius: var(--radius-sm);
+      background: color-mix(in srgb, var(--marca) 8%, var(--superficie));
+      border: 1px solid color-mix(in srgb, var(--marca) 35%, var(--borde));
+      border-left: 5px solid var(--marca);
+      border-radius: var(--radio);
       padding: 16px;
       margin: 12px 0;
     }
 
+    /* Tarjeta con error de validación (sigue el molde de .error / .aviso--grave) */
     .q-card.has-error {
-      background: color-mix(in srgb, var(--c-alert-bg) 35%, var(--bg));
-      border: 1.5px solid var(--c-alert);
-      border-radius: var(--radius-sm);
+      background: color-mix(in srgb, var(--grave) 10%, var(--superficie));
+      border: 1px solid var(--grave);
+      border-left: 5px solid var(--grave);
+      border-radius: var(--radio);
       padding: 14px;
     }
 
@@ -580,40 +693,40 @@
     }
 
     .q-num {
-      background: var(--brand);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
+      background: var(--marca);
+      color: var(--marca-texto);
+      font-size: 0.8rem;
+      font-weight: 700;
       min-width: 28px;
       height: 26px;
       padding: 0 7px;
-      border-radius: 7px;
+      border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
     }
 
     .q-num.cond {
-      background: var(--c-warn);
+      background: var(--serie-2);
+      color: #ffffff;
     }
 
-    .q-label-wrap {
-      flex: 1;
-    }
+    .q-label-wrap { flex: 1; }
 
     .q-title {
-      font-size: 14.5px;
+      font-size: 1rem;
       font-weight: 700;
-      color: var(--ink);
+      color: var(--texto);
       margin: 0 0 3px;
-      line-height: 1.38;
+      line-height: 1.35;
     }
 
     .q-meta {
-      font-size: 12px;
-      color: var(--ink-soft);
+      font-size: 0.82rem;
+      color: var(--texto-suave);
       margin: 0;
       display: flex;
       align-items: center;
@@ -621,66 +734,50 @@
       flex-wrap: wrap;
     }
 
-    .counter-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      color: var(--ink-soft);
-    }
-
-    .counter-pill.limit-reached {
-      background: var(--c-warn-bg);
-      color: var(--c-warn);
-      border-color: rgba(217, 119, 6, 0.4);
-    }
-
-    /* OPCIONES DE SELECCIÓN ÚNICA Y MÚLTIPLE (TARJETAS TÁCTILES) */
+    /* Botones de Selección Única y Múltiple */
     .options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
       gap: 8px;
     }
 
-    .options-grid.cols-1 {
-      grid-template-columns: 1fr;
-    }
-
     .opt-btn {
-      background: var(--bg-alt);
-      border: 1.5px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 11px 13px;
-      font-size: 13.5px;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      min-height: var(--alto-control);
+      padding: 10px 14px;
+      font: inherit;
+      font-size: 0.92rem;
       font-weight: 600;
-      color: var(--ink);
+      color: var(--texto);
       cursor: pointer;
       text-align: left;
       display: flex;
       align-items: center;
       gap: 10px;
-      transition: all 0.16s var(--ease);
-      font-family: inherit;
-      line-height: 1.3;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .opt-btn:hover {
-      border-color: var(--brand);
-      background: color-mix(in srgb, var(--brand-bg) 35%, var(--bg));
+      border-color: var(--marca);
+      background: color-mix(in srgb, var(--marca) 8%, var(--superficie));
+    }
+
+    .opt-btn:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
     }
 
     .opt-btn .opt-indicator {
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      border: 2px solid var(--ink-muted);
+      border: 2px solid var(--texto-suave);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.15s var(--ease);
     }
 
     .opt-btn.multi .opt-indicator {
@@ -688,92 +785,95 @@
     }
 
     .opt-btn.active {
-      background: var(--brand-bg);
-      border-color: var(--brand);
-      color: var(--ink);
+      background: color-mix(in srgb, var(--marca) 14%, var(--superficie));
+      border: 2px solid var(--marca);
+      color: var(--texto);
       font-weight: 700;
-      box-shadow: 0 2px 8px rgba(0, 157, 224, 0.16);
     }
 
     .opt-btn.active .opt-indicator {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #fff;
+      background: var(--marca);
+      border-color: var(--marca);
+      color: var(--marca-texto);
     }
 
     .opt-btn.disabled-max:not(.active) {
-      opacity: 0.48;
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
+    /* Campos de texto e inputs (alineados a .filtros input de componentes.css) */
     .otro-input-wrap {
       margin-top: 10px;
-      padding: 12px;
-      background: var(--bg);
-      border: 1.5px solid var(--brand);
-      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      background: var(--superficie);
+      border: 1px solid var(--marca);
+      border-left: 4px solid var(--marca);
+      border-radius: var(--radio);
     }
 
     .otro-input-wrap label {
       display: block;
-      font-size: 12.5px;
+      font-size: 0.85rem;
       font-weight: 700;
-      color: var(--brand-d);
+      color: var(--texto);
       margin-bottom: 6px;
     }
 
     .form-input,
     .form-textarea {
       width: 100%;
-      background: var(--bg-alt);
-      border: 1.5px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 11px 14px;
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+      font: inherit;
+      font-size: 0.95rem;
+      color: var(--texto);
+      background: var(--fondo);
+      border: 1px solid var(--texto-suave);
+      border-radius: var(--radio);
+      padding: 10px 12px;
     }
 
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: var(--brand);
-      background: var(--bg);
-      box-shadow: 0 0 0 3px var(--brand-bg);
+    .form-input {
+      height: var(--alto-control);
     }
 
-    /* ================= ESCALAS LIKERT 1 A 5 TÁCTILES ================= */
+    .form-input:focus-visible,
+    .form-textarea:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
+      background: var(--superficie);
+    }
+
+    /* Escalas Likert 1 a 5 (con colores de tokens.css y texto en --texto para contraste WCAG AA) */
     .likert-row {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 7px;
+      gap: 8px;
     }
 
     .likert-row.with-na {
-      grid-template-columns: repeat(5, 1fr) 115px;
+      grid-template-columns: repeat(5, 1fr) 120px;
     }
 
     @media (max-width: 640px) {
-      .likert-row {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 5px;
-      }
+      .likert-row,
       .likert-row.with-na {
         grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
       }
       .likert-row.with-na .likert-btn.na-btn {
         grid-column: 1 / -1;
         flex-direction: row;
+        min-height: 40px;
         padding: 8px 12px;
         gap: 8px;
       }
     }
 
     .likert-btn {
-      background: var(--bg-alt);
-      border: 1.5px solid var(--line);
-      border-radius: var(--radius-sm);
+      --color-likert: var(--marca);
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
       padding: 10px 4px 8px;
       cursor: pointer;
       display: flex;
@@ -781,14 +881,19 @@
       align-items: center;
       justify-content: flex-start;
       gap: 4px;
-      transition: all 0.16s var(--ease);
-      font-family: inherit;
-      color: var(--ink);
+      font: inherit;
+      color: var(--texto);
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
     }
 
     .likert-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      border-color: var(--color-likert);
+      background: color-mix(in srgb, var(--color-likert) 8%, var(--superficie));
+    }
+
+    .likert-btn:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
     }
 
     .likert-top {
@@ -798,979 +903,1119 @@
     }
 
     .likert-num {
-      font-size: 15px;
-      font-weight: 900;
+      font-size: 1rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--texto);
     }
 
     .likert-icon {
       font-size: 22px;
-      font-variation-settings: 'FILL' 0, 'wght' 500;
+      color: var(--color-likert);
     }
 
     .likert-text {
-      font-size: 10.5px;
+      font-size: 0.74rem;
       font-weight: 600;
-      color: var(--ink-soft);
+      color: var(--texto-suave);
       text-align: center;
       line-height: 1.15;
     }
 
-    /* Colores semafóricos por valor (1 a 5) */
-    .likert-btn[data-val="5"] .likert-icon,
-    .likert-btn[data-val="5"] .likert-num { color: #059669; }
-    .likert-btn[data-val="4"] .likert-icon,
-    .likert-btn[data-val="4"] .likert-num { color: #65a30d; }
-    .likert-btn[data-val="3"] .likert-icon,
-    .likert-btn[data-val="3"] .likert-num { color: #d97706; }
-    .likert-btn[data-val="2"] .likert-icon,
-    .likert-btn[data-val="2"] .likert-num { color: #ea580c; }
-    .likert-btn[data-val="1"] .likert-icon,
-    .likert-btn[data-val="1"] .likert-num { color: #dc2626; }
+    /* Asignación semafórica mediante variables de tokens.css */
+    .likert-btn[data-val="5"] { --color-likert: var(--ok); }
+    .likert-btn[data-val="4"] { --color-likert: var(--serie-3); }
+    .likert-btn[data-val="3"] { --color-likert: var(--serie-6); }
+    .likert-btn[data-val="2"] { --color-likert: var(--serie-2); }
+    .likert-btn[data-val="1"] { --color-likert: var(--grave); }
 
+    /* Al seleccionarse: tinte de fondo al 16% y texto en --texto (12-16:1 WCAG AA) */
     .likert-btn.active {
-      transform: translateY(-1px);
-    }
-    .likert-btn.active .likert-icon {
-      font-variation-settings: 'FILL' 1, 'wght' 600;
-      transform: scale(1.1);
-    }
-    .likert-btn.active .likert-text {
-      font-weight: 800;
-      color: var(--ink);
+      background: color-mix(in srgb, var(--color-likert) 16%, var(--superficie));
+      border: 2px solid var(--color-likert);
     }
 
-    .likert-btn[data-val="5"].active {
-      background: var(--c-ok-bg);
-      border-color: #059669;
-      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.22);
-    }
-    .likert-btn[data-val="4"].active {
-      background: color-mix(in srgb, #65a30d 18%, var(--bg));
-      border-color: #65a30d;
-      box-shadow: 0 3px 10px rgba(101, 163, 13, 0.2);
-    }
-    .likert-btn[data-val="3"].active {
-      background: var(--c-warn-bg);
-      border-color: #d97706;
-      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.2);
-    }
-    .likert-btn[data-val="2"].active {
-      background: color-mix(in srgb, #ea580c 18%, var(--bg));
-      border-color: #ea580c;
-      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.2);
-    }
-    .likert-btn[data-val="1"].active {
-      background: var(--c-alert-bg);
-      border-color: #dc2626;
-      box-shadow: 0 3px 10px rgba(220, 38, 38, 0.22);
+    .likert-btn.active .likert-text {
+      color: var(--texto);
+      font-weight: 700;
     }
 
     .likert-btn.na-btn {
+      --color-likert: var(--texto-suave);
       border-style: dashed;
     }
     .likert-btn.na-btn.active {
-      background: var(--bg-soft);
       border-style: solid;
-      border-color: var(--ink-soft);
     }
 
-    /* ================= SUBFILAS MATRIZ (P23 y P24) ================= */
+    /* Subfilas de matriz (P23 y P24) */
     .matrix-subrow {
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
       padding: 14px;
       margin-bottom: 12px;
     }
-
-    .matrix-subrow:last-child {
-      margin-bottom: 0;
-    }
-
+    .matrix-subrow:last-child { margin-bottom: 0; }
     .matrix-subrow-title {
-      font-size: 13.5px;
-      font-weight: 800;
+      font-size: 0.92rem;
+      font-weight: 700;
       margin: 0 0 10px;
-      color: var(--ink);
+      color: var(--texto);
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* ================= ESCALA eNPS 1 A 10 (P27) ================= */
+    /* Escala eNPS 1 a 10 (P27) */
     .enps-grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 6px;
     }
-
     @media (max-width: 520px) {
-      .enps-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
+      .enps-grid { grid-template-columns: repeat(5, 1fr); }
     }
 
     .enps-btn {
-      background: var(--bg-alt);
-      border: 1.5px solid var(--line);
-      border-radius: 10px;
-      padding: 12px 4px;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--ink);
+      --color-enps: var(--marca);
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      min-height: var(--alto-control);
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--texto);
       cursor: pointer;
-      transition: all 0.15s var(--ease);
-      font-family: inherit;
     }
+
+    .enps-btn.detractor { --color-enps: var(--grave); }
+    .enps-btn.pasivo    { --color-enps: var(--serie-6); }
+    .enps-btn.promotor  { --color-enps: var(--ok); }
 
     .enps-btn:hover {
-      border-color: var(--brand);
-      transform: translateY(-2px);
+      border-color: var(--color-enps);
+      background: color-mix(in srgb, var(--color-enps) 10%, var(--superficie));
     }
 
-    .enps-btn.detractor.active {
-      background: #dc2626;
-      border-color: #dc2626;
-      color: #fff;
-      box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+    .enps-btn:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
     }
 
-    .enps-btn.pasivo.active {
-      background: #d97706;
-      border-color: #d97706;
-      color: #fff;
-      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.3);
-    }
-
-    .enps-btn.promotor.active {
-      background: #059669;
-      border-color: #059669;
-      color: #fff;
-      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
+    .enps-btn.active {
+      background: color-mix(in srgb, var(--color-enps) 20%, var(--superficie));
+      border: 2px solid var(--color-enps);
+      font-weight: 800;
     }
 
     .enps-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 11.5px;
-      color: var(--ink-soft);
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--texto-suave);
       margin-top: 8px;
       font-weight: 600;
     }
 
-    /* ================= NAVEGACIÓN POR BLOQUES Y ENVÍO ================= */
     .wizard-nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin: 20px 0 32px;
+      margin: 18px 0 28px;
     }
 
-    .btn-secondary {
-      background: var(--bg);
-      border: 1.5px solid var(--line);
-      color: var(--ink);
-      padding: 13px 20px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: inherit;
-      transition: all 0.15s var(--ease);
+    /* --- Modales Nativos (<dialog class="modal"> de componentes.css) --- */
+    .modal {
+      width: min(720px, calc(100% - 32px));
+      max-height: calc(100% - 32px);
+      padding: 0;
+      border: 1px solid var(--borde);
+      border-radius: 24px;
+      background: var(--superficie);
+      color: var(--texto);
     }
 
-    .btn-secondary:hover {
-      border-color: var(--brand);
-      color: var(--brand-d);
+    .modal::backdrop {
+      background: rgba(0, 0, 0, 0.55);
     }
 
-    .btn-primary {
-      background: var(--brand);
-      border: none;
-      color: #fff;
-      padding: 14px 26px;
-      border-radius: 999px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
-      box-shadow: 0 4px 14px rgba(0, 157, 224, 0.32);
-      transition: all 0.18s var(--ease);
+    .modal-cuerpo {
+      padding: 24px 28px 28px;
     }
 
-    .btn-primary:hover {
-      background: var(--brand-d);
-      transform: translateY(-1px);
-    }
-
-    .btn-submit-full {
-      width: 100%;
-      background: linear-gradient(135deg, #009DE0 0%, #059669 100%);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 16px 28px;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
+    .modal-cabecera {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
-      box-shadow: 0 6px 18px rgba(0, 157, 224, 0.35);
-      margin: 18px 0 36px;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
     }
 
-    /* ================= ALERTAS Y MODALES ================= */
+    .modal-cabecera h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .modal-cabecera h2 img { width: 28px; height: 28px; }
+    .modal-cabecera form { margin: 0; }
+
+    .modal-cerrar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: var(--fondo);
+      color: var(--texto);
+      cursor: pointer;
+    }
+    .modal-cerrar:hover { filter: brightness(0.94); }
+    .modal-cerrar:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 2px;
+    }
+
+    .modal-cuerpo > p {
+      margin: 0 0 16px;
+      color: var(--texto-suave);
+    }
+
+    .modal-cuerpo a {
+      color: var(--marca-enlace);
+      font-weight: 600;
+    }
+
+    .ods-grilla {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .ods-grilla img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* --- Footer Institucional de 2 Filas (.pie de base.css) --- */
+    .pie {
+      margin-top: 32px;
+      border-top: 1px solid var(--borde);
+      padding: 20px 0 28px;
+      font-size: 0.8rem;
+      color: var(--texto-suave);
+    }
+
+    .pie .contenedor {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pie-fila {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 24px;
+    }
+
+    .pie-fila--inferior {
+      padding-top: 16px;
+      border-top: 1px solid var(--borde);
+    }
+
+    .pie-escudos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 24px;
+    }
+
+    .pie-escudos img {
+      height: 38px;
+      width: auto;
+      filter: var(--filtro-escudo);
+    }
+
+    .pie-acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pie p { margin: 0; }
+
+    .pie-textos {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pie-textos strong {
+      font-weight: 700;
+      color: var(--texto);
+    }
+
+    .enlaces-paginas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+    }
+
+    .enlaces-paginas a,
+    .enlaces-paginas button {
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      color: var(--marca-enlace);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .enlaces-paginas a:hover,
+    .enlaces-paginas button:hover {
+      text-decoration: underline;
+    }
+
+    /* Toast accesible */
     .toast-banner {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: #14171a;
-      color: #fff;
+      background: var(--superficie);
+      color: var(--texto);
+      border: 1px solid var(--grave);
+      border-left: 5px solid var(--grave);
       padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 13px;
+      border-radius: var(--radio);
+      font-size: 0.9rem;
       font-weight: 600;
       display: none;
       align-items: center;
-      gap: 8px;
-      z-index: 90;
-      box-shadow: var(--shadow-lift);
+      gap: 10px;
+      z-index: 95;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
       max-width: 92vw;
     }
+    .toast-banner.show { display: inline-flex; }
 
-    .toast-banner.show {
-      display: inline-flex;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 14, 18, 0.68);
-      backdrop-filter: blur(5px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 100;
-      overflow-y: auto;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal-box {
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 26px;
-      max-width: 580px;
-      width: 100%;
-      box-shadow: var(--shadow-lift);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .receipt-box {
-      background: var(--bg-soft);
-      border: 1px dashed var(--line);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      text-align: left;
-      font-size: 12px;
-      margin: 14px 0 18px;
-      color: var(--ink-soft);
-    }
-
-    /* ================= FOOTER ================= */
-    footer.site-footer {
-      border-top: 1px solid var(--line);
-      background: var(--bg);
-      padding: 24px 0 36px;
-      margin-top: 30px;
-      font-size: 12px;
-      color: var(--ink-soft);
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= HEADER INSTITUCIONAL ================= -->
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <div class="brand-group">
-        <img class="logo-muni" src="assets/logo.png" alt="Gobierno de Río Cuarto">
-        <span class="brand-divider" aria-hidden="true"></span>
-        <div class="brand-titles">
-          <span class="org-top">Secretaría de Gestión y Participación Ciudadana</span>
-          <span class="org-sub">Dirección General de Estadísticas, Control de Calidad y Procesos</span>
-        </div>
+  <!-- Enlace accesible para teclado (Ley 26.653 / WCAG 2.1 AA) -->
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- ================= HEADER (igual en todos los tableros) ================ -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <img class="logo" src="assets/gob.webp" alt="Gobierno de Río Cuarto">
+      <span class="separador" aria-hidden="true"></span>
+      <div class="titulos">
+        <h1>Sec. Gestión y Participación Ciudadana</h1>
+        <p>Dir. de Estadística, Control de Calidad y Procesos</p>
       </div>
 
-      <div class="topbar-actions">
-        <span class="code-pill" title="Código oficial del Sistema de Gestión de Calidad y Procesos">FO-SGC-05-IDI.11</span>
-        <button type="button" class="icon-btn" id="btn-theme" title="Cambiar entre modo claro y oscuro" aria-label="Cambiar entre modo claro y oscuro">
-          <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
-        </button>
-      </div>
+      <!-- Interruptor de modo claro/oscuro oficial -->
+      <button type="button" class="boton-tema" id="boton-tema" aria-label="Cambiar entre modo claro y oscuro">
+        <svg class="icono-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>
+        </svg>
+        <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
     </div>
   </header>
 
-  <!-- ================= BARRA DE PROGRESO Y AUTOGUARDADO ================= -->
-  <div class="progress-sticky" role="region" aria-label="Progreso de la encuesta">
-    <div class="wrap">
-      <div class="progress-top-row">
-        <div class="progress-status">
-          <span class="progress-pct-badge" id="progress-pct">0%</span>
-          <span id="progress-label">Bloque 1 de 7 · Datos generales</span>
+  <!-- ========================= CONTENIDO PRINCIPAL ========================= -->
+  <main id="contenido">
+    <div class="contenedor">
+
+      <!-- SECCIÓN INTRO OFICIAL (.intro) -->
+      <section class="intro" aria-labelledby="titulo-encuesta">
+        <div class="intro-cabecera">
+          <div>
+            <h2 id="titulo-encuesta">Encuesta de Clima Laboral 2026</h2>
+            <p class="bajada">Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto</p>
+          </div>
+          <button type="button" class="boton boton--secundario boton--chico" id="btn-toggle-view-mode">
+            <span class="icono icono--chico" aria-hidden="true" id="view-mode-icon">view_agenda</span>
+            <span id="view-mode-text">Ver formulario completo</span>
+          </button>
         </div>
-        <div class="autosave-indicator" id="autosave-status">
-          <span class="material-symbols-outlined" style="font-size:15px; color:var(--c-ok);">cloud_done</span>
-          <span>Guardado local automático activo</span>
+
+        <div class="intro-pildoras">
+          <p class="actualizado">
+            <span class="icono" aria-hidden="true">description</span>
+            Código: FO-SGC-05-IDI.11
+          </p>
+          <p class="actualizado">
+            <span class="icono" aria-hidden="true">verified_user</span>
+            Anónima y confidencial (k-anonimato n ≥ 5)
+          </p>
+          <button type="button" class="boton boton--sutil boton--chico" data-abrir="modal-anonimato">
+            <span class="icono icono--chico" aria-hidden="true">shield_lock</span>
+            Ver protocolo técnico de anonimato
+          </button>
+        </div>
+      </section>
+
+      <!-- CAJA DE PROPÓSITO (.aviso--info del sistema de diseño) -->
+      <div class="aviso aviso--info" role="region" aria-label="Propósito de la encuesta">
+        <span class="icono" aria-hidden="true">info</span>
+        <div>
+          <strong>Propósito</strong>
+          <p style="margin-bottom:6px;">
+            Esta encuesta forma parte del Sistema de Gestión de Calidad y Procesos. Su objetivo es conocer cómo percibís tu lugar de trabajo, para identificar fortalezas y oportunidades de mejora.
+          </p>
+          <ul style="margin:0 0 6px; padding-left:18px; font-size:0.92rem;">
+            <li><strong>Es anónima y confidencial.</strong></li>
+            <li><strong>Tu participación es voluntaria</strong>, pero muy importante para que los resultados reflejen la realidad del área.</li>
+            <li><strong>La información será usada solo con fines de diagnóstico y mejora.</strong></li>
+          </ul>
+          <p style="font-weight:700;">Tu aporte es muy valioso. ¡Gracias por participar!</p>
         </div>
       </div>
-      <div class="progress-track" aria-hidden="true">
-        <div class="progress-fill" id="progress-fill"></div>
+
+      <!-- BARRA STICKY DE PROGRESO Y PESTAÑAS (.pestanas ARIA) -->
+      <div class="barra-progreso-sticky" role="region" aria-label="Avance por bloques">
+        <div class="progreso-fila-superior">
+          <div class="progreso-info">
+            <span class="estado estado--ok texto-numero" id="progress-pct">0% completado</span>
+            <span id="progress-label" class="texto-chico">Bloque 1 de 7 · Datos generales</span>
+          </div>
+          <span class="estado estado--neutro" id="autosave-status">
+            Guardado local automático activo
+          </span>
+        </div>
+
+        <div class="progreso-pista" aria-hidden="true">
+          <div class="progreso-relleno" id="progress-fill"></div>
+        </div>
+
+        <div class="pestanas" id="block-pills-nav" role="tablist" aria-label="Bloques del cuestionario">
+          <button type="button" class="pestana" role="tab" aria-selected="true" data-step="1">1. Datos</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="2">2. Ambiente</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="3">3. Motivación</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="4">4. Capacitación</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="5">5. Recursos</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="6">6. Valoración</button>
+          <button type="button" class="pestana" role="tab" aria-selected="false" data-step="7">7. Comentario</button>
+        </div>
       </div>
-      <div class="block-nav-pills" id="block-pills-nav" role="tablist" aria-label="Navegación por bloques">
-        <button type="button" class="block-pill current" data-step="1">1. Datos</button>
-        <button type="button" class="block-pill" data-step="2">2. Ambiente</button>
-        <button type="button" class="block-pill" data-step="3">3. Motivación</button>
-        <button type="button" class="block-pill" data-step="4">4. Capacitación</button>
-        <button type="button" class="block-pill" data-step="5">5. Recursos</button>
-        <button type="button" class="block-pill" data-step="6">6. Valoración</button>
-        <button type="button" class="block-pill" data-step="7">7. Comentario</button>
-      </div>
+
+      <!-- FORMULARIO PRINCIPAL -->
+      <form id="clima-survey-form" novalidate>
+
+        <!-- ===============================================================
+             BLOQUE 1 · DATOS GENERALES
+             =============================================================== -->
+        <section class="panel" data-block="1" id="section-block-1" aria-labelledby="titulo-b1">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">badge</span>
+              <h3 class="titulo-m" id="titulo-b1">Bloque 1 · Datos generales</h3>
+            </div>
+            <span class="estado estado--neutro">Respuestas cerradas y sin identificación personal</span>
+          </div>
+
+          <!-- P1 -->
+          <div class="q-card" id="qcard-p1">
+            <div class="q-header">
+              <span class="q-num">1</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Área en la que trabaja *</h4>
+                <p class="q-meta">Selección única · obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p1" id="group-p1"></div>
+            <input type="hidden" name="p1" id="input-p1" required>
+          </div>
+
+          <!-- P2 -->
+          <div class="q-card" id="qcard-p2">
+            <div class="q-header">
+              <span class="q-num">2</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Modalidad de contratación *</h4>
+                <p class="q-meta">Selección única · obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p2" id="group-p2"></div>
+            <input type="hidden" name="p2" id="input-p2" required>
+          </div>
+
+          <!-- P3 -->
+          <div class="q-card" id="qcard-p3">
+            <div class="q-header">
+              <span class="q-num">3</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Antigüedad laboral *</h4>
+                <p class="q-meta">Selección única · obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p3" id="group-p3"></div>
+            <input type="hidden" name="p3" id="input-p3" required>
+          </div>
+
+          <!-- P4 -->
+          <div class="q-card" id="qcard-p4">
+            <div class="q-header">
+              <span class="q-num">4</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Tarea que desempeña *</h4>
+                <p class="q-meta">Selección única · obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p4" id="group-p4"></div>
+            <input type="hidden" name="p4" id="input-p4" required>
+          </div>
+
+          <!-- P5 -->
+          <div class="q-card" id="qcard-p5">
+            <div class="q-header">
+              <span class="q-num">5</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Está conforme con el área donde trabaja y con las tareas que realiza actualmente? *</h4>
+                <p class="q-meta">Selección única · obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p5" id="group-p5"></div>
+            <input type="hidden" name="p5" id="input-p5" required>
+          </div>
+
+          <!-- P6 (Condicional) -->
+          <div class="q-card conditional-card hidden" id="qcard-p6">
+            <div class="q-header">
+              <span class="q-num cond">6</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Qué es lo que más pesa en su disconformidad? *</h4>
+                <p class="q-meta">
+                  <span>Selección múltiple, máximo 3 · condicional obligatoria</span>
+                  <span class="estado estado--neutro" id="counter-p6">0 / 3 seleccionadas</span>
+                </p>
+              </div>
+            </div>
+            <div class="options-grid" data-multi-group="p6" data-max="3" id="group-p6"></div>
+            <input type="hidden" name="p6" id="input-p6">
+            <div class="otro-input-wrap hidden" id="otro-wrap-p6">
+              <label for="input-p6-otro">Indique qué motiva su disconformidad (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-p6-otro" name="p6_otro" maxlength="200" placeholder="Describa brevemente el motivo de su disconformidad...">
+            </div>
+          </div>
+
+          <!-- P7 (Condicional) -->
+          <div class="q-card conditional-card hidden" id="qcard-p7">
+            <div class="q-header">
+              <span class="q-num cond">7</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿En qué área preferiría trabajar? *</h4>
+                <p class="q-meta">Selección única · condicional obligatoria</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p7" id="group-p7"></div>
+            <input type="hidden" name="p7" id="input-p7">
+
+            <div class="otro-input-wrap hidden" id="otro-wrap-p7">
+              <label for="input-p7-otro">Indique en qué otra área prefiere trabajar (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-p7-otro" name="p7_otro" maxlength="160" placeholder="Escriba el área en la que preferiría trabajar...">
+            </div>
+
+            <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--borde);">
+              <label for="input-p7-porque" style="display:block; font-size:0.92rem; font-weight:700; color:var(--texto); margin-bottom:6px;">
+                ¿Por qué prefiere dicha área? * <span class="texto-suave texto-chico" style="font-weight:500;">(obligatorio · máx. 250 caracteres)</span>
+              </label>
+              <textarea class="form-textarea" id="input-p7-porque" name="p7_porque" rows="2" maxlength="250" placeholder="Explique brevemente por qué prefiere trabajar en esa área..."></textarea>
+              <div class="texto-chico texto-suave texto-numero" style="text-align:right; margin-top:4px;" id="char-count-p7">0 / 250 caracteres</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 2 · AMBIENTE LABORAL
+             =============================================================== -->
+        <section class="panel hidden" data-block="2" id="section-block-2" aria-labelledby="titulo-b2">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">groups</span>
+              <h3 class="titulo-m" id="titulo-b2">Bloque 2 · Ambiente laboral</h3>
+            </div>
+            <span class="estado estado--neutro">Una respuesta por fila · obligatoria</span>
+          </div>
+
+          <div class="aviso aviso--info">
+            <span class="icono" aria-hidden="true">tune</span>
+            <p class="texto-chico">
+              <strong>Escala de conformidad (1 a 5):</strong>
+              5 Muy conforme · 4 Conforme · 3 Ni conforme ni disconforme · 2 Poco conforme · 1 Nada conforme.
+            </p>
+          </div>
+
+          <div id="container-bloque-2"></div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 3 · MOTIVACIÓN Y COMPROMISO
+             =============================================================== -->
+        <section class="panel hidden" data-block="3" id="section-block-3" aria-labelledby="titulo-b3">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">bolt</span>
+              <h3 class="titulo-m" id="titulo-b3">Bloque 3 · Motivación y compromiso</h3>
+            </div>
+            <span class="estado estado--neutro">Una respuesta por fila · obligatoria</span>
+          </div>
+
+          <div class="aviso aviso--info">
+            <span class="icono" aria-hidden="true">tune</span>
+            <p class="texto-chico">
+              <strong>Escala de acuerdo (1 a 5):</strong>
+              5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo.
+            </p>
+          </div>
+
+          <div id="container-bloque-3"></div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 4 · CAPACITACIÓN Y DESARROLLO
+             =============================================================== -->
+        <section class="panel hidden" data-block="4" id="section-block-4" aria-labelledby="titulo-b4">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">school</span>
+              <h3 class="titulo-m" id="titulo-b4">Bloque 4 · Capacitación y desarrollo</h3>
+            </div>
+            <span class="estado estado--neutro">Formación y mejora continua</span>
+          </div>
+
+          <!-- P21 -->
+          <div class="q-card" id="qcard-p21">
+            <div class="q-header">
+              <span class="q-num">21</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Qué tan satisfecho está con las oportunidades de capacitación relacionadas con su tarea? *</h4>
+                <p class="q-meta">Escala de 5 puntos · obligatoria</p>
+              </div>
+            </div>
+            <div class="likert-row" data-likert-group="p21" id="likert-p21"></div>
+            <input type="hidden" name="p21" id="input-p21" required>
+          </div>
+
+          <!-- P22 -->
+          <div class="q-card" id="qcard-p22">
+            <div class="q-header">
+              <span class="q-num">22</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Capacitaciones que considera necesarias para mejorar su tarea diaria *</h4>
+                <p class="q-meta">
+                  <span>Selección múltiple · obligatoria (máximo 3)</span>
+                  <span class="estado estado--neutro" id="counter-p22">0 / 3 seleccionadas</span>
+                </p>
+              </div>
+            </div>
+            <div class="options-grid" data-multi-group="p22" data-max="3" id="group-p22"></div>
+            <input type="hidden" name="p22" id="input-p22" required>
+            <div class="otro-input-wrap hidden" id="otro-wrap-p22">
+              <label for="input-p22-otro">Indique qué capacitación le gustaría realizar (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-p22-otro" name="p22_otro" maxlength="200" placeholder="Escriba la temática o curso que considera necesario...">
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 5 · PROCESOS, RECURSOS Y HERRAMIENTAS
+             =============================================================== -->
+        <section class="panel hidden" data-block="5" id="section-block-5" aria-labelledby="titulo-b5">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">handyman</span>
+              <h3 class="titulo-m" id="titulo-b5">Bloque 5 · Procesos, recursos y herramientas</h3>
+            </div>
+            <span class="estado estado--neutro">Equipamiento, insumos y procedimientos</span>
+          </div>
+
+          <div class="aviso aviso--info">
+            <span class="icono" aria-hidden="true">tune</span>
+            <p class="texto-chico">
+              <strong>Escala de acuerdo (1 a 5):</strong>
+              5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo. Una respuesta por fila · obligatoria.
+            </p>
+          </div>
+
+          <!-- P23 -->
+          <div class="q-card" id="qcard-p23">
+            <div class="q-header">
+              <span class="q-num">23</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Recibo en tiempo y forma, y en buen estado, lo necesario para mis tareas: *</h4>
+                <p class="q-meta">Escala de acuerdo 1 a 5 · matriz, una respuesta por fila · obligatoria · Cada fila incluye "No me corresponde / no lo uso".</p>
+              </div>
+            </div>
+            <div id="container-p23-rows"></div>
+          </div>
+
+          <!-- P23.1 Condicional -->
+          <div id="container-p23-1-conditionals"></div>
+
+          <!-- P24 -->
+          <div class="q-card" id="qcard-p24">
+            <div class="q-header">
+              <span class="q-num">24</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Quién le provee habitualmente cada uno de estos elementos? *</h4>
+                <p class="q-meta">Selección única por fila · obligatoria · Filas: las mismas de P23</p>
+              </div>
+            </div>
+            <div id="container-p24-rows"></div>
+          </div>
+
+          <!-- P25 -->
+          <div class="q-card" id="qcard-p25">
+            <div class="q-header">
+              <span class="q-num">25</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Los procedimientos de trabajo de mi sector están claros y se respetan. *</h4>
+                <p class="q-meta">Escala de acuerdo 1 a 5 · obligatoria</p>
+              </div>
+            </div>
+            <div class="likert-row" data-likert-group="p25" id="likert-p25"></div>
+            <input type="hidden" name="p25" id="input-p25" required>
+          </div>
+
+          <!-- P25.1 Condicional -->
+          <div class="q-card conditional-card hidden" id="qcard-p25_1">
+            <div class="q-header">
+              <span class="q-num cond">25.1</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Qué es lo que más pesa en que los procedimientos no estén claros o no se respeten? *</h4>
+                <p class="q-meta">
+                  <span>Selección múltiple, máximo 2 · condicional obligatoria</span>
+                  <span class="estado estado--neutro" id="counter-p25_1">0 / 2 seleccionadas</span>
+                </p>
+              </div>
+            </div>
+            <div class="options-grid" data-multi-group="p25_1" data-max="2" id="group-p25_1"></div>
+            <input type="hidden" name="p25_1" id="input-p25_1">
+            <div class="otro-input-wrap hidden" id="otro-wrap-p25_1">
+              <label for="input-p25_1-otro">Indique el motivo de desacuerdo (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-p25_1-otro" name="p25_1_otro" maxlength="200" placeholder="Describa el motivo...">
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 6 · VALORACIÓN GLOBAL Y RECOMENDACIÓN (eNPS)
+             =============================================================== -->
+        <section class="panel hidden" data-block="6" id="section-block-6" aria-labelledby="titulo-b6">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">recommend</span>
+              <h3 class="titulo-m" id="titulo-b6">Bloque 6 · Valoración global y recomendación (eNPS)</h3>
+            </div>
+            <span class="estado estado--neutro">Satisfacción General y eNPS</span>
+          </div>
+
+          <!-- P26 -->
+          <div class="q-card" id="qcard-p26">
+            <div class="q-header">
+              <span class="q-num">26</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">En general, ¿qué tan satisfecho/a está con su lugar de trabajo hoy? *</h4>
+                <p class="q-meta">Escala de 5 puntos · obligatoria</p>
+              </div>
+            </div>
+            <div class="likert-row" data-likert-group="p26" id="likert-p26"></div>
+            <input type="hidden" name="p26" id="input-p26" required>
+          </div>
+
+          <!-- P27 -->
+          <div class="q-card" id="qcard-p27">
+            <div class="q-header">
+              <span class="q-num">27</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Recomendaría trabajar en su área a un conocido? *</h4>
+                <p class="q-meta">Escala numérica 1 a 10 · obligatoria</p>
+              </div>
+            </div>
+            <div class="enps-grid" id="enps-group-p27"></div>
+            <div class="enps-labels">
+              <span>1 = Nada probable (Detractores: 1 a 6)</span>
+              <span>Neutros (7 a 8)</span>
+              <span>10 = Totalmente probable (Promotores: 9 a 10)</span>
+            </div>
+            <input type="hidden" name="p27" id="input-p27" required>
+          </div>
+
+          <!-- P27.1 Condicional -->
+          <div class="q-card conditional-card hidden" id="qcard-p27_1">
+            <div class="q-header">
+              <span class="q-num cond">27.1</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">¿Qué fue lo que más pesó en su valoración? *</h4>
+                <p class="q-meta">Selección única · obligatoria · condicional (si P26 es "Ni satisfecho ni insatisfecho", "Insatisfecho" o "Muy insatisfecho", o si P27 es 6 o menos)</p>
+              </div>
+            </div>
+            <div class="options-grid" data-single-group="p27_1" id="group-p27_1"></div>
+            <input type="hidden" name="p27_1" id="input-p27_1">
+            <div class="otro-input-wrap hidden" id="otro-wrap-p27_1">
+              <label for="input-p27_1-otro">Indique el motivo de su valoración (obligatorio): *</label>
+              <input type="text" class="form-input" id="input-p27_1-otro" name="p27_1_otro" maxlength="200" placeholder="Describa el motivo principal de su valoración...">
+            </div>
+          </div>
+
+          <!-- P28 Condicional -->
+          <div class="q-card conditional-card hidden" id="qcard-p28">
+            <div class="q-header">
+              <span class="q-num cond">28</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Cuéntenos brevemente qué cambiaría *</h4>
+                <p class="q-meta">Texto libre · obligatorio en este caso</p>
+              </div>
+            </div>
+            <textarea class="form-textarea" id="input-p28" name="p28" rows="3" maxlength="500" placeholder="Escribí tu comentario aquí"></textarea>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             BLOQUE 7 · COMENTARIO FINAL
+             =============================================================== -->
+        <section class="panel hidden" data-block="7" id="section-block-7" aria-labelledby="titulo-b7">
+          <div class="cabecera-bloque">
+            <div class="cabecera-bloque-izq">
+              <span class="icono" aria-hidden="true">rate_review</span>
+              <h3 class="titulo-m" id="titulo-b7">Bloque 7 · Comentario final</h3>
+            </div>
+            <span class="estado estado--neutro">Espacio abierto opcional</span>
+          </div>
+
+          <!-- P29 -->
+          <div class="q-card" id="qcard-p29">
+            <div class="q-header">
+              <span class="q-num">29</span>
+              <div class="q-label-wrap">
+                <h4 class="q-title">Escriba de modo simple sus observaciones o sugerencias para mejorar su lugar de trabajo. Puede incluir lo que funciona bien y debería seguir igual, y lo que cambiaría (por ejemplo: condiciones del lugar, trato entre compañeros, recursos, organización, etc.).</h4>
+                <p class="q-meta">Texto libre · opcional</p>
+              </div>
+            </div>
+            <textarea class="form-textarea" id="input-p29" name="p29" rows="4" maxlength="1000" placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+          </div>
+
+          <div style="margin-top:20px;">
+            <button type="submit" class="boton boton--primario boton--grande" id="btn-submit-final" style="width:100%;">
+              <span class="icono" aria-hidden="true">send</span>
+              Enviar Encuesta Anónima
+            </button>
+          </div>
+        </section>
+
+        <!-- BOTONES DE NAVEGACIÓN ENTRE BLOQUES -->
+        <div class="wizard-nav" id="wizard-nav-controls">
+          <button type="button" class="boton boton--secundario hidden" id="btn-prev-block">
+            <span class="icono" aria-hidden="true">arrow_back</span>
+            Bloque anterior
+          </button>
+          <div style="flex:1"></div>
+          <button type="button" class="boton boton--primario boton--grande" id="btn-next-block">
+            Siguiente bloque
+            <span class="icono" aria-hidden="true">arrow_forward</span>
+          </button>
+        </div>
+
+      </form>
+
     </div>
-  </div>
-
-  <!-- ================= CONTENIDO PRINCIPAL ================= -->
-  <main class="wrap">
-
-    <!-- TARJETA INSTITUCIONAL DE BIENVENIDA Y PROPÓSITO -->
-    <section class="hero-card" aria-labelledby="survey-main-title">
-      <div class="hero-eyebrow">
-        <span class="hero-tag">
-          <span class="material-symbols-outlined" style="font-size:16px;">verified_user</span>
-          Relevamiento Institucional Anónimo 2026
-        </span>
-        <button type="button" class="mode-switch-btn" id="btn-toggle-view-mode">
-          <span class="material-symbols-outlined" style="font-size:16px;" id="view-mode-icon">view_agenda</span>
-          <span id="view-mode-text">Ver formulario completo</span>
-        </button>
-      </div>
-
-      <h1 id="survey-main-title">Encuesta de Clima Laboral 2026</h1>
-      <p class="hero-subtitle">Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto</p>
-
-      <div class="purpose-box">
-        <h2>
-          <span class="material-symbols-outlined" style="font-size:18px;">info</span>
-          Propósito
-        </h2>
-        <p>
-          Esta encuesta forma parte del Sistema de Gestión de Calidad y Procesos. Su objetivo es conocer cómo percibís tu lugar de trabajo, para identificar fortalezas y oportunidades de mejora.
-        </p>
-        <ul class="purpose-list">
-          <li><strong>Es anónima y confidencial.</strong></li>
-          <li><strong>Tu participación es voluntaria</strong>, pero muy importante para que los resultados reflejen la realidad del área.</li>
-          <li><strong>La información será usada solo con fines de diagnóstico y mejora.</strong></li>
-        </ul>
-        <p class="purpose-thanks">Tu aporte es muy valioso. ¡Gracias por participar!</p>
-      </div>
-
-      <div class="anon-guarantee-bar">
-        <div class="anon-badges">
-          <span class="anon-Chip">
-            <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-ok);">lock</span>
-            Sin DNI, Nombre ni IP
-          </span>
-          <span class="anon-Chip">
-            <span class="material-symbols-outlined" style="font-size:14px; color:var(--brand);">groups</span>
-            Secreto estadístico (k-anonimato n ≥ 5)
-          </span>
-          <span class="anon-Chip">
-            <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-warn);">schedule</span>
-            Sello horario redondeado
-          </span>
-        </div>
-        <button type="button" class="link-btn" onclick="abrirModalAnonimato()">
-          Ver protocolo técnico de anonimato
-        </button>
-      </div>
-    </section>
-
-    <!-- FORMULARIO PRINCIPAL -->
-    <form id="clima-survey-form" novalidate>
-
-      <!-- =================================================================
-           BLOQUE 1 · DATOS GENERALES
-           ================================================================= -->
-      <section class="form-section" data-block="1" id="section-block-1">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 1 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Respuestas cerradas y sin identificación personal</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">badge</span>
-            Bloque 1 · Datos generales
-          </h2>
-        </div>
-
-        <!-- P1 -->
-        <div class="q-card" id="qcard-p1">
-          <div class="q-header">
-            <span class="q-num">1</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Área en la que trabaja *</h3>
-              <p class="q-meta">Selección única · obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p1" id="group-p1"></div>
-          <input type="hidden" name="p1" id="input-p1" required>
-        </div>
-
-        <!-- P2 -->
-        <div class="q-card" id="qcard-p2">
-          <div class="q-header">
-            <span class="q-num">2</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Modalidad de contratación *</h3>
-              <p class="q-meta">Selección única · obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p2" id="group-p2"></div>
-          <input type="hidden" name="p2" id="input-p2" required>
-        </div>
-
-        <!-- P3 -->
-        <div class="q-card" id="qcard-p3">
-          <div class="q-header">
-            <span class="q-num">3</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Antigüedad laboral *</h3>
-              <p class="q-meta">Selección única · obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p3" id="group-p3"></div>
-          <input type="hidden" name="p3" id="input-p3" required>
-        </div>
-
-        <!-- P4 -->
-        <div class="q-card" id="qcard-p4">
-          <div class="q-header">
-            <span class="q-num">4</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Tarea que desempeña *</h3>
-              <p class="q-meta">Selección única · obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p4" id="group-p4"></div>
-          <input type="hidden" name="p4" id="input-p4" required>
-        </div>
-
-        <!-- P5 -->
-        <div class="q-card" id="qcard-p5">
-          <div class="q-header">
-            <span class="q-num">5</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Está conforme con el área donde trabaja y con las tareas que realiza actualmente? *</h3>
-              <p class="q-meta">Selección única · obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p5" id="group-p5"></div>
-          <input type="hidden" name="p5" id="input-p5" required>
-        </div>
-
-        <!-- P6 (Condicional: aparece si P5 != "Sí, conforme con ambas") -->
-        <div class="q-card conditional-card hidden" id="qcard-p6">
-          <div class="q-header">
-            <span class="q-num cond">6</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Qué es lo que más pesa en su disconformidad? *</h3>
-              <p class="q-meta">
-                <span>Selección múltiple, máximo 3 · obligatoria</span>
-                <span class="counter-pill" id="counter-p6">0 / 3 seleccionadas</span>
-              </p>
-            </div>
-          </div>
-          <div class="options-grid" data-multi-group="p6" data-max="3" id="group-p6"></div>
-          <input type="hidden" name="p6" id="input-p6">
-          <div class="otro-input-wrap hidden" id="otro-wrap-p6">
-            <label for="input-p6-otro">Indique qué motiva su disconformidad (obligatorio): *</label>
-            <input type="text" class="form-input" id="input-p6-otro" name="p6_otro" maxlength="200" placeholder="Describa brevemente el motivo de su disconformidad...">
-          </div>
-        </div>
-
-        <!-- P7 (Condicional: aparece si P5 == "No con el área" o "No con ninguna de las dos") -->
-        <div class="q-card conditional-card hidden" id="qcard-p7">
-          <div class="q-header">
-            <span class="q-num cond">7</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿En qué área preferiría trabajar? *</h3>
-              <p class="q-meta">Selección única · condicional obligatoria</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p7" id="group-p7"></div>
-          <input type="hidden" name="p7" id="input-p7">
-
-          <div class="otro-input-wrap hidden" id="otro-wrap-p7">
-            <label for="input-p7-otro">Indique en qué otra área prefiere trabajar (obligatorio): *</label>
-            <input type="text" class="form-input" id="input-p7-otro" name="p7_otro" maxlength="160" placeholder="Escriba el área en la que preferiría trabajar...">
-          </div>
-
-          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--brand-border);">
-            <label for="input-p7-porque" style="display:block; font-size:13.5px; font-weight:700; color:var(--ink); margin-bottom:6px;">
-              ¿Por qué prefiere dicha área? * <span style="font-weight:500; font-size:12px; color:var(--ink-soft);">(obligatorio · máx. 250 caracteres)</span>
-            </label>
-            <textarea class="form-textarea" id="input-p7-porque" name="p7_porque" rows="2" maxlength="250" placeholder="Explique brevemente por qué prefiere trabajar en esa área..."></textarea>
-            <div style="text-align:right; font-size:11px; color:var(--ink-soft); margin-top:4px;" id="char-count-p7">0 / 250 caracteres</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 2 · AMBIENTE LABORAL
-           ================================================================= -->
-      <section class="form-section hidden" data-block="2" id="section-block-2">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 2 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Una respuesta por fila · obligatoria</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">groups</span>
-            Bloque 2 · Ambiente laboral
-          </h2>
-        </div>
-
-        <div class="scale-legend">
-          <strong>Escala de conformidad (1 a 5):</strong>
-          5 Muy conforme · 4 Conforme · 3 Ni conforme ni disconforme · 2 Poco conforme · 1 Nada conforme.
-        </div>
-
-        <div id="container-bloque-2"></div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 3 · MOTIVACIÓN Y COMPROMISO
-           ================================================================= -->
-      <section class="form-section hidden" data-block="3" id="section-block-3">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 3 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Una respuesta por fila · obligatoria</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">bolt</span>
-            Bloque 3 · Motivación y compromiso
-          </h2>
-        </div>
-
-        <div class="scale-legend">
-          <strong>Escala de acuerdo (1 a 5):</strong>
-          5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo.
-        </div>
-
-        <div id="container-bloque-3"></div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 4 · CAPACITACIÓN Y DESARROLLO
-           ================================================================= -->
-      <section class="form-section hidden" data-block="4" id="section-block-4">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 4 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Formación y mejora continua</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">school</span>
-            Bloque 4 · Capacitación y desarrollo
-          </h2>
-        </div>
-
-        <!-- P21 -->
-        <div class="q-card" id="qcard-p21">
-          <div class="q-header">
-            <span class="q-num">21</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Qué tan satisfecho está con las oportunidades de capacitación relacionadas con su tarea? *</h3>
-              <p class="q-meta">Escala de 5 puntos · obligatoria</p>
-            </div>
-          </div>
-          <div class="likert-row" data-likert-group="p21" id="likert-p21"></div>
-          <input type="hidden" name="p21" id="input-p21" required>
-        </div>
-
-        <!-- P22 -->
-        <div class="q-card" id="qcard-p22">
-          <div class="q-header">
-            <span class="q-num">22</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Capacitaciones que considera necesarias para mejorar su tarea diaria *</h3>
-              <p class="q-meta">
-                <span>Selección múltiple · obligatoria (máximo 3)</span>
-                <span class="counter-pill" id="counter-p22">0 / 3 seleccionadas</span>
-              </p>
-            </div>
-          </div>
-          <div class="options-grid" data-multi-group="p22" data-max="3" id="group-p22"></div>
-          <input type="hidden" name="p22" id="input-p22" required>
-          <div class="otro-input-wrap hidden" id="otro-wrap-p22">
-            <label for="input-p22-otro">Indique qué capacitación le gustaría realizar (obligatorio): *</label>
-            <input type="text" class="form-input" id="input-p22-otro" name="p22_otro" maxlength="200" placeholder="Escriba la temática o curso que considera necesario...">
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 5 · PROCESOS, RECURSOS Y HERRAMIENTAS
-           ================================================================= -->
-      <section class="form-section hidden" data-block="5" id="section-block-5">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 5 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Equipamiento, insumos y procedimientos</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">handyman</span>
-            Bloque 5 · Procesos, recursos y herramientas
-          </h2>
-        </div>
-
-        <div class="scale-legend">
-          <strong>Escala de acuerdo (1 a 5):</strong>
-          5 Totalmente de acuerdo · 4 De acuerdo · 3 Ni de acuerdo ni en desacuerdo · 2 En desacuerdo · 1 Totalmente en desacuerdo. Una respuesta por fila · obligatoria.
-        </div>
-
-        <!-- P23 Matriz -->
-        <div class="q-card" id="qcard-p23">
-          <div class="q-header">
-            <span class="q-num">23</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Recibo en tiempo y forma, y en buen estado, lo necesario para mis tareas: *</h3>
-              <p class="q-meta">Escala de acuerdo 1 a 5 · matriz, una respuesta por fila · obligatoria · Cada fila incluye "No me corresponde / no lo uso".</p>
-            </div>
-          </div>
-          <div id="container-p23-rows"></div>
-        </div>
-
-        <!-- P23.1 Condicional por cada fila de P23 con respuesta 1 o 2 -->
-        <div id="container-p23-1-conditionals"></div>
-
-        <!-- P24 Matriz de Proveedor -->
-        <div class="q-card" id="qcard-p24">
-          <div class="q-header">
-            <span class="q-num">24</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Quién le provee habitualmente cada uno de estos elementos? *</h3>
-              <p class="q-meta">Selección única por fila · obligatoria · Filas: las mismas de P23</p>
-            </div>
-          </div>
-          <div id="container-p24-rows"></div>
-        </div>
-
-        <!-- P25 -->
-        <div class="q-card" id="qcard-p25">
-          <div class="q-header">
-            <span class="q-num">25</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Los procedimientos de trabajo de mi sector están claros y se respetan. *</h3>
-              <p class="q-meta">Escala de acuerdo 1 a 5 · obligatoria</p>
-            </div>
-          </div>
-          <div class="likert-row" data-likert-group="p25" id="likert-p25"></div>
-          <input type="hidden" name="p25" id="input-p25" required>
-        </div>
-
-        <!-- P25.1 Condicional si P25 es 1 o 2 -->
-        <div class="q-card conditional-card hidden" id="qcard-p25_1">
-          <div class="q-header">
-            <span class="q-num cond">25.1</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Qué es lo que más pesa en que los procedimientos no estén claros o no se respeten? *</h3>
-              <p class="q-meta">
-                <span>Selección múltiple, máximo 2 · condicional obligatoria</span>
-                <span class="counter-pill" id="counter-p25_1">0 / 2 seleccionadas</span>
-              </p>
-            </div>
-          </div>
-          <div class="options-grid" data-multi-group="p25_1" data-max="2" id="group-p25_1"></div>
-          <input type="hidden" name="p25_1" id="input-p25_1">
-          <div class="otro-input-wrap hidden" id="otro-wrap-p25_1">
-            <label for="input-p25_1-otro">Indique el motivo de desacuerdo (obligatorio): *</label>
-            <input type="text" class="form-input" id="input-p25_1-otro" name="p25_1_otro" maxlength="200" placeholder="Describa el motivo...">
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 6 · VALORACIÓN GLOBAL Y RECOMENDACIÓN (eNPS)
-           ================================================================= -->
-      <section class="form-section hidden" data-block="6" id="section-block-6">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 6 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Satisfacción General y eNPS</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">recommend</span>
-            Bloque 6 · Valoración global y recomendación (eNPS)
-          </h2>
-        </div>
-
-        <!-- P26 -->
-        <div class="q-card" id="qcard-p26">
-          <div class="q-header">
-            <span class="q-num">26</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">En general, ¿qué tan satisfecho/a está con su lugar de trabajo hoy? *</h3>
-              <p class="q-meta">Escala de 5 puntos · obligatoria</p>
-            </div>
-          </div>
-          <div class="likert-row" data-likert-group="p26" id="likert-p26"></div>
-          <input type="hidden" name="p26" id="input-p26" required>
-        </div>
-
-        <!-- P27 -->
-        <div class="q-card" id="qcard-p27">
-          <div class="q-header">
-            <span class="q-num">27</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Recomendaría trabajar en su área a un conocido? *</h3>
-              <p class="q-meta">Escala numérica 1 a 10 · obligatoria</p>
-            </div>
-          </div>
-          <div class="enps-grid" id="enps-group-p27"></div>
-          <div class="enps-labels">
-            <span>1 = Nada probable (Detractor: 1 a 6)</span>
-            <span>Neutro (7 a 8)</span>
-            <span>10 = Totalmente probable (Promotor: 9 a 10)</span>
-          </div>
-          <input type="hidden" name="p27" id="input-p27" required>
-        </div>
-
-        <!-- P27.1 Condicional: si P26 <= 3 o P27 <= 6 -->
-        <div class="q-card conditional-card hidden" id="qcard-p27_1">
-          <div class="q-header">
-            <span class="q-num cond">27.1</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">¿Qué fue lo que más pesó en su valoración? *</h3>
-              <p class="q-meta">Selección única · obligatoria · condicional (si P26 es "Ni satisfecho ni insatisfecho", "Insatisfecho" o "Muy insatisfecho", o si P27 es 6 o menos)</p>
-            </div>
-          </div>
-          <div class="options-grid" data-single-group="p27_1" id="group-p27_1"></div>
-          <input type="hidden" name="p27_1" id="input-p27_1">
-          <div class="otro-input-wrap hidden" id="otro-wrap-p27_1">
-            <label for="input-p27_1-otro">Indique el motivo de su valoración (obligatorio): *</label>
-            <input type="text" class="form-input" id="input-p27_1-otro" name="p27_1_otro" maxlength="200" placeholder="Describa el motivo principal de su valoración...">
-          </div>
-        </div>
-
-        <!-- P28 Condicional en este mismo caso -->
-        <div class="q-card conditional-card hidden" id="qcard-p28">
-          <div class="q-header">
-            <span class="q-num cond">28</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Cuéntenos brevemente qué cambiaría *</h3>
-              <p class="q-meta">Texto libre · obligatorio en este caso</p>
-            </div>
-          </div>
-          <textarea class="form-textarea" id="input-p28" name="p28" rows="3" maxlength="500" placeholder="Escribí tu comentario aquí"></textarea>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           BLOQUE 7 · COMENTARIO FINAL
-           ================================================================= -->
-      <section class="form-section hidden" data-block="7" id="section-block-7">
-        <div class="sec-header">
-          <div class="sec-badge-row">
-            <span class="sec-kicker">Bloque 7 de 7</span>
-            <span style="font-size:12px; color:var(--ink-soft); font-weight:600;">Espacio abierto opcional</span>
-          </div>
-          <h2 class="sec-title">
-            <span class="material-symbols-outlined" style="color:var(--brand);">rate_review</span>
-            Bloque 7 · Comentario final
-          </h2>
-        </div>
-
-        <!-- P29 -->
-        <div class="q-card" id="qcard-p29">
-          <div class="q-header">
-            <span class="q-num">29</span>
-            <div class="q-label-wrap">
-              <h3 class="q-title">Escriba de modo simple sus observaciones o sugerencias para mejorar su lugar de trabajo. Puede incluir lo que funciona bien y debería seguir igual, y lo que cambiaría (por ejemplo: condiciones del lugar, trato entre compañeros, recursos, organización, etc.).</h3>
-              <p class="q-meta">Texto libre · opcional</p>
-            </div>
-          </div>
-          <textarea class="form-textarea" id="input-p29" name="p29" rows="4" maxlength="1000" placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit-full" id="btn-submit-final">
-          <span class="material-symbols-outlined">send</span>
-          Enviar Encuesta Anónima
-        </button>
-      </section>
-
-      <!-- CONTROLES DE NAVEGACIÓN PASO A PASO -->
-      <div class="wizard-nav" id="wizard-nav-controls">
-        <button type="button" class="btn-secondary hidden" id="btn-prev-block">
-          <span class="material-symbols-outlined">arrow_back</span>
-          Bloque anterior
-        </button>
-        <div style="flex:1"></div>
-        <button type="button" class="btn-primary" id="btn-next-block">
-          Siguiente bloque
-          <span class="material-symbols-outlined">arrow_forward</span>
-        </button>
-      </div>
-
-    </form>
   </main>
 
-  <!-- ================= MODAL DE CONFIRMACIÓN DE ENVÍO ================= -->
-  <div class="modal-overlay" id="modal-success" role="dialog" aria-modal="true" aria-labelledby="modal-success-title">
-    <div class="modal-box" style="text-align:center;">
-      <div style="width:60px; height:60px; border-radius:50%; background:var(--c-ok-bg); color:var(--c-ok); display:flex; align-items:center; justify-content:center; margin:0 auto 14px;">
-        <span class="material-symbols-outlined" style="font-size:34px;">check_circle</span>
-      </div>
-      <h2 id="modal-success-title" style="font-size:20px; font-weight:900; margin:0 0 8px;">¡Muchas gracias por participar!</h2>
-      <p style="font-size:14px; color:var(--ink-soft); margin:0 0 12px;">
-        Tu respuesta fue registrada de forma <strong>100% anónima y confidencial</strong> dentro del Sistema de Gestión de Calidad y Procesos (FO-SGC-05-IDI.11).
-      </p>
+  <!-- ================= FOOTER OFICIAL DE 2 FILAS (base.css) ================ -->
+  <footer class="pie">
+    <div class="contenedor">
 
-      <div class="receipt-box" id="receipt-details">
-        <div><strong>Comprobante Técnico de Anonimato (UUID):</strong> <span id="rec-uuid">-</span></div>
-        <div><strong>Sello Temporal Redondeado:</strong> <span id="rec-time">-</span></div>
-        <div><strong>Índice de Clima de la Respuesta (IGCL):</strong> <span id="rec-igcl">-</span></div>
-      </div>
-
-      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button type="button" class="btn-primary" onclick="reiniciarFormulario()">
-          <span class="material-symbols-outlined">restart_alt</span>
-          Nueva respuesta
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= MODAL PROTOCOLO DE ANONIMATO ================= -->
-  <div class="modal-overlay" id="modal-anonimato" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-        <h3 style="margin:0; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
-          <span class="material-symbols-outlined" style="color:var(--brand);">shield_lock</span>
-          Protocolo de Anonimato Técnico y Metodológico
-        </h3>
-        <button type="button" class="icon-btn" onclick="cerrarModalAnonimato()" aria-label="Cerrar">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <p style="font-size:13.5px; color:var(--ink-soft); margin-top:0;">
-        En cumplimiento del diseño metodológico de la <strong>Dirección General de Estadísticas, Control de Calidad y Procesos</strong>, este instrumento aplica las siguientes salvaguardas técnicas:
-      </p>
-      <ul style="font-size:13px; color:var(--ink); padding-left:18px; line-height:1.55;">
-        <li><strong>Ausencia total de datos filiatorios:</strong> No se solicita Nombre, DNI, Legajo ni Correo Electrónico.</li>
-        <li><strong>No almacenamiento de IP ni huella de dispositivo:</strong> El servidor descarta cabeceras de red y direcciones IP.</li>
-        <li><strong>Sello temporal redondeado a la hora:</strong> La fecha de envío se trunca a la hora en punto (<code>HH:00:00</code>) para impedir la trazabilidad por minuto exacto de carga.</li>
-        <li><strong>Criterio estadístico de <em>k</em>-anonimato (<em>n</em> ≥ 5):</strong> Ningún filtro o cruce por área, modalidad o antigüedad se muestra en el monitor si cuenta con menos de 5 respuestas.</li>
-        <li><strong>Sanitización automática de texto libre:</strong> Cualquier número de documento o correo ingresado accidentalmente en los comentarios abiertos es enmascarado antes de guardarse.</li>
-      </ul>
-      <div style="text-align:right; margin-top:16px;">
-        <button type="button" class="btn-primary" onclick="cerrarModalAnonimato()">Entendido</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= MODAL LABORATORIO METODOLÓGICO (SGCyP / FASE 6) ================= -->
-  <div class="modal-overlay" id="modal-lab" role="dialog" aria-modal="true">
-    <div class="modal-box" style="max-width:680px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-        <h3 style="margin:0; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
-          <span class="material-symbols-outlined" style="color:var(--brand);">science</span>
-          Laboratorio Metodológico y Simulación Monte Carlo (SGCyP)
-        </h3>
-        <button type="button" class="icon-btn" onclick="cerrarModalLab()" aria-label="Cerrar">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <p style="font-size:13px; color:var(--ink-soft); margin-top:0;">
-        Herramienta de verificación estadística (Fases 2 y 6 de la Hoja de Ruta) para probar el almacenamiento local, el cálculo de <strong>Alfa de Cronbach (α)</strong>, <strong>IGCL</strong>, <strong>eNPS</strong> y la exportación de datos limpios.
-      </p>
-
-      <div class="receipt-box" id="lab-stats-summary" style="font-size:12.5px; line-height:1.6;">
-        Cargando estadísticas de la base local...
+      <div class="pie-fila pie-fila--superior">
+        <div class="pie-escudos">
+          <img src="assets/sec.png" alt="Río Cuarto Gobierno — Secretaría de Gestión y Participación Ciudadana">
+          <img src="assets/dat.png" alt="Datos Río Cuarto">
+        </div>
+        <div class="pie-acciones">
+          <button type="button" class="boton boton--secundario boton--pildora" data-abrir="modal-lab">
+            <span class="icono" aria-hidden="true">science</span>
+            Laboratorio SGCyP
+          </button>
+          <button type="button" class="boton boton--secundario boton--pildora" data-abrir="modal-ia">
+            <span class="icono" aria-hidden="true">auto_awesome</span>
+            Río Cuarto IA
+          </button>
+          <button type="button" class="boton boton--secundario boton--pildora" data-abrir="modal-ods">
+            <img src="assets/ods.png" alt="" width="20" height="20">
+            Río Cuarto ODS
+          </button>
+        </div>
       </div>
 
-      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
-        <button type="button" class="btn-primary" style="padding:10px 16px; font-size:13px;" onclick="ejecutarSimulacionMonteCarlo()">
-          <span class="material-symbols-outlined" style="font-size:18px;">auto_graph</span>
-          Inyectar 100 casos Monte Carlo (Fase 6.1)
-        </button>
-        <button type="button" class="btn-secondary" style="padding:10px 16px; font-size:13px;" onclick="exportarBaseCSV()">
-          <span class="material-symbols-outlined" style="font-size:18px;">download</span>
-          Descargar CSV limpio
-        </button>
-        <button type="button" class="btn-secondary" style="padding:10px 16px; font-size:13px; color:var(--c-alert);" onclick="purgarBaseLocal()">
-          <span class="material-symbols-outlined" style="font-size:18px;">delete_sweep</span>
-          Purgar base de prueba (Fase 6.2)
-        </button>
+      <div class="pie-fila pie-fila--inferior">
+        <div class="pie-textos">
+          <p><strong>Elaboración:</strong> Sec. Gestión y Participación Ciudadana · Dir. de Estadística, Control de Calidad y Procesos</p>
+          <p><strong>Instrumento:</strong> Encuesta de Clima Laboral 2026 · Subsecretaría de Servicios Públicos (Código FO-SGC-05-IDI.11)</p>
+        </div>
+        <nav class="enlaces-paginas" aria-label="Accesos metodológicos">
+          <button type="button" data-abrir="modal-anonimato">Protocolo de anonimato →</button>
+        </nav>
       </div>
 
-      <div style="text-align:right;">
-        <button type="button" class="btn-secondary" onclick="cerrarModalLab()">Cerrar panel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST DE AVISO -->
-  <div class="toast-banner" id="toast-banner" role="status" aria-live="polite">
-    <span class="material-symbols-outlined" style="color:var(--c-warn);">warning</span>
-    <span id="toast-text">Por favor complete los campos obligatorios.</span>
-  </div>
-
-  <!-- ================= FOOTER INSTITUCIONAL ================= -->
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div>
-        <strong>Dirección General de Estadísticas, Control de Calidad y Procesos</strong><br>
-        Subsecretaría de Servicios Públicos · Municipalidad de Río Cuarto · FO-SGC-05-IDI.11
-      </div>
-      <div style="display:flex; gap:14px; align-items:center;">
-        <button type="button" class="link-btn" onclick="abrirModalLab()">
-          <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
-          Verificador Metodológico (SGCyP)
-        </button>
-      </div>
     </div>
   </footer>
 
-  <!-- ================= LÓGICA DE LA APLICACIÓN ================= -->
+  <!-- ================= MODALES NATIVOS (<dialog class="modal">) ================ -->
+
+  <!-- Modal 1: Confirmación de Envío Exitoso -->
+  <dialog class="modal" id="modal-exito" aria-labelledby="modal-exito-titulo">
+    <div class="modal-cuerpo">
+      <header class="modal-cabecera">
+        <h2 id="modal-exito-titulo">
+          <span class="icono" aria-hidden="true" style="color:var(--ok);">check_circle</span>
+          ¡Muchas gracias por participar!
+        </h2>
+        <form method="dialog">
+          <button class="modal-cerrar" aria-label="Cerrar"><span class="icono" aria-hidden="true">close</span></button>
+        </form>
+      </header>
+      <p>
+        Tu respuesta fue registrada de forma <strong>100% anónima y confidencial</strong> dentro del Sistema de Gestión de Calidad y Procesos (<code>FO-SGC-05-IDI.11</code>).
+      </p>
+      <div class="aviso aviso--ok">
+        <span class="icono" aria-hidden="true">verified_user</span>
+        <div class="texto-chico">
+          <strong>Comprobante Técnico de Anonimato</strong>
+          <div>ID de respuesta (UUID v4): <code id="rec-uuid" class="texto-numero">-</code></div>
+          <div>Sello temporal redondeado: <code id="rec-time" class="texto-numero">-</code></div>
+          <div>Índice de Clima de la Respuesta (IGCL): <strong id="rec-igcl" style="display:inline;">-</strong></div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button type="button" class="boton boton--primario" onclick="reiniciarFormulario()">
+          <span class="icono" aria-hidden="true">restart_alt</span>
+          Cargar otra respuesta
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal 2: Protocolo de Anonimato Técnico -->
+  <dialog class="modal" id="modal-anonimato" aria-labelledby="modal-anon-titulo">
+    <div class="modal-cuerpo">
+      <header class="modal-cabecera">
+        <h2 id="modal-anon-titulo">
+          <span class="icono" aria-hidden="true" style="color:var(--marca-enlace);">shield_lock</span>
+          Protocolo de Anonimato Técnico y Estadístico
+        </h2>
+        <form method="dialog">
+          <button class="modal-cerrar" aria-label="Cerrar"><span class="icono" aria-hidden="true">close</span></button>
+        </form>
+      </header>
+      <p>
+        En cumplimiento del diseño metodológico de la <strong>Dirección General de Estadísticas, Control de Calidad y Procesos</strong>, este instrumento aplica cinco salvaguardas técnicas:
+      </p>
+      <ul style="font-size:0.94rem; line-height:1.55; padding-left:20px; margin:0 0 18px;">
+        <li><strong>Sin datos identificatorios:</strong> No se solicita Nombre, DNI, Legajo ni Correo Electrónico.</li>
+        <li><strong>Sin registro de IP ni metadatos:</strong> El repositorio descarta direcciones IP y huellas del navegador.</li>
+        <li><strong>Sello temporal redondeado a la hora:</strong> La marca de tiempo se trunca a la hora en punto (<code>HH:00:00</code>) para evitar la trazabilidad por minuto exacto.</li>
+        <li><strong>Regla de los 5 casos (<em>k</em>-anonimato <em>n</em> ≥ 5):</strong> Ningún cruce por área, modalidad o antigüedad se publica si cuenta con menos de 5 respuestas.</li>
+        <li><strong>Sanitización automática de texto libre:</strong> Cualquier número de documento o correo ingresado accidentalmente en los comentarios abiertos se enmascara antes de guardarse.</li>
+      </ul>
+      <form method="dialog" style="text-align:right;">
+        <button class="boton boton--primario">Entendido</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal 3: Laboratorio Metodológico y Simulador Monte Carlo (Fase 2 y 6) -->
+  <dialog class="modal" id="modal-lab" aria-labelledby="modal-lab-titulo">
+    <div class="modal-cuerpo">
+      <header class="modal-cabecera">
+        <h2 id="modal-lab-titulo">
+          <span class="icono" aria-hidden="true" style="color:var(--marca-enlace);">science</span>
+          Laboratorio Metodológico (SGCyP)
+        </h2>
+        <form method="dialog">
+          <button class="modal-cerrar" aria-label="Cerrar"><span class="icono" aria-hidden="true">close</span></button>
+        </form>
+      </header>
+      <p>
+        Verificador de parámetros estadísticos (Fases 2 y 6): inyección de lote sintético <strong>Monte Carlo (100 casos)</strong>, cálculo en vivo de <strong>Alfa de Cronbach (α)</strong>, <strong>IGCL</strong>, <strong>eNPS</strong> y exportación de base limpia.
+      </p>
+
+      <div class="indicadores" id="lab-kpis-grid">
+        <div class="kpi">
+          <p class="etiqueta">Muestra local (n)</p>
+          <p class="valor" id="lab-kpi-n">0</p>
+          <p class="detalle" id="lab-kpi-err">Margen error: —</p>
+        </div>
+        <div class="kpi">
+          <p class="etiqueta">IGCL Promedio</p>
+          <p class="valor" id="lab-kpi-igcl">—</p>
+          <p class="detalle">Escala 0 a 100%</p>
+        </div>
+        <div class="kpi">
+          <p class="etiqueta">eNPS Municipal</p>
+          <p class="valor" id="lab-kpi-enps">—</p>
+          <p class="detalle">Rango −100 a +100</p>
+        </div>
+        <div class="kpi">
+          <p class="etiqueta">Alfa de Cronbach (α)</p>
+          <p class="valor" id="lab-kpi-alfa">—</p>
+          <p class="detalle" id="lab-kpi-alfa-desc">Consistencia interna</p>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;">
+        <button type="button" class="boton boton--primario boton--chico" onclick="ejecutarSimulacionMonteCarlo()">
+          <span class="icono icono--chico" aria-hidden="true">auto_graph</span>
+          Inyectar 100 casos Monte Carlo
+        </button>
+        <button type="button" class="boton boton--secundario boton--chico" onclick="exportarBaseCSV()">
+          <span class="icono icono--chico" aria-hidden="true">download</span>
+          Descargar CSV limpio
+        </button>
+        <button type="button" class="boton boton--peligro boton--chico" onclick="purgarBaseLocal()">
+          <span class="icono icono--chico" aria-hidden="true">delete_sweep</span>
+          Purgar datos de prueba
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal 4: Río Cuarto IA (Estándar rcu-tablero-template) -->
+  <dialog class="modal" id="modal-ia" aria-labelledby="modal-ia-titulo">
+    <div class="modal-cuerpo">
+      <header class="modal-cabecera">
+        <h2 id="modal-ia-titulo"><span class="icono" aria-hidden="true">auto_awesome</span> Río Cuarto IA</h2>
+        <form method="dialog"><button class="modal-cerrar" aria-label="Cerrar"><span class="icono" aria-hidden="true">close</span></button></form>
+      </header>
+      <h3 class="titulo-m">Declaración de uso de Inteligencia Artificial</h3>
+      <p>
+        El desarrollo del presente instrumento digital contó con el apoyo de herramientas de inteligencia artificial generativa (GenAI) —proveedor: Google DeepMind; herramienta: Antigravity; lenguajes de programación: HTML5, CSS3 y JavaScript ES6— para asistir en la maquetación accesible, la programación de reglas condicionales, el autoguardado resiliente y la implementación de las fórmulas psicométricas (IGCL, IFN, eNPS y Alfa de Cronbach). El diseño metodológico del cuestionario (<code>FO-SGC-05-IDI.11</code>), la definición de dimensiones, el protocolo de <em>k</em>-anonimato y la validación técnica estuvieron íntegramente a cargo del equipo de la Dirección General de Estadísticas, Control de Calidad y Procesos y la Subsecretaría de Servicios Públicos.
+      </p>
+      <p>
+        Los contenidos generados o asistidos por la herramienta fueron revisados, verificados y validados por los autores, quienes asumen plena responsabilidad por el contenido final del trabajo.
+      </p>
+    </div>
+  </dialog>
+
+  <!-- Modal 5: Río Cuarto ODS (Estándar rcu-tablero-template) -->
+  <dialog class="modal" id="modal-ods" aria-labelledby="modal-ods-titulo">
+    <div class="modal-cuerpo">
+      <header class="modal-cabecera">
+        <h2 id="modal-ods-titulo"><img src="assets/ods.png" alt="" width="28" height="28"> Río Cuarto ODS</h2>
+        <form method="dialog"><button class="modal-cerrar" aria-label="Cerrar"><span class="icono" aria-hidden="true">close</span></button></form>
+      </header>
+      <p>
+        Este relevamiento institucional contribuye al seguimiento de los siguientes Objetivos de Desarrollo Sostenible (ODS) de la Agenda 2030, en cumplimiento de la <a href="https://drive.google.com/file/d/1-JUX_knfakCrvlmDB0gHUXXLpbqkpIaY/view?usp=sharing" target="_blank" rel="noopener">Ordenanza N° 148/2021<span class="solo-lectores"> (se abre en una pestaña nueva)</span></a>:
+      </p>
+      <ul class="ods-grilla">
+        <li><img src="assets/ods-08.png" alt="ODS 8: Trabajo decente y crecimiento económico" width="240" height="240"></li>
+        <li><img src="assets/ods-16.png" alt="ODS 16: Paz, justicia e instituciones sólidas" width="240" height="240"></li>
+      </ul>
+    </div>
+  </dialog>
+
+  <!-- TOAST DE VALIDACIÓN -->
+  <div class="toast-banner" id="toast-banner" role="alert" aria-live="assertive">
+    <span class="icono" aria-hidden="true" style="color:var(--grave);">warning</span>
+    <span id="toast-text">Por favor complete los campos obligatorios.</span>
+  </div>
+
+  <!-- ================= SCRIPTS OFICIALES Y LÓGICA DEL CUESTIONARIO ================ -->
   <script>
-    // Endpoint Serverless (Google Apps Script) configurable para Fase 3
+    /* --- 1. Interruptor de tema oficial (js/tema.js de rcu-tablero-template) --- */
+    (function () {
+      const CLAVE = 'tablero-tema';
+      function guardar(valor) {
+        try { localStorage.setItem(CLAVE, valor); } catch (e) {}
+      }
+      function sistemaPrefiereOscuro() {
+        return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      }
+      function actual() {
+        const elegido = document.documentElement.getAttribute('data-tema');
+        if (elegido === 'claro' || elegido === 'oscuro') return elegido;
+        return sistemaPrefiereOscuro() ? 'oscuro' : 'claro';
+      }
+      function sincronizarBoton() {
+        const boton = document.getElementById('boton-tema');
+        if (!boton) return;
+        const oscuro = actual() === 'oscuro';
+        boton.classList.toggle('es-oscuro', oscuro);
+        boton.setAttribute('aria-pressed', String(oscuro));
+      }
+      function alternar() {
+        const siguiente = actual() === 'oscuro' ? 'claro' : 'oscuro';
+        document.documentElement.setAttribute('data-tema', siguiente);
+        guardar(siguiente);
+        sincronizarBoton();
+        document.dispatchEvent(new CustomEvent('tema:cambio', { detail: { tema: siguiente } }));
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const boton = document.getElementById('boton-tema');
+        if (boton) boton.addEventListener('click', alternar);
+        sincronizarBoton();
+      });
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sincronizarBoton);
+      }
+      window.Tema = { actual: actual, alternar: alternar };
+    })();
+
+    /* --- 2. Apertura y cierre de modales <dialog> (js/pie.js de rcu-tablero-template) --- */
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-abrir]').forEach(function (boton) {
+          boton.addEventListener('click', function () {
+            var id = boton.getAttribute('data-abrir');
+            if (id === 'modal-lab') actualizarVistaLaboratorio();
+            var modal = document.getElementById(id);
+            if (modal && typeof modal.showModal === 'function') modal.showModal();
+          });
+        });
+        document.querySelectorAll('dialog.modal').forEach(function (modal) {
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) modal.close();
+          });
+        });
+      });
+    })();
+
+    /* --- 3. Lógica del Cuestionario FO-SGC-05-IDI.11 --- */
     const SCRIPT_URL = "";
     const STORAGE_DRAFT_KEY = "borrador_clima_sp_2026_v1";
     const STORAGE_DB_KEY = "respuestas_clima_sp_2026";
@@ -1814,7 +2059,6 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-      initTheme();
       renderAllQuestions();
       bindEvents();
       restaurarBorradorLocal();
@@ -1823,32 +2067,10 @@
       actualizarProgresoGlobal();
     });
 
-    /* ================= TEMA CLARO / OSCURO ================= */
-    function initTheme() {
-      const btn = document.getElementById("btn-theme");
-      const icon = document.getElementById("theme-icon");
-      const updateIcon = () => {
-        const current = document.documentElement.getAttribute("data-tema");
-        const isDark = current === "oscuro" || (!current && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        icon.textContent = isDark ? "light_mode" : "dark_mode";
-      };
-      updateIcon();
-      btn.addEventListener("click", () => {
-        const current = document.documentElement.getAttribute("data-tema");
-        const isDark = current === "oscuro" || (!current && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        const next = isDark ? "claro" : "oscuro";
-        document.documentElement.setAttribute("data-tema", next);
-        try { localStorage.setItem("clima_sp_tema", next); } catch (e) {}
-        updateIcon();
-      });
-    }
-
-    /* ================= RENDERIZADO DINÁMICO DESDE EL SCHEMA ================= */
     function renderAllQuestions() {
       const cat = window.CLIMA_SP_SCHEMA.catalogos;
       const dims = window.CLIMA_SP_SCHEMA.dimensiones;
 
-      // Bloque 1
       renderSingleChoice("group-p1", "p1", cat.areas);
       renderSingleChoice("group-p2", "p2", cat.modalidades);
       renderSingleChoice("group-p3", "p3", cat.antiguedad);
@@ -1857,24 +2079,19 @@
       renderMultiChoice("group-p6", "p6", cat.motivos_disconformidad, 3);
       renderSingleChoice("group-p7", "p7", [...cat.areas, "Otro"]);
 
-      // Bloque 2 (P8 a P14)
-      const contB2 = document.getElementById("container-bloque-2");
-      contB2.innerHTML = dims.ambiente_laboral.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "conformidad_1_5", false)).join("");
+      document.getElementById("container-bloque-2").innerHTML =
+        dims.ambiente_laboral.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "conformidad_1_5", false)).join("");
 
-      // Bloque 3 (P15 a P20)
-      const contB3 = document.getElementById("container-bloque-3");
-      contB3.innerHTML = dims.motivacion_compromiso.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "acuerdo_1_5", false)).join("");
+      document.getElementById("container-bloque-3").innerHTML =
+        dims.motivacion_compromiso.items.map((it) => crearTarjetaLikertHTML(it.codigo, it.numero, it.texto, "acuerdo_1_5", false)).join("");
 
-      // Bloque 4 (P21 y P22)
       document.getElementById("likert-p21").innerHTML = crearBotonesLikertHTML("satisfaccion_1_5", false);
       renderMultiChoice("group-p22", "p22", cat.capacitaciones_p22, 3);
 
-      // Bloque 5 (P23, P23.1, P24, P25, P25.1)
-      const contP23 = document.getElementById("container-p23-rows");
-      contP23.innerHTML = cat.items_p23_p24.map((item) => `
+      document.getElementById("container-p23-rows").innerHTML = cat.items_p23_p24.map((item) => `
         <div class="matrix-subrow" id="qcard-${item.codigo}">
           <div class="matrix-subrow-title">
-            <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand);">check_box_outline_blank</span>
+            <span class="icono icono--chico" aria-hidden="true" style="color:var(--marca-enlace);">check_circle</span>
             ${item.label} *
           </div>
           <div class="likert-row with-na" data-likert-group="${item.codigo}">
@@ -1884,18 +2101,17 @@
         </div>
       `).join("");
 
-      const contP23_1 = document.getElementById("container-p23-1-conditionals");
-      contP23_1.innerHTML = cat.items_p23_p24.map((item) => {
+      document.getElementById("container-p23-1-conditionals").innerHTML = cat.items_p23_p24.map((item) => {
         const subKey = `p23_1${item.id}`;
         return `
           <div class="q-card conditional-card hidden" id="qcard-${subKey}">
             <div class="q-header">
               <span class="q-num cond">23.1</span>
               <div class="q-label-wrap">
-                <h3 class="q-title">¿Qué es lo que falla con <u>${item.corto}</u>? *</h3>
+                <h4 class="q-title">¿Qué es lo que falla con <u>${item.corto}</u>? *</h4>
                 <p class="q-meta">
                   <span>Selección múltiple, máximo 2 · condicional obligatoria</span>
-                  <span class="counter-pill" id="counter-${subKey}">0 / 2 seleccionadas</span>
+                  <span class="estado estado--neutro" id="counter-${subKey}">0 / 2 seleccionadas</span>
                 </p>
               </div>
             </div>
@@ -1913,13 +2129,12 @@
         renderMultiChoice(`group-p23_1${item.id}`, `p23_1${item.id}`, cat.fallas_p23_1, 2);
       });
 
-      const contP24 = document.getElementById("container-p24-rows");
-      contP24.innerHTML = cat.items_p23_p24.map((item) => {
+      document.getElementById("container-p24-rows").innerHTML = cat.items_p23_p24.map((item) => {
         const code24 = `p24${item.id}`;
         return `
           <div class="matrix-subrow" id="qcard-${code24}">
             <div class="matrix-subrow-title">
-              <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand);">inventory_2</span>
+              <span class="icono icono--chico" aria-hidden="true" style="color:var(--marca-enlace);">inventory_2</span>
               ${item.label} *
             </div>
             <div class="options-grid" data-single-group="${code24}" id="group-${code24}"></div>
@@ -1934,8 +2149,6 @@
 
       document.getElementById("likert-p25").innerHTML = crearBotonesLikertHTML("acuerdo_1_5", false);
       renderMultiChoice("group-p25_1", "p25_1", cat.fallas_procedimientos_p25_1, 2);
-
-      // Bloque 6 (P26, P27, P27.1, P28)
       document.getElementById("likert-p26").innerHTML = crearBotonesLikertHTML("satisfaccion_1_5", false);
 
       const enpsCont = document.getElementById("enps-group-p27");
@@ -1956,7 +2169,7 @@
         const label = opt === "Otro" ? "Otro (especificar)" : opt;
         return `
           <button type="button" class="opt-btn single" data-val="${escapeAttr(opt)}">
-            <span class="opt-indicator"></span>
+            <span class="opt-indicator" aria-hidden="true"></span>
             <span>${escapeHTML(label)}</span>
           </button>
         `;
@@ -1970,8 +2183,8 @@
         const label = opt === "Otro" ? "Otro (especificar)" : opt;
         return `
           <button type="button" class="opt-btn multi" data-val="${escapeAttr(opt)}">
-            <span class="opt-indicator">
-              <span class="material-symbols-outlined" style="font-size:14px; opacity:0;">check</span>
+            <span class="opt-indicator" aria-hidden="true">
+              <span class="icono icono--chico" style="font-size:14px; opacity:0;">check</span>
             </span>
             <span>${escapeHTML(label)}</span>
           </button>
@@ -1985,7 +2198,7 @@
           <div class="q-header">
             <span class="q-num">${numero}</span>
             <div class="q-label-wrap">
-              <h3 class="q-title">${escapeHTML(texto)} *</h3>
+              <h4 class="q-title">${escapeHTML(texto)} *</h4>
               <p class="q-meta">Escala 1 a 5 · obligatoria</p>
             </div>
           </div>
@@ -2003,7 +2216,7 @@
         <button type="button" class="likert-btn" data-val="${it.val}">
           <div class="likert-top">
             <span class="likert-num">${it.val}</span>
-            <span class="material-symbols-outlined likert-icon">${it.icon}</span>
+            <span class="icono likert-icon" aria-hidden="true">${it.icon}</span>
           </div>
           <span class="likert-text">${it.label}</span>
         </button>
@@ -2013,7 +2226,7 @@
         html += `
           <button type="button" class="likert-btn na-btn" data-val="No me corresponde / no lo uso">
             <div class="likert-top">
-              <span class="material-symbols-outlined likert-icon" style="color:var(--ink-soft);">block</span>
+              <span class="icono likert-icon" aria-hidden="true">block</span>
             </div>
             <span class="likert-text">No me corresponde / no lo uso</span>
           </button>
@@ -2022,9 +2235,8 @@
       return html;
     }
 
-    /* ================= EVENTOS E INTERACCIÓN ================= */
     function bindEvents() {
-      // Single choice groups
+      // Selección única
       document.querySelectorAll("[data-single-group]").forEach((group) => {
         const name = group.getAttribute("data-single-group");
         const input = document.getElementById(`input-${name}`);
@@ -2045,7 +2257,7 @@
         });
       });
 
-      // Multi choice groups (con tope máximo 2 o 3)
+      // Selección múltiple con límite
       document.querySelectorAll("[data-multi-group]").forEach((group) => {
         const name = group.getAttribute("data-multi-group");
         const max = Number(group.getAttribute("data-max")) || 3;
@@ -2063,17 +2275,15 @@
             }
 
             btn.classList.toggle("active");
-            const checkIcon = btn.querySelector(".material-symbols-outlined");
-            if (checkIcon) {
-              checkIcon.style.opacity = btn.classList.contains("active") ? "1" : "0";
-            }
+            const checkIcon = btn.querySelector(".icono");
+            if (checkIcon) checkIcon.style.opacity = btn.classList.contains("active") ? "1" : "0";
 
             const selectedValues = Array.from(group.querySelectorAll(".opt-btn.active")).map((b) => b.getAttribute("data-val"));
             input.value = JSON.stringify(selectedValues);
 
             if (counter) {
               counter.textContent = `${selectedValues.length} / ${max} seleccionadas`;
-              counter.classList.toggle("limit-reached", selectedValues.length >= max);
+              counter.className = selectedValues.length >= max ? "estado estado--alerta" : "estado estado--neutro";
             }
 
             group.querySelectorAll(".opt-btn").forEach((b) => {
@@ -2088,7 +2298,7 @@
         });
       });
 
-      // Escalas Likert 1 a 5
+      // Escalas Likert
       document.querySelectorAll("[data-likert-group]").forEach((group) => {
         const name = group.getAttribute("data-likert-group");
         const input = document.getElementById(`input-${name}`);
@@ -2105,7 +2315,7 @@
         });
       });
 
-      // eNPS 1 a 10 (P27)
+      // eNPS P27
       const enpsGroup = document.getElementById("enps-group-p27");
       const inputP27 = document.getElementById("input-p27");
       enpsGroup.querySelectorAll(".enps-btn").forEach((btn) => {
@@ -2120,7 +2330,7 @@
         });
       });
 
-      // Inputs de texto y contador de caracteres P7
+      // Contador P7
       const p7Porque = document.getElementById("input-p7-porque");
       const charCountP7 = document.getElementById("char-count-p7");
       p7Porque.addEventListener("input", () => {
@@ -2136,7 +2346,6 @@
         });
       });
 
-      // Navegación por bloques (Wizard y píldoras)
       document.getElementById("btn-prev-block").addEventListener("click", () => {
         if (currentBlock > 1) irABloque(currentBlock - 1);
       });
@@ -2146,7 +2355,9 @@
         if (currentBlock < 7) irABloque(currentBlock + 1);
       });
 
-      document.querySelectorAll("#block-pills-nav .block-pill").forEach((pill) => {
+      // Navegación por pestañas ARIA (.pestana) + soporte de flechas ← / →
+      const tabs = Array.from(document.querySelectorAll("#block-pills-nav .pestana"));
+      tabs.forEach((pill, idx) => {
         pill.addEventListener("click", () => {
           const target = Number(pill.getAttribute("data-step"));
           if (isFullViewMode) {
@@ -2154,6 +2365,13 @@
           } else {
             if (target > currentBlock && !validarBloque(currentBlock)) return;
             irABloque(target);
+          }
+        });
+        pill.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            const nextIdx = e.key === "ArrowRight" ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+            tabs[nextIdx].focus();
           }
         });
       });
@@ -2180,10 +2398,8 @@
         }
       });
 
-      // Envío del formulario
       document.getElementById("clima-survey-form").addEventListener("submit", onSubmitForm);
 
-      // Monitoreo de conexión online/offline
       window.addEventListener("online", () => {
         actualizarEstadoRed();
         sincronizarColaPendiente();
@@ -2191,9 +2407,7 @@
       window.addEventListener("offline", actualizarEstadoRed);
     }
 
-    /* ================= LÓGICA DE CONDICIONALES EXACTA DEL PDF ================= */
     function actualizarCondicionales() {
-      // 1) P5 -> P6 y P7
       const valP5 = document.getElementById("input-p5").value;
       const showP6 = valP5 && valP5 !== "Sí, conforme con ambas";
       const showP7 = valP5 === "No con el área" || valP5 === "No con ninguna de las dos";
@@ -2201,19 +2415,15 @@
       document.getElementById("qcard-p6").classList.toggle("hidden", !showP6);
       document.getElementById("qcard-p7").classList.toggle("hidden", !showP7);
 
-      // Campo "Otro" en P6
       const arrP6 = parseMultiValue("input-p6");
       document.getElementById("otro-wrap-p6").classList.toggle("hidden", !arrP6.includes("Otro"));
 
-      // Campo "Otro" en P7
       const valP7 = document.getElementById("input-p7").value;
       document.getElementById("otro-wrap-p7").classList.toggle("hidden", valP7 !== "Otro");
 
-      // 2) P22 -> Campo "Otro"
       const arrP22 = parseMultiValue("input-p22");
       document.getElementById("otro-wrap-p22").classList.toggle("hidden", !arrP22.includes("Otro"));
 
-      // 3) P23 (a, b, c) -> P23.1 (a, b, c) aparece por cada fila contestada con 1 o 2
       ["a", "b", "c"].forEach((id) => {
         const val23 = document.getElementById(`input-p23${id}`).value;
         const show23_1 = val23 === "1" || val23 === "2";
@@ -2225,19 +2435,15 @@
         if (otroWrap) otroWrap.classList.toggle("hidden", !arr23_1.includes("Otro"));
       });
 
-      // 4) P25 -> P25.1 aparece si P25 es 1 o 2
       const valP25 = document.getElementById("input-p25").value;
       const showP25_1 = valP25 === "1" || valP25 === "2";
       document.getElementById("qcard-p25_1").classList.toggle("hidden", !showP25_1);
       const arrP25_1 = parseMultiValue("input-p25_1");
       document.getElementById("otro-wrap-p25_1").classList.toggle("hidden", !arrP25_1.includes("Otro"));
 
-      // 5) P26 y P27 -> P27.1 y P28 aparecen si P26 <= 3 ("Ni satisfecho ni insatisfecho", "Insatisfecho", "Muy insatisfecho") o si P27 <= 6
       const valP26 = Number(document.getElementById("input-p26").value);
       const valP27 = Number(document.getElementById("input-p27").value);
-      const condP26 = valP26 >= 1 && valP26 <= 3;
-      const condP27 = valP27 >= 1 && valP27 <= 6;
-      const showP27_1_P28 = condP26 || condP27;
+      const showP27_1_P28 = (valP26 >= 1 && valP26 <= 3) || (valP27 >= 1 && valP27 <= 6);
 
       document.getElementById("qcard-p27_1").classList.toggle("hidden", !showP27_1_P28);
       document.getElementById("qcard-p28").classList.toggle("hidden", !showP27_1_P28);
@@ -2257,10 +2463,8 @@
       }
     }
 
-    /* ================= VALIDACIÓN EXHAUSTIVA POR BLOQUE ================= */
     function obtenerRequisitosBloque(numBloque) {
       const reqs = [];
-
       if (numBloque === 1) {
         ["p1", "p2", "p3", "p4", "p5"].forEach((code) => {
           reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: `Complete la pregunta ${code.toUpperCase()}.` });
@@ -2278,26 +2482,22 @@
           reqs.push({ id: "qcard-p7", ok: Boolean(valP7) && otro7Ok && porque7Ok, msg: "En la pregunta 7, indique qué área prefiere y por qué." });
         }
       }
-
       if (numBloque === 2) {
         ["p8", "p9", "p10", "p11", "p12", "p13", "p14"].forEach((code) => {
           reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: "Responda todas las filas del Bloque 2 (Ambiente laboral)." });
         });
       }
-
       if (numBloque === 3) {
         ["p15", "p16", "p17", "p18", "p19", "p20"].forEach((code) => {
           reqs.push({ id: `qcard-${code}`, ok: Boolean(document.getElementById(`input-${code}`).value), msg: "Responda todas las filas del Bloque 3 (Motivación y compromiso)." });
         });
       }
-
       if (numBloque === 4) {
         reqs.push({ id: "qcard-p21", ok: Boolean(document.getElementById("input-p21").value), msg: "Responda la pregunta 21 sobre satisfacción con la capacitación." });
         const arrP22 = parseMultiValue("input-p22");
         const otro22Ok = !arrP22.includes("Otro") || Boolean(document.getElementById("input-p22-otro").value.trim());
         reqs.push({ id: "qcard-p22", ok: arrP22.length >= 1 && arrP22.length <= 3 && otro22Ok, msg: "En la pregunta 22, seleccione entre 1 y 3 capacitaciones necesarias." });
       }
-
       if (numBloque === 5) {
         ["a", "b", "c"].forEach((id) => {
           const v23 = document.getElementById(`input-p23${id}`).value;
@@ -2310,7 +2510,6 @@
           const v24 = document.getElementById(`input-p24${id}`).value;
           reqs.push({ id: `qcard-p24${id}`, ok: Boolean(v24), msg: `Responda quién le provee el elemento en 24.${id}.` });
         });
-
         const v25 = document.getElementById("input-p25").value;
         reqs.push({ id: "qcard-p25", ok: Boolean(v25), msg: "Responda la pregunta 25 sobre claridad de los procedimientos." });
         if (v25 === "1" || v25 === "2") {
@@ -2319,13 +2518,11 @@
           reqs.push({ id: "qcard-p25_1", ok: arr25_1.length >= 1 && arr25_1.length <= 2 && otro25Ok, msg: "En la pregunta 25.1, indique qué pesa en que los procedimientos no estén claros." });
         }
       }
-
       if (numBloque === 6) {
         const v26 = document.getElementById("input-p26").value;
         const v27 = document.getElementById("input-p27").value;
         reqs.push({ id: "qcard-p26", ok: Boolean(v26), msg: "Responda la pregunta 26 (Satisfacción general)." });
         reqs.push({ id: "qcard-p27", ok: Boolean(v27), msg: "Responda la pregunta 27 (Escala de recomendación 1 a 10)." });
-
         if ((Number(v26) >= 1 && Number(v26) <= 3) || (Number(v27) >= 1 && Number(v27) <= 6)) {
           const v27_1 = document.getElementById("input-p27_1").value;
           const otro27Ok = v27_1 !== "Otro" || Boolean(document.getElementById("input-p27_1-otro").value.trim());
@@ -2333,7 +2530,6 @@
           reqs.push({ id: "qcard-p28", ok: Boolean(document.getElementById("input-p28").value.trim()), msg: "Complete la pregunta 28 comentando brevemente qué cambiaría." });
         }
       }
-
       return reqs;
     }
 
@@ -2375,9 +2571,9 @@
       document.getElementById("btn-next-block").classList.toggle("hidden", currentBlock === 7);
       document.getElementById("progress-label").textContent = NOMBRES_BLOQUES[currentBlock];
 
-      document.querySelectorAll("#block-pills-nav .block-pill").forEach((pill) => {
+      document.querySelectorAll("#block-pills-nav .pestana").forEach((pill) => {
         const s = Number(pill.getAttribute("data-step"));
-        pill.classList.toggle("current", s === currentBlock);
+        pill.setAttribute("aria-selected", String(s === currentBlock));
       });
 
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2393,25 +2589,25 @@
         const okCount = reqs.filter((r) => r.ok).length;
         totalCompletadas += okCount;
 
-        const pill = document.querySelector(`#block-pills-nav .block-pill[data-step="${b}"]`);
+        const pill = document.querySelector(`#block-pills-nav .pestana[data-step="${b}"]`);
         if (pill) {
-          pill.classList.toggle("completed", reqs.length > 0 && okCount === reqs.length);
+          const completo = reqs.length > 0 && okCount === reqs.length;
+          pill.classList.toggle("completada", completo);
         }
       }
 
       const pct = totalRequeridas > 0 ? Math.round((totalCompletadas / totalRequeridas) * 100) : 0;
-      document.getElementById("progress-pct").textContent = `${pct}%`;
+      const badge = document.getElementById("progress-pct");
+      badge.textContent = `${pct}% completado`;
+      badge.className = pct === 100 ? "estado estado--ok texto-numero" : (pct >= 40 ? "estado estado--alerta texto-numero" : "estado estado--neutro texto-numero");
       document.getElementById("progress-fill").style.width = `${pct}%`;
     }
 
-    /* ================= AUTOGUARDADO EN LOCALSTORAGE (FASE 4.2.b) ================= */
     function recolectarEstadoActual() {
       const form = document.getElementById("clima-survey-form");
       const fd = new FormData(form);
       const raw = {};
-      for (const [k, v] of fd.entries()) {
-        raw[k] = v;
-      }
+      for (const [k, v] of fd.entries()) raw[k] = v;
       ["p6", "p22", "p23_1a", "p23_1b", "p23_1c", "p25_1"].forEach((mKey) => {
         raw[mKey] = parseMultiValue(`input-${mKey}`);
       });
@@ -2437,22 +2633,15 @@
         if (!parsed || !parsed.data) return;
         const d = parsed.data;
 
-        // Restaurar selección única
         ["p1", "p2", "p3", "p4", "p5", "p7", "p24a", "p24b", "p24c", "p27_1"].forEach((k) => {
           if (d[k]) activarBotonSingle(k, d[k]);
         });
-
-        // Restaurar selección múltiple
         ["p6", "p22", "p23_1a", "p23_1b", "p23_1c", "p25_1"].forEach((k) => {
           if (Array.isArray(d[k]) && d[k].length > 0) activarBotonesMulti(k, d[k]);
         });
-
-        // Restaurar escalas Likert
         ["p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23a", "p23b", "p23c", "p25", "p26"].forEach((k) => {
           if (d[k]) activarBotonLikert(k, d[k]);
         });
-
-        // Restaurar eNPS P27
         if (d.p27) {
           const btn = document.querySelector(`#enps-group-p27 .enps-btn[data-enps="${d.p27}"]`);
           if (btn) {
@@ -2460,8 +2649,6 @@
             document.getElementById("input-p27").value = d.p27;
           }
         }
-
-        // Restaurar campos de texto
         ["p6_otro", "p7_otro", "p7_porque", "p22_otro", "p23_1a_otro", "p23_1b_otro", "p23_1c_otro", "p25_1_otro", "p27_1_otro", "p28", "p29"].forEach((k) => {
           const el = document.querySelector(`[name="${k}"]`);
           if (el && d[k]) el.value = d[k];
@@ -2493,7 +2680,7 @@
         const v = btn.getAttribute("data-val");
         if (valuesArray.includes(v)) {
           btn.classList.add("active");
-          const checkIcon = btn.querySelector(".material-symbols-outlined");
+          const checkIcon = btn.querySelector(".icono");
           if (checkIcon) checkIcon.style.opacity = "1";
         }
       });
@@ -2520,16 +2707,15 @@
         const match = window.CLIMA_SP_SCHEMA.catalogos.areas.find(
           (a) => a.toLowerCase().includes(areaParam.toLowerCase())
         );
-        if (match) {
-          activarBotonSingle("p1", match);
-        }
+        if (match) activarBotonSingle("p1", match);
       }
       if (params.get("modo") === "admin" || params.get("lab") === "1") {
-        abrirModalLab();
+        actualizarVistaLaboratorio();
+        const modalLab = document.getElementById("modal-lab");
+        if (modalLab && typeof modalLab.showModal === "function") modalLab.showModal();
       }
     }
 
-    /* ================= ENVÍO CON RESILIENCIA OFFLINE Y ANONIMATO (FASE 3 y 4) ================= */
     async function onSubmitForm(e) {
       e.preventDefault();
 
@@ -2543,7 +2729,6 @@
       const raw = recolectarEstadoActual();
       const stats = window.CLIMA_SP_STATS;
 
-      // Construcción del registro anónimo estandarizado (Fase 3.2 y 3.3)
       const payload = {
         response_id: stats.generarUUID(),
         timestamp_redondeado: stats.obtenerSelloTemporalRedondeado(),
@@ -2559,34 +2744,21 @@
         p7: (raw.p5 === "No con el área" || raw.p5 === "No con ninguna de las dos") ? raw.p7 : "",
         p7_otro: raw.p7 === "Otro" ? stats.sanitizarTextoLibre(raw.p7_otro) : "",
         p7_porque: (raw.p5 === "No con el área" || raw.p5 === "No con ninguna de las dos") ? stats.sanitizarTextoLibre(raw.p7_porque) : "",
-        p8: Number(raw.p8),
-        p9: Number(raw.p9),
-        p10: Number(raw.p10),
-        p11: Number(raw.p11),
-        p12: Number(raw.p12),
-        p13: Number(raw.p13),
-        p14: Number(raw.p14),
-        p15: Number(raw.p15),
-        p16: Number(raw.p16),
-        p17: Number(raw.p17),
-        p18: Number(raw.p18),
-        p19: Number(raw.p19),
-        p20: Number(raw.p20),
+        p8: Number(raw.p8), p9: Number(raw.p9), p10: Number(raw.p10), p11: Number(raw.p11),
+        p12: Number(raw.p12), p13: Number(raw.p13), p14: Number(raw.p14),
+        p15: Number(raw.p15), p16: Number(raw.p16), p17: Number(raw.p17), p18: Number(raw.p18),
+        p19: Number(raw.p19), p20: Number(raw.p20),
         p21: Number(raw.p21),
         p22: raw.p22,
         p22_otro: raw.p22 && raw.p22.includes("Otro") ? stats.sanitizarTextoLibre(raw.p22_otro) : "",
-        p23a: raw.p23a,
-        p23b: raw.p23b,
-        p23c: raw.p23c,
+        p23a: raw.p23a, p23b: raw.p23b, p23c: raw.p23c,
         p23_1a: (raw.p23a === "1" || raw.p23a === "2") ? raw.p23_1a : [],
         p23_1a_otro: stats.sanitizarTextoLibre(raw.p23_1a_otro),
         p23_1b: (raw.p23b === "1" || raw.p23b === "2") ? raw.p23_1b : [],
         p23_1b_otro: stats.sanitizarTextoLibre(raw.p23_1b_otro),
         p23_1c: (raw.p23c === "1" || raw.p23c === "2") ? raw.p23_1c : [],
         p23_1c_otro: stats.sanitizarTextoLibre(raw.p23_1c_otro),
-        p24a: raw.p24a,
-        p24b: raw.p24b,
-        p24c: raw.p24c,
+        p24a: raw.p24a, p24b: raw.p24b, p24c: raw.p24c,
         p25: Number(raw.p25),
         p25_1: (raw.p25 === "1" || raw.p25 === "2") ? raw.p25_1 : [],
         p25_1_otro: stats.sanitizarTextoLibre(raw.p25_1_otro),
@@ -2606,10 +2778,9 @@
 
       const btnSubmit = document.getElementById("btn-submit-final");
       btnSubmit.disabled = true;
-      btnSubmit.innerHTML = `<span class="material-symbols-outlined">sync</span> Registrando respuesta anónima...`;
+      btnSubmit.innerHTML = `<span class="icono" aria-hidden="true">sync</span> Registrando respuesta anónima...`;
 
       try {
-        // Guardar en repositorio local para interoperabilidad con el Monitor
         const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
         db.push(payload);
         localStorage.setItem(STORAGE_DB_KEY, JSON.stringify(db));
@@ -2630,13 +2801,15 @@
         encolarParaReintento(payload);
       } finally {
         btnSubmit.disabled = false;
-        btnSubmit.innerHTML = `<span class="material-symbols-outlined">send</span> Enviar Encuesta Anónima`;
+        btnSubmit.innerHTML = `<span class="icono" aria-hidden="true">send</span> Enviar Encuesta Anónima`;
       }
 
       document.getElementById("rec-uuid").textContent = payload.response_id;
       document.getElementById("rec-time").textContent = payload.timestamp_redondeado;
       document.getElementById("rec-igcl").textContent = `${payload.igcl}% (${payload.enps_categoria} en eNPS)`;
-      document.getElementById("modal-success").classList.add("open");
+
+      const modalExito = document.getElementById("modal-exito");
+      if (modalExito && typeof modalExito.showModal === "function") modalExito.showModal();
     }
 
     function encolarParaReintento(payload) {
@@ -2655,11 +2828,7 @@
         const restantes = [];
         for (const item of q) {
           try {
-            await fetch(SCRIPT_URL, {
-              method: "POST",
-              mode: "no-cors",
-              body: JSON.stringify(item)
-            });
+            await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(item) });
           } catch (e) {
             restantes.push(item);
           }
@@ -2669,19 +2838,21 @@
     }
 
     function reiniciarFormulario() {
-      document.getElementById("modal-success").classList.remove("open");
+      const modalExito = document.getElementById("modal-exito");
+      if (modalExito && modalExito.open) modalExito.close();
+
       document.getElementById("clima-survey-form").reset();
       document.querySelectorAll(".opt-btn.active, .likert-btn.active, .enps-btn.active").forEach((b) => {
         b.classList.remove("active", "disabled-max");
         const ind = b.querySelector(".opt-indicator");
         if (ind && b.classList.contains("single")) ind.innerHTML = "";
-        const chk = b.querySelector(".material-symbols-outlined");
+        const chk = b.querySelector(".icono");
         if (chk && b.classList.contains("multi")) chk.style.opacity = "0";
       });
       document.querySelectorAll('input[type="hidden"]').forEach((i) => { i.value = ""; });
-      document.querySelectorAll(".counter-pill").forEach((c) => {
+      document.querySelectorAll("[id^='counter-']").forEach((c) => {
         c.textContent = c.id.includes("25_1") || c.id.includes("23_1") ? "0 / 2 seleccionadas" : "0 / 3 seleccionadas";
-        c.classList.remove("limit-reached");
+        c.className = "estado estado--neutro";
       });
       localStorage.removeItem(STORAGE_DRAFT_KEY);
       actualizarCondicionales();
@@ -2689,52 +2860,47 @@
       irABloque(1);
     }
 
-    /* ================= LABORATORIO METODOLÓGICO Y SIMULACIÓN MONTE CARLO ================= */
-    function abrirModalAnonimato() {
-      document.getElementById("modal-anonimato").classList.add("open");
-    }
-    function cerrarModalAnonimato() {
-      document.getElementById("modal-anonimato").classList.remove("open");
-    }
-    function abrirModalLab() {
-      actualizarVistaLaboratorio();
-      document.getElementById("modal-lab").classList.add("open");
-    }
-    function cerrarModalLab() {
-      document.getElementById("modal-lab").classList.remove("open");
-    }
-
     function actualizarVistaLaboratorio() {
       const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
-      const box = document.getElementById("lab-stats-summary");
+      const elN = document.getElementById("lab-kpi-n");
+      const elErr = document.getElementById("lab-kpi-err");
+      const elIgcl = document.getElementById("lab-kpi-igcl");
+      const elEnps = document.getElementById("lab-kpi-enps");
+      const elAlfa = document.getElementById("lab-kpi-alfa");
+      const elAlfaDesc = document.getElementById("lab-kpi-alfa-desc");
+
       if (db.length === 0) {
-        box.innerHTML = `<strong>Respuestas almacenadas localmente:</strong> 0 registros.<br>Podés inyectar el lote sintético de 100 casos (Fase 6.1) para verificar todas las fórmulas matemáticas.`;
+        elN.textContent = "0";
+        elErr.textContent = "Sin casos cargados";
+        elIgcl.textContent = "—";
+        elEnps.textContent = "—";
+        elAlfa.textContent = "—";
+        elAlfaDesc.textContent = "Inyecte lote de prueba";
         return;
       }
 
       const stats = window.CLIMA_SP_STATS;
       const cronbach = stats.calcularAlfaCronbach(db);
       const igcls = db.map((r) => Number(r.igcl)).filter((n) => Number.isFinite(n));
-      const igclProm = igcls.length > 0 ? (igcls.reduce((a, b) => a + b, 0) / igcls.length).toFixed(1) : "-";
+      const igclProm = igcls.length > 0 ? (igcls.reduce((a, b) => a + b, 0) / igcls.length).toFixed(1) : "—";
 
       const promotores = db.filter((r) => Number(r.p27) >= 9).length;
       const detractores = db.filter((r) => Number(r.p27) <= 6).length;
       const enpsGlobal = (((promotores - detractores) / db.length) * 100).toFixed(1);
       const margenError = stats.calcularMargenErrorFinito(db.length, 350);
 
-      box.innerHTML = `
-        <div><strong>Total de casos en base local (<em>n</em>):</strong> ${db.length} respuestas (Universo ref. <em>N</em>=350 → Margen de error <em>e</em> = ±${margenError}%)</div>
-        <div><strong>Índice Global de Clima Laboral (IGCL Promedio):</strong> ${igclProm}%</div>
-        <div><strong>eNPS Municipal (%Promotores − %Detractores):</strong> ${enpsGlobal} pts</div>
-        <div><strong>Fiabilidad Psicométrica (Alfa de Cronbach α):</strong> ${cronbach.alfa !== null ? cronbach.alfa : "N/A"} (${cronbach.interpretacion}, <em>K</em>=${cronbach.k_items} ítems Likert)</div>
-      `;
+      elN.textContent = String(db.length);
+      elErr.textContent = `Margen error (N=350): ±${margenError}%`;
+      elIgcl.textContent = `${igclProm}%`;
+      elEnps.textContent = `${enpsGlobal > 0 ? '+' : ''}${enpsGlobal}`;
+      elAlfa.textContent = cronbach.alfa !== null ? String(cronbach.alfa) : "N/A";
+      elAlfaDesc.textContent = cronbach.interpretacion;
     }
 
     function ejecutarSimulacionMonteCarlo() {
       const lote = window.CLIMA_SP_STATS.generarLoteSinteticoMonteCarlo(100);
       const db = JSON.parse(localStorage.getItem(STORAGE_DB_KEY) || "[]");
-      const unidos = db.concat(lote);
-      localStorage.setItem(STORAGE_DB_KEY, JSON.stringify(unidos));
+      localStorage.setItem(STORAGE_DB_KEY, JSON.stringify(db.concat(lote)));
       actualizarVistaLaboratorio();
       mostrarToast("Se inyectaron 100 casos simulados (Monte Carlo) con éxito.");
     }
@@ -2785,9 +2951,11 @@
     function actualizarEstadoRed() {
       const el = document.getElementById("autosave-status");
       if (navigator.onLine) {
-        el.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; color:var(--c-ok);">cloud_done</span><span>Guardado local automático activo</span>`;
+        el.className = "estado estado--neutro";
+        el.textContent = "Guardado local automático activo";
       } else {
-        el.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; color:var(--c-warn);">cloud_off</span><span>Modo sin conexión · Resiliencia activa</span>`;
+        el.className = "estado estado--alerta";
+        el.textContent = "Modo sin conexión · Resiliencia activa";
       }
     }
 
