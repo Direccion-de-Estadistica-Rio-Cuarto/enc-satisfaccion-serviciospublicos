@@ -448,7 +448,8 @@
     }
     .aviso .icono { flex: none; margin-top: 2px; color: var(--marca-enlace); }
     .aviso p { margin: 0; }
-    .aviso strong { display: block; margin-bottom: 2px; }
+    .aviso > div > strong:first-child { display: block; margin-bottom: 2px; }
+    .aviso li strong, .aviso p strong { display: inline; margin-bottom: 0; }
     .aviso--info   { --color-estado: var(--marca); }
     .aviso--ok     { --color-estado: var(--ok); }
     .aviso--ok .icono { color: var(--ok); }
